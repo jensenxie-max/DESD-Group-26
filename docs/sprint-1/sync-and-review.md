@@ -28,7 +28,7 @@ SHA-256 of the exported PNG: `70ccf993785d72d176b71cb0dc2ad42887acfed986655be99d
 - Link the cloud diagram, cloud README, local model, requirements and backlog.
 - Correct issue #3's workbook reference from `.xlsx` to the tracked `.xlsm` file.
 - Update model/scope/review issues with artifact links and explicit completion criteria; keep pending human reviews open.
-- Correct the recorded-video and 29 October ZIP instructions in issues #6/#7 against the supplied brief, retaining the earlier wording as superseded context.
+- The earlier sync changed the video/ZIP instructions using only the general PDF. That interpretation is superseded by the module-team Sprint 1 announcement supplied on 28 October. Issues #6/#7 are restored to video preparation and the 29 October ZIP deadline, with the announcement as the governing source.
 - Keep a single tracked model copy. Ignore working exports and intermediate model-generation files without deleting those local files.
 - Verify the existing board in the signed-in browser, move partially completed task #7 to In Progress, and fill the empty board description/README with scope, links and status rules.
 
@@ -38,7 +38,7 @@ The private board linked from this repository contains the seven existing issues
 
 | Column | Issues | Reason |
 |---|---|---|
-| Todo | #4, #5, #6 | Tutor discussion, real group review and live demonstration still require group activity |
+| Todo | #4, #5, #6 | Tutor discussion, real group review and recording the selected video still require group activity |
 | In Progress | #2, #7 | Model/export preparation is complete, while group review/contribution evidence and marking-team access checks remain open |
 | Done | #1, #3 | Preserve the existing completed setup and initial-requirements tasks |
 
@@ -54,20 +54,25 @@ GitHub API Projects permission remains unavailable with the current credential; 
 | Obtain tutor agreement on both functions | [#4](https://github.com/jensenxie-max/DESD-Group-26/issues/4); record the actual decision and any boundary changes |
 | Verify marking-team repository and board access | [#7](https://github.com/jensenxie-max/DESD-Group-26/issues/7); the [existing board](https://github.com/users/jensenxie-max/projects/2) was checked while signed in as the owner; access by the marking team still requires confirmation |
 | Record actual student contributions | Link genuine commits, review notes and sprint participation; agree/sign the required Contribution Matrix when appropriate |
-| Prepare the live Sprint 1 demonstration | [#6](https://github.com/jensenxie-max/DESD-Group-26/issues/6); every member explains their own work and understanding |
+| Record the selected Sprint 1 video | [#6](https://github.com/jensenxie-max/DESD-Group-26/issues/6); all members introduce themselves and present; MP4 maximum 10 minutes; Standup 3 attended separately |
+| Submit the mandatory Sprint 1 ZIP | [#7](https://github.com/jensenxie-max/DESD-Group-26/issues/7); links document, MP4 and slides if used; before 29 October 2026, 14:00 UK time |
 | Check for later module announcements | Confirm the actual sprint-review arrangements and any changed submission instructions with the module team |
 
 These are open checks, not evidence that reviews or approvals have taken place.
 
-## Assessment instruction correction
+## Current assessment submission instructions
 
-Source: `UFCFTR-30-3_-First_Sit_-_Task_1(1).pdf`, supplied course requirements, pp.2 and 6-7.
+The module-team announcement supplied by the user on 28 October 2026 is now the governing source for Sprint 1 review arrangements. See the [requirements record](submission-instructions.md).
 
-- Assessed artifacts and development evidence are maintained/submitted through the group repository.
-- Sprint reviews are live in-class demonstrations. The brief states that a written report or recorded presentation is not required.
-- The Task 1 final deadline is **before 14:00 UK time on 10 December 2026**. This must not be presented as a Sprint 1 deadline.
-- The supplied brief does not establish a 29 October ZIP/MP4 submission requirement. If such an instruction came from a later module announcement, attach that evidence and update the tasks accordingly.
-- The private repository and project board must be accessible to the marking team; this check does not grant anyone new access.
+- Every group submits one ZIP to Blackboard before **Thursday, 29 October 2026, 14:00 UK time**, regardless of presentation format.
+- The group selected **Option B: pre-recorded MP4, maximum 10 minutes**. All members must present with clear audio/video and introduce their full name/student ID.
+- The ZIP contains the repository/project-management links document, MP4, and slides if used. Written report not required; slides optional.
+- Show technical progress and project management, including Kanban, allocation, planning and tracking. Video groups still attend Standup 3, marked separately.
+- In-class presentation is an alternative only after whole-group agreement and arranging it with tutors during the practical session in the week commencing 26 October. In-class members must be physically present and submit their ZIP before presenting.
+- Repository and board access by the marking team remains to be verified; no public exposure or collaborator change is made by this update.
+- The 10 December Task 1 final date in the older general brief is distinct from this Sprint 1 deadline.
+
+The prior PDF-only change to video/ZIP tasks was premature and is corrected in the current README, board notes and issues. Earlier Git commits retain the historical wording; it is not the current submission instruction.
 
 ## Contribution and change provenance
 

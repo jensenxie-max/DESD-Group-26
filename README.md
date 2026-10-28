@@ -93,6 +93,10 @@ The strategic model has one canonical repository location: `models/strategic/`. 
 
 ## Submission Checks
 
-The supplied 2026-27 Assessment Brief requires repository artefacts and live in-class sprint demonstrations. It states that no written report or recorded presentation is required (pp.2, 6-7). The Task 1 final deadline is **before 14:00 UK time on 10 December 2026**; this is not a new Sprint 1 deadline. No 29 October ZIP/MP4 requirement was found in the supplied brief. Check for any newer module announcement before submission.
+**Sprint 1: submit a single ZIP to Blackboard before Thursday, 29 October 2026, 14:00 UK time. The group has selected Option B: pre-recorded MP4 video, maximum 10 minutes.**
 
-The repository is private. The group still needs to verify marking-team repository and board access, complete the live review and retain genuine contribution evidence, including the required signed Contribution Matrix. See the [open-check register](docs/sprint-1/sync-and-review.md#remaining-human-checks).
+The module-team Sprint 1 submission announcement supplied on 28 October overrides the earlier general-PDF-only interpretation. The ZIP must contain the repository/project-management links document, the MP4, and slides if used. All members must appear and present with clear audio/video, introducing their full name and student ID. Demonstrate both the actual work and project management: the Kanban board, allocation, planning and tracking. Standup 3 must still be attended and is marked separately for video groups. A written report is not required; slides are optional.
+
+See the [current submission requirements](docs/sprint-1/submission-instructions.md), [links document](docs/sprint-1/submission-links.txt) and [recording checklist](docs/sprint-1/video-checklist.md). A local preparation ZIP is available under `outputs/sprint-1-submission/`; it is a draft until the recorded MP4 and any used slides have been added and checked.
+
+The repository and board are private. Confirm marking-team access before submitting. Group review, tutor agreement on F1/F2 and genuine contribution evidence remain open. The 10 December date in the general brief is the Task 1 final deadline, not the Sprint 1 ZIP deadline. No Blackboard upload, video recording or access change is recorded as completed by this update.

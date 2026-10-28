@@ -109,7 +109,7 @@ The diagram intentionally abstracts decisions and exception paths inside high-le
 | Case Study p.2; Use Cases p.3 | Link customers/products/producers/orders and communicate quality concerns | Quality/traceability area; conditional suspension and failed-notification follow-up documented |
 | Case Study p.2 | Surplus discounts, recipes/storage/farm stories and postcode-based food miles | Community/sustainability area |
 
-Reference files: `Case_Study_-_v2.pdf`; `Task_1_-_Use_Cases.pdf`; `UFCFTR-30-3_-First_Sit_-_Task_1(1).pdf`. Check later module announcements for any changes.
+Reference files: `Case_Study_-_v2.pdf`; `Task_1_-_Use_Cases.pdf`; `UFCFTR-30-3_-First_Sit_-_Task_1(1).pdf`. The [module-team Sprint 1 submission announcement](submission-instructions.md) supplied on 28 October governs the review format and ZIP deadline; the group selected video.
 
 ## Initial Product Backlog
 
@@ -122,7 +122,7 @@ Owners below are planned responsibilities. A drafted artefact is not evidence of
 | S1-03 | Must | Scope F1 and F2 | Jiaqi + Yunze / module team | Boundaries, triggers, outcomes and exceptions documented; tutor decision recorded | Scope drafted; approval pending |
 | S1-04 | Must | Review BPMN semantics and coverage | Jilong + Haodong / joint BPMN leads | Review notes identify gaps and record their resolution | To do |
 | S1-05 | Must | Repository and project-board evidence | Jiaqi / all members | BPMN and readable export stored, board links accessible, meaningful actual contributions recorded | Model files and scope notes synchronized; board verified; marking-team access/contribution evidence pending |
-| S1-06 | Must | Sprint review preparation | All members | Each member can explain scope, responsibility, interactions and their own work | To do |
+| S1-06 | Must | Sprint review video and ZIP | All members | All members introduce themselves and demonstrate progress/project management in MP4 <=10 min; links and video in one ZIP before 29 October 14:00 UK | Format selected; recording/upload pending |
 | S2-01 | Must | i* SD and SR models | Joint BPMN leads / all members | Goals, dependencies and rationale trace to strategic/operational choices | Planned |
 | S2-02 | Must | Detailed operational BPMN for F1 | Jiaqi / Jilong | Correction, certification failure/outage and publication paths traced end to end | Blocked by scope agreement |
 | S2-03 | Must | Detailed operational BPMN for F2 | Yunze / Haodong | Zero stock, replenishment, season boundaries and update failures represented | Blocked by scope agreement |
@@ -137,7 +137,8 @@ Owners below are planned responsibilities. A drafted artefact is not evidence of
 3. Review F1/F2 against the selected use case. Take scope proposals to the module team and record the actual decision.
 4. Record review findings with an owner and resolution, then revise the model where justified.
 5. Export BPMN XML and PNG/SVG, add them to the repository with an accurate change description, and link the current project board.
-6. Prepare a short live demonstration and individual stand-up updates: completed work, next work, blockers and contribution evidence.
+6. Record the selected Option B presentation: MP4, maximum 10 minutes, with all members introducing their full name/student ID and presenting their own contribution. Include technical progress and Kanban planning/tracking. Attend Standup 3 separately.
+7. Add the MP4, repository/board links document and slides if used to one ZIP; check marking-team access and upload to Blackboard before 29 October 2026, 14:00 UK time.
 
 Sprint 1 group-mark criteria: strategic BPMN 50%; business analysis/scope/planning 30%; progress/version control/professional practice 20%. Sprint 1 contributes 20% of the Task 1 Group Mark. i* models may start now but are summatively evaluated in Sprint 2. Full executable automation is a later-sprint objective.
 
@@ -150,7 +151,7 @@ Sprint 1 group-mark criteria: strategic BPMN 50%; business analysis/scope/planni
 | S1-03 | [Tutor scope agreement #4](https://github.com/jensenxie-max/DESD-Group-26/issues/4) |
 | S1-04 | [Group model review #5](https://github.com/jensenxie-max/DESD-Group-26/issues/5) and [unfilled review template](../../meetings/Sprint-1-Review-Template.md) |
 | S1-05 | [Repository/access checks #7](https://github.com/jensenxie-max/DESD-Group-26/issues/7) and [sync/evidence register](sync-and-review.md) |
-| S1-06 | [Live demonstration #6](https://github.com/jensenxie-max/DESD-Group-26/issues/6) |
+| S1-06 | [Video presentation #6](https://github.com/jensenxie-max/DESD-Group-26/issues/6) |
 
 ## Review and Evidence Register
 

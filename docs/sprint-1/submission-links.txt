@@ -1,0 +1,32 @@
+UFCFTR-30-3 - Task 1, Sprint 1 Review
+Group 26 - Bristol Regional Food Network
+Selected use case: Use Case 1 - Producer Product Listing and Inventory Management
+Selected review format: Option B - pre-recorded MP4, maximum 10 minutes
+Sprint 1 ZIP deadline: 29 October 2026, 14:00 UK time
+
+REPOSITORY
+https://github.com/jensenxie-max/DESD-Group-26
+
+PROJECT MANAGEMENT / KANBAN BOARD
+https://github.com/users/jensenxie-max/projects/2
+
+SPRINT SCOPE, BACKLOG AND PLAN
+https://github.com/jensenxie-max/DESD-Group-26/blob/main/docs/sprint-1/README.md
+
+STRATEGIC BPMN SOURCE AND READABLE IMAGE
+https://github.com/jensenxie-max/DESD-Group-26/tree/main/models/strategic
+
+CAMUNDA DIAGRAM
+https://hub.camunda.io/diagrams/0e4d3877-3211-460d-b58e-656a9d09e7f3--strategic-bpmn-bristol-food-network
+
+REQUIREMENTS WORKBOOK
+https://github.com/jensenxie-max/DESD-Group-26/blob/main/docs/Use-Case-1-Requirements.xlsm
+
+REVIEW AND CONTRIBUTION EVIDENCE
+https://github.com/jensenxie-max/DESD-Group-26/issues
+https://github.com/jensenxie-max/DESD-Group-26/tree/main/meetings
+
+ACCESS NOTE
+The repository and board are private at the time of preparation. Marking-team access must be verified before submission. A board screenshot does not replace permission to inspect the technical contribution. GitHub model downloads are available in the repository if the cloud Camunda link requires a separate account.
+
+This links document does not certify that the MP4 has been recorded or that the final ZIP has been submitted.
