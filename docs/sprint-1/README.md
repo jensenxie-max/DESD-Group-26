@@ -36,10 +36,6 @@ These proposals require agreement from the module team before detailed implement
 | Jilong Cheng | 25028281 | Work with Jiaqi on product requirement checks, review notes and later forms, testing and documentation |
 | Haodong Yang | 25061288 | Work with Yunze on inventory requirement checks, review notes and later data handling, testing and documentation |
 
-Jiaqi Xie and Yunze Yu jointly design, draw and refine the strategic and operational BPMN models.
-
-These are proposed responsibilities, not statements of completed contributions. Tasks are reassigned when necessary, and completed work is attributed to its actual contributors.
-
 ## Current Status
 
 - Project and initial requirements documentation established.
@@ -58,21 +54,6 @@ These are proposed responsibilities, not statements of completed contributions. 
 | `meetings/` | Review feedback, decisions and tutor feedback |
 
 Record model changes, review findings and revisions in the repository. Identify the actual contributors to individual and joint work.
-
-## Sprint 1 Strategic Scope and Reading Guide
-
-The current strategic diagram contains six responsibility areas. Each row is a separate business cycle, not a sequence that must run from the top row to the bottom. The four external participants are producers, customers/community buyers, certification verification and sandbox payment/settlement services. Solid arrows are sequence flows inside the network; dashed arrows are messages exchanged with external participants.
-
-| Area | Enterprise responsibility | Relationship to other areas |
-|---|---|---|
-| Catalogue and producer support | Validate product information, check claimed organic certification and communicate publication outcomes | Supplies validated products to browsing, ordering and inventory management |
-| Inventory and availability | Manage producer quantity/season updates and customer-facing availability | Uses the published catalogue; confirmed orders reduce quantities; zero stock blocks new orders |
-| Order and fulfilment coordination | Handle multi-vendor checkout, payment, producer allocation and fulfilment outcomes | Reads catalogue/stock, sends confirmed-order stock changes and creates records used by finance and traceability |
-| Finance and settlement | Reconcile sales, calculate the 5% network commission, settle weekly and retain audit records | Uses completed transaction records and communicates with payment services and producers |
-| Quality and traceability | Identify affected orders, investigate concerns, coordinate proportionate action and review closure | Requires linked customers, products, producers and orders; confirmed risks can suspend product availability |
-| Community and sustainability | Communicate surplus offers, educational content and postcode-based food miles | Uses product availability, producer content and location data |
-
-The diagram intentionally abstracts decisions and exception paths inside high-level activities. An end event means the request/cycle was handled, not necessarily that a sale, certification or payment succeeded. These branches must be expanded in operational models. Community capabilities are drawn sequentially for readability; independent triggers may be preferable after stakeholder review. Lane ownership and trigger choices are proposed design decisions, not additional facts supplied by the case study.
 
 ## Two Candidate Major Functionalities
 
@@ -153,22 +134,6 @@ Sprint 1 group-mark criteria: strategic BPMN 50%; business analysis/scope/planni
 | S1-05 | [Repository/access checks #7](https://github.com/jensenxie-max/DESD-Group-26/issues/7) and [sync/evidence register](sync-and-review.md) |
 | S1-06 | [Video presentation #6](https://github.com/jensenxie-max/DESD-Group-26/issues/6) |
 
-## Review and Evidence Register
-
-| Check / evidence | Current state |
-|---|---|
-| Current strategic diagram saved in Camunda | Autosave observed; latest reviewed version: Sprint 1 - Reviewed baseline 2026-10-28 |
-| Camunda Design modeling checks | Problems 0 observed after import; this is not proof of business completeness or executable readiness |
-| Case-study coverage mapping | Draft mapping above |
-| Peer review and stakeholder assumptions | Pending; no review meeting or decision fabricated |
-| Tutor agreement on F1/F2 | Pending |
-| GitHub/GitLab commit history and project board | Model export and repository documentation version controlled; [existing board](https://github.com/users/jensenxie-max/projects/2) verified in signed-in browser; marking-team access remains unverified |
-| Individual contribution evidence | Record actual work and review activity separately; planned ownership is not completed contribution. This baseline preparation/sync was assistant-supported and does not establish student authorship |
-| Operational implementation and deployment | Planned for later sprints; current diagram is a strategic, non-executable model |
-
-Questions for review: are the proposed lanes the right organisational responsibilities? What happens when certification cannot be verified? Which events update stock? How are catalogue, orders and traceability records linked? How will availability remain consistent after concurrent updates? What evidence supports each person's contribution?
-
-
 ## Sprint 1 Camunda Completion Check — 28 October 2026
 
 The Camunda preparation work is complete for the current Sprint 1 baseline. This status covers model content, project documentation, visual checks, saved versions and export preparation. It does not certify tutor approval, student contribution, repository submission or a completed assessed sprint review.
@@ -192,12 +157,3 @@ The Camunda preparation work is complete for the current Sprint 1 baseline. This
 - R3: Product/stock input labels touched the pool/lane border. They now fit in the space between participants.
 - R4: The source model now declares the Camunda Cloud 8.10 modeling platform. This remains a non-executable strategic model; no deployment is required for this baseline.
 
-### Short Sprint 1 walkthrough
-
-1. Explain the enterprise boundary and why producers, customers and verification/payment providers are separate participants.
-2. Walk through the six independent business cycles and distinguish solid sequence flows from dashed messages.
-3. Identify F1 and F2, their boundaries and the failure cases that must be expanded later.
-4. Explain the shared information between catalogue, inventory, orders, settlement and traceability using the reading-guide table.
-5. Show the backlog, planned responsibilities, saved version and open tutor/group-review actions.
-
-[Open strategic BPMN](https://hub.camunda.io/diagrams/0e4d3877-3211-460d-b58e-656a9d09e7f3--strategic-bpmn-bristol-food-network)
