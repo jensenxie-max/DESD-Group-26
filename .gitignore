@@ -1,0 +1,15 @@
+# Office lock files
+~$*
+
+# Local exports and intermediate files; canonical artifacts live in models/strategic/
+/outputs/
+/work/
+/docs/learning-example/
+
+# Python caches
+__pycache__/
+*.py[cod]
+
+# Editor / OS files
+.DS_Store
+Thumbs.db

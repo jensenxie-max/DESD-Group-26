@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.md text eol=lf
+# Preserve exact bytes of Camunda exports, including embedded documentation line endings.
+*.bpmn -text whitespace=cr-at-eol
+*.png binary
+*.xlsm binary

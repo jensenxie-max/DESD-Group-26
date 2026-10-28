@@ -33,6 +33,15 @@ The planned working pairs are Jiaqi Xie with Jilong Cheng, and Yunze Yu with Hao
 - Maintain version-control and contribution evidence.
 - Prepare the Sprint 1 review and submission.
 
+## Project Links
+
+- [Camunda strategic BPMN](https://hub.camunda.io/diagrams/0e4d3877-3211-460d-b58e-656a9d09e7f3--strategic-bpmn-bristol-food-network)
+- [Camunda project README](https://hub.camunda.io/readmes/1e2f8e97-d53d-43ec-af65-957c8362ca3e--readme/)
+- [BPMN source](models/strategic/Strategic-BPMN.bpmn) and [full-resolution diagram](models/strategic/Strategic-BPMN.png)
+- [Repository issues](https://github.com/jensenxie-max/DESD-Group-26/issues) and [Projects tab](https://github.com/jensenxie-max/DESD-Group-26/projects) (specific board/access to verify)
+
+Camunda and GitHub do not automatically synchronize. Follow the [export and sync procedure](docs/sprint-1/sync-and-review.md#export-and-sync-procedure) after future model changes.
+
 ## Candidate Major Functionalities
 
 1. **Product validation and publishing**
@@ -45,20 +54,24 @@ Both proposals require agreement from the module team before detailed implementa
 | Path | Purpose |
 |---|---|
 | `README.md` | Project overview, planned responsibilities and progress |
-| `docs/` | Requirements workbook, scope, backlog and supporting analysis |
-| `models/` | BPMN source files and readable exports |
-| `meetings/` | Meeting notes, review feedback and decisions |
+| [`docs/Use-Case-1-Requirements.xlsm`](docs/Use-Case-1-Requirements.xlsm) | Existing requirements workbook |
+| [`docs/sprint-1/README.md`](docs/sprint-1/README.md) | Strategic scope, traceability, backlog and sprint plan |
+| [`docs/sprint-1/sync-and-review.md`](docs/sprint-1/sync-and-review.md) | Baseline evidence, open checks and synchronization instructions |
+| [`models/strategic/`](models/strategic/) | Current strategic BPMN source, readable PNG and opening instructions |
+| [`meetings/Sprint-1-Review-Template.md`](meetings/Sprint-1-Review-Template.md) | Unfilled group-review and tutor-decision template |
 
-Folders are created as their contents are added.
+The strategic model has one canonical repository location: `models/strategic/`. Local working exports under `outputs/` are not a second tracked copy.
 
 ## Current Progress
 
-- Git repository and local working copy established.
-- Initial Use Case 1 requirements workbook added.
-- Sprint 1 project board created.
-- Camunda project and strategic BPMN diagram created.
-- Strategic modelling is in progress.
-- Model review and tutor agreement on the candidate functionalities are pending.
+- Git repository and existing requirements workbook retained.
+- Current strategic BPMN baseline exported from Camunda and stored under `models/strategic/`.
+- Six business responsibility lanes, four external participants, 18 high-level tasks and F1/F2 candidate scope prepared.
+- Camunda Design reported **Problems 0** for the saved strategic baseline on 28 October 2026. This does not certify business approval or executable readiness.
+- Scope, source traceability, a 12-item prioritised backlog and Sprint 1 plan are available in [`docs/sprint-1/README.md`](docs/sprint-1/README.md).
+- Group review, tutor agreement and actual individual contribution evidence remain open.
+- A project board was previously recorded as created; its exact URL, contents and marking-team access still need verification. The current API authorization cannot read Projects.
+- Later operational modelling and automation remain planned work.
 
 ## Planned Later Development
 
@@ -80,4 +93,6 @@ Folders are created as their contents are added.
 
 ## Submission Checks
 
-Follow the latest module submission instructions. Check that required files are present, links work, and the marking team can access the repository and project board.
+The supplied 2026-27 Assessment Brief requires repository artefacts and live in-class sprint demonstrations. It states that no written report or recorded presentation is required (pp.2, 6-7). The Task 1 final deadline is **before 14:00 UK time on 10 December 2026**; this is not a new Sprint 1 deadline. No 29 October ZIP/MP4 requirement was found in the supplied brief. Check for any newer module announcement before submission.
+
+The repository is private. The group still needs to verify marking-team repository and board access, complete the live review and retain genuine contribution evidence, including the required signed Contribution Matrix. See the [open-check register](docs/sprint-1/sync-and-review.md#remaining-human-checks).
