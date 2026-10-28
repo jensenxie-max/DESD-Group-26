@@ -89,4 +89,3 @@ The strategic model has one canonical repository location: `models/strategic/`. 
 - Record actual contributors through Git commits and review notes.
 - Identify each person's activities when work is completed jointly.
 - Save review findings and record how they were addressed.
-- Keep planned responsibilities separate from completed contributions.
