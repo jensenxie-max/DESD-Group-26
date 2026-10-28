@@ -38,7 +38,7 @@ The planned working pairs are Jiaqi Xie with Jilong Cheng, and Yunze Yu with Hao
 - [Camunda strategic BPMN](https://hub.camunda.io/diagrams/0e4d3877-3211-460d-b58e-656a9d09e7f3--strategic-bpmn-bristol-food-network)
 - [Camunda project README](https://hub.camunda.io/readmes/1e2f8e97-d53d-43ec-af65-957c8362ca3e--readme/)
 - [BPMN source](models/strategic/Strategic-BPMN.bpmn) and [full-resolution diagram](models/strategic/Strategic-BPMN.png)
-- [Repository issues](https://github.com/jensenxie-max/DESD-Group-26/issues) and [Projects tab](https://github.com/jensenxie-max/DESD-Group-26/projects) (specific board/access to verify)
+- [Repository issues](https://github.com/jensenxie-max/DESD-Group-26/issues) and [Sprint 1 project board](https://github.com/users/jensenxie-max/projects/2) (marking-team access still to verify)
 
 Camunda and GitHub do not automatically synchronize. Follow the [export and sync procedure](docs/sprint-1/sync-and-review.md#export-and-sync-procedure) after future model changes.
 
@@ -70,7 +70,7 @@ The strategic model has one canonical repository location: `models/strategic/`. 
 - Camunda Design reported **Problems 0** for the saved strategic baseline on 28 October 2026. This does not certify business approval or executable readiness.
 - Scope, source traceability, a 12-item prioritised backlog and Sprint 1 plan are available in [`docs/sprint-1/README.md`](docs/sprint-1/README.md).
 - Group review, tutor agreement and actual individual contribution evidence remain open.
-- A project board was previously recorded as created; its exact URL, contents and marking-team access still need verification. The current API authorization cannot read Projects.
+- The existing [Sprint 1 board](https://github.com/users/jensenxie-max/projects/2) was checked in the signed-in browser: Todo 3 (#4/#5/#6), In Progress 2 (#2/#7), Done 2 (#1/#3). Marking-team access still needs verification.
 - Later operational modelling and automation remain planned work.
 
 ## Planned Later Development

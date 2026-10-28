@@ -121,7 +121,7 @@ Owners below are planned responsibilities. A drafted artefact is not evidence of
 | S1-02 | Must | Strategic BPMN of the whole enterprise | Jiaqi + Yunze / all members | Major areas and external interactions represented; diagram readable; modeling checks reviewed | Baseline saved in Camunda and exported to models/strategic/; group review pending |
 | S1-03 | Must | Scope F1 and F2 | Jiaqi + Yunze / module team | Boundaries, triggers, outcomes and exceptions documented; tutor decision recorded | Scope drafted; approval pending |
 | S1-04 | Must | Review BPMN semantics and coverage | Jilong + Haodong / joint BPMN leads | Review notes identify gaps and record their resolution | To do |
-| S1-05 | Must | Repository and project-board evidence | Jiaqi / all members | BPMN and readable export stored, board links accessible, meaningful actual contributions recorded | Model files and scope notes synchronized; board/access/contribution checks pending |
+| S1-05 | Must | Repository and project-board evidence | Jiaqi / all members | BPMN and readable export stored, board links accessible, meaningful actual contributions recorded | Model files and scope notes synchronized; board verified; marking-team access/contribution evidence pending |
 | S1-06 | Must | Sprint review preparation | All members | Each member can explain scope, responsibility, interactions and their own work | To do |
 | S2-01 | Must | i* SD and SR models | Joint BPMN leads / all members | Goals, dependencies and rationale trace to strategic/operational choices | Planned |
 | S2-02 | Must | Detailed operational BPMN for F1 | Jiaqi / Jilong | Correction, certification failure/outage and publication paths traced end to end | Blocked by scope agreement |
@@ -161,7 +161,7 @@ Sprint 1 group-mark criteria: strategic BPMN 50%; business analysis/scope/planni
 | Case-study coverage mapping | Draft mapping above |
 | Peer review and stakeholder assumptions | Pending; no review meeting or decision fabricated |
 | Tutor agreement on F1/F2 | Pending |
-| GitHub/GitLab commit history and project board | Model export and repository documentation are version controlled with this update; board and marking-team access remain unverified |
+| GitHub/GitLab commit history and project board | Model export and repository documentation version controlled; [existing board](https://github.com/users/jensenxie-max/projects/2) verified in signed-in browser; marking-team access remains unverified |
 | Individual contribution evidence | Record actual work and review activity separately; planned ownership is not completed contribution. This baseline preparation/sync was assistant-supported and does not establish student authorship |
 | Operational implementation and deployment | Planned for later sprints; current diagram is a strategic, non-executable model |
 
@@ -182,7 +182,7 @@ The Camunda preparation work is complete for the current Sprint 1 baseline. This
 | Visual and structural review | Order-outcome and quality-notification message routes adjusted to avoid activities/end events; narrow labels repositioned | Corrected |
 | Model validation | Camunda Design panel reported Problems 0 after the corrected model was uploaded | Passed at strategic-model level |
 | Model history | Sprint 1 - Reviewed baseline 2026-10-28 | Saved |
-| External submission/evidence | Repository link retained; group review, actual contributions, board access and tutor decision still require evidence | Outside this Camunda completion status |
+| External submission/evidence | Repository model exports and existing board verified; group review, actual contributions, marking-team access and tutor decision still require evidence | Outside this Camunda completion status |
 
 ### Model review findings resolved
 
