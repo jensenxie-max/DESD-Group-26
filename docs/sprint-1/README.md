@@ -150,10 +150,3 @@ The Camunda preparation work is complete for the current Sprint 1 baseline. This
 | Model history | Sprint 1 - Reviewed baseline 2026-10-28 | Saved |
 | External submission/evidence | Repository model exports and existing board verified; group review, actual contributions, marking-team access and tutor decision still require evidence | Outside this Camunda completion status |
 
-### Model review findings resolved
-
-- R1: The order outcome message overlapped the end event. It now leaves the completion activity from below and routes separately to customers.
-- R2: The affected-customer notification crossed the review activity and end event. It now routes below the quality process.
-- R3: Product/stock input labels touched the pool/lane border. They now fit in the space between participants.
-- R4: The source model now declares the Camunda Cloud 8.10 modeling platform. This remains a non-executable strategic model; no deployment is required for this baseline.
-
