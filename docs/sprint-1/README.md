@@ -90,7 +90,7 @@ Record model changes, review findings and revisions in the repository. Identify 
 | Case Study p.2; Use Cases p.3 | Link customers/products/producers/orders and communicate quality concerns | Quality/traceability area; conditional suspension and failed-notification follow-up documented |
 | Case Study p.2 | Surplus discounts, recipes/storage/farm stories and postcode-based food miles | Community/sustainability area |
 
-Reference files: `Case_Study_-_v2.pdf`; `Task_1_-_Use_Cases.pdf`; `UFCFTR-30-3_-First_Sit_-_Task_1(1).pdf`. The [module-team Sprint 1 submission announcement](submission-instructions.md) supplied on 28 October governs the review format and ZIP deadline; the group selected video.
+Reference files: `Case_Study_-_v2.pdf`; `Task_1_-_Use_Cases.pdf`; `UFCFTR-30-3_-First_Sit_-_Task_1(1).pdf`. The [module-team Sprint 1 submission announcement](submission-instructions.md) supplied on 28 October governs the review format and ZIP deadline.
 
 ## Initial Product Backlog
 
