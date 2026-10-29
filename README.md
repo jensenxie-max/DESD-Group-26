@@ -47,7 +47,7 @@ Camunda and GitHub are maintained separately. After model changes, export the BP
 1. **Product validation and publishing**
 2. **Inventory and seasonal availability management**
 
-The [tutor-confirmation task #4](https://github.com/jensenxie-max/DESD-Group-26/issues/4) is marked complete. Add the tutor decision and any scope changes to the written record before detailed implementation.
+The [tutor-confirmation task #4](https://github.com/jensenxie-max/DESD-Group-26/issues/4) is awaiting tutor confirmation. F1/F2 remain candidate functionalities and have not yet been confirmed by the tutor. Record the decision and any scope changes after confirmation is received, before detailed implementation.
 
 ## Repository Organisation
 
@@ -69,7 +69,7 @@ The strategic model has one canonical repository location: `models/strategic/`. 
 - Six business responsibility lanes, four external participants, 18 high-level tasks and F1/F2 candidate scope prepared.
 - Camunda Design reported **Problems 0** for the saved strategic baseline on 28 October 2026. This does not certify business approval or executable readiness.
 - Scope, source traceability, a 12-item prioritised backlog and Sprint 1 plan are available in [`docs/sprint-1/README.md`](docs/sprint-1/README.md).
-- Model review (#5) and tutor confirmation (#4) are marked complete in GitHub. Brief review findings and the tutor decision still need a written record. The group-provided contribution matrix is available in `docs/sprint-1/`.
+- Model review (#5) is marked complete in GitHub; brief review findings still need a written record. Tutor confirmation (#4) remains pending. The group-provided contribution matrix is available in `docs/sprint-1/`.
 - The [Sprint 1 board](https://github.com/users/jensenxie-max/projects/2) opens without signing in. Repository and board public access were verified on 29 October 2026.
 - Video recording is complete according to the group. Blackboard upload has not yet been confirmed.
 - Later operational modelling and automation remain planned work.
