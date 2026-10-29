@@ -43,10 +43,10 @@ Use the current [group-provided matrix](Group-26-Sprint-1-Contribution-Matrix.do
 
 ## Final checks
 
-- [ ] Play the actual MP4, check the maximum 10-minute duration, and confirm all members' introductions, contributions and clear audio/video.
+- [x] Play the actual MP4, check the maximum 10-minute duration, and confirm all members' introductions, contributions and clear audio/video.
 - [x] Repository and board links open without signing in, verified on 29 October 2026.
-- [ ] Include the latest links document and any slides actually used.
-- [ ] Reopen the final ZIP and check that the MP4 is present and plays after extraction.
+- [x] Include the latest links document and any slides actually used.
+- [x] Reopen the final ZIP and check that the MP4 is present and plays after extraction.
 - [ ] Upload the ZIP to Blackboard by the deadline and retain the submission receipt.
 - [ ] Attend Standup 3 separately, as required for video groups.
 
