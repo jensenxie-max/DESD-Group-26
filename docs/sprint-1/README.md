@@ -3,7 +3,7 @@
 **Module:** UFCFTR-30-3 Distributed and Enterprise Software Development
 **Selected Use Case:** Use Case 1 — Producer Product Listing and Inventory Management
 
-Repository edition, synchronized from the saved Camunda README on 28 October 2026. See the [project overview](../../README.md), [model files](../../models/strategic/) and [sync/evidence register](sync-and-review.md). This edition includes repository-specific status updates; the Camunda README remains a separate saved document.
+Repository edition, synchronized from the saved Camunda README on 28 October 2026. See the [project overview](../../README.md), [model files](../../models/strategic/) and [submission checklist](submission-checklist.md). This edition includes repository-specific status updates; the Camunda README remains a separate saved document.
 
 ## Project Overview
 
@@ -90,7 +90,7 @@ Record model changes, review findings and revisions in the repository. Identify 
 | Case Study p.2; Use Cases p.3 | Link customers/products/producers/orders and communicate quality concerns | Quality/traceability area; conditional suspension and failed-notification follow-up documented |
 | Case Study p.2 | Surplus discounts, recipes/storage/farm stories and postcode-based food miles | Community/sustainability area |
 
-Reference files: `Case_Study_-_v2.pdf`; `Task_1_-_Use_Cases.pdf`; `UFCFTR-30-3_-First_Sit_-_Task_1(1).pdf`. The [module-team Sprint 1 submission announcement](submission-instructions.md) supplied on 28 October governs the review format and ZIP deadline.
+Reference files: `Case_Study_-_v2.pdf`; `Task_1_-_Use_Cases.pdf`; `UFCFTR-30-3_-First_Sit_-_Task_1(1).pdf`. The module-team announcement supplied on 28 October governs the review format and ZIP deadline; see the [submission checklist](submission-checklist.md).
 
 ## Initial Product Backlog
 
@@ -130,8 +130,8 @@ Sprint 1 group-mark criteria: strategic BPMN 50%; business analysis/scope/planni
 | S1-01 | [Requirements preparation #3](https://github.com/jensenxie-max/DESD-Group-26/issues/3), [requirements workbook](../Use-Case-1-Requirements.xlsm) and scope/traceability above |
 | S1-02 | [Strategic model #2](https://github.com/jensenxie-max/DESD-Group-26/issues/2) and [model files](../../models/strategic/) |
 | S1-03 | [Tutor scope agreement #4](https://github.com/jensenxie-max/DESD-Group-26/issues/4) |
-| S1-04 | [Group model review #5](https://github.com/jensenxie-max/DESD-Group-26/issues/5) and [unfilled review template](../../meetings/Sprint-1-Review-Template.md) |
-| S1-05 | [Repository/access checks #7](https://github.com/jensenxie-max/DESD-Group-26/issues/7) and [sync/evidence register](sync-and-review.md) |
+| S1-04 | [Group model review #5](https://github.com/jensenxie-max/DESD-Group-26/issues/5) and actual review findings recorded on that issue |
+| S1-05 | [Repository/access checks #7](https://github.com/jensenxie-max/DESD-Group-26/issues/7) and [submission checklist](submission-checklist.md) |
 | S1-06 | [Video presentation #6](https://github.com/jensenxie-max/DESD-Group-26/issues/6) |
 
 ## Sprint 1 Camunda Completion Check — 28 October 2026
@@ -150,3 +150,9 @@ The Camunda preparation work is complete for the current Sprint 1 baseline. This
 | Model history | Sprint 1 - Reviewed baseline 2026-10-28 | Saved |
 | External submission/evidence | Repository model exports and existing board verified; group review, actual contributions, marking-team access and tutor decision still require evidence | Outside this Camunda completion status |
 
+
+## Sprint 1 Contribution Record
+
+The [contribution matrix review copy](Sprint-1-Contributions-Matrix-For-Review.docx) contains member details and the proposed overall allocation supplied by the group. Component percentages, evidence, discussion details and signatures still require group confirmation. It is not the signed final matrix.
+
+The group reports that the video is recorded. Use the [submission checklist](submission-checklist.md) to assemble the actual MP4 and links into the final Blackboard ZIP.

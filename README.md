@@ -40,7 +40,7 @@ The planned working pairs are Jiaqi Xie with Jilong Cheng, and Yunze Yu with Hao
 - [BPMN source](models/strategic/Strategic-BPMN.bpmn) and [full-resolution diagram](models/strategic/Strategic-BPMN.png)
 - [Repository issues](https://github.com/jensenxie-max/DESD-Group-26/issues) and [Sprint 1 project board](https://github.com/users/jensenxie-max/projects/2) (marking-team access still to verify)
 
-Camunda and GitHub do not automatically synchronize. Follow the [export and sync procedure](docs/sprint-1/sync-and-review.md#export-and-sync-procedure) after future model changes.
+Camunda and GitHub are maintained separately. After model changes, export the BPMN source and readable diagram to `models/strategic/` and commit the corresponding documentation.
 
 ## Candidate Major Functionalities
 
@@ -56,9 +56,9 @@ Both proposals require agreement from the module team before detailed implementa
 | `README.md` | Project overview, planned responsibilities and progress |
 | [`docs/Use-Case-1-Requirements.xlsm`](docs/Use-Case-1-Requirements.xlsm) | Existing requirements workbook |
 | [`docs/sprint-1/README.md`](docs/sprint-1/README.md) | Strategic scope, traceability, backlog and sprint plan |
-| [`docs/sprint-1/sync-and-review.md`](docs/sprint-1/sync-and-review.md) | Baseline evidence, open checks and synchronization instructions |
+| [`docs/sprint-1/Sprint-1-Contributions-Matrix-For-Review.docx`](docs/sprint-1/Sprint-1-Contributions-Matrix-For-Review.docx) | Sprint 1 contribution matrix awaiting group confirmation and signatures |
 | [`models/strategic/`](models/strategic/) | Current strategic BPMN source, readable PNG and opening instructions |
-| [`meetings/Sprint-1-Review-Template.md`](meetings/Sprint-1-Review-Template.md) | Unfilled group-review and tutor-decision template |
+| [`docs/sprint-1/submission-checklist.md`](docs/sprint-1/submission-checklist.md) | Video ZIP contents, access checks and contribution matrix completion |
 
 The strategic model has one canonical repository location: `models/strategic/`. Local working exports under `outputs/` are not a second tracked copy.
 
