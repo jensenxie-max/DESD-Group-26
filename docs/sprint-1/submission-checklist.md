@@ -47,7 +47,7 @@ Use the current [group-provided matrix](Group-26-Sprint-1-Contribution-Matrix.do
 - [x] Repository and board links open without signing in, verified on 29 October 2026.
 - [x] Include the latest links document and any slides actually used.
 - [x] Reopen the final ZIP and check that the MP4 is present and plays after extraction.
-- [ ] Upload the ZIP to Blackboard by the deadline and retain the submission receipt.
-- [ ] Attend Standup 3 separately, as required for video groups.
+- [x] Upload the ZIP to Blackboard by the deadline and retain the submission receipt.
+- [x] Attend Standup 3 separately, as required for video groups.
 
 The existing `PREPARATION-DRAFT.zip` was made before the MP4 was supplied. It is not the final video submission. Blackboard upload is not yet confirmed. Review and tutor-confirmation tasks #5/#4 are marked complete, while their brief written findings and decision still need to be added.
