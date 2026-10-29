@@ -25,7 +25,7 @@ The strategic model covers the overall enterprise. Detailed operational models w
 1. Product validation and publishing.
 2. Inventory and seasonal availability management.
 
-These proposals require agreement from the module team before detailed implementation begins.
+The tutor-confirmation task #4 is marked complete. Record the actual decision and any scope changes before detailed implementation begins.
 
 ## Team and Planned Responsibilities
 
@@ -39,8 +39,8 @@ These proposals require agreement from the module team before detailed implement
 ## Current Status
 
 - Project and initial requirements documentation established.
-- Strategic BPMN draft populated and saved in Camunda; peer review is pending.
-- Requirements review and tutor agreement on the candidate functionalities are pending.
+- Strategic BPMN saved in Camunda and exported. The model-review task #5 is marked complete; brief review findings still need recording.
+- The functionality-confirmation task #4 is marked complete; the tutor decision and any scope changes still need recording.
 - Detailed automation and supporting code are planned for later sprints.
 
 ## Version Control and Review
@@ -76,13 +76,13 @@ Record model changes, review findings and revisions in the repository. Identify 
 - Excludes: full order/payment implementation, settlement and incident investigation.
 - Planned lead/reviewer pair: Yunze Yu / Haodong Yang; joint BPMN review with Jiaqi Xie.
 
-**Approval status: both candidates require discussion and agreement with the module team before detailed implementation. No tutor approval is recorded here.**
+**Tracker status: [tutor-confirmation task #4](https://github.com/jensenxie-max/DESD-Group-26/issues/4) is marked complete. The tutor decision and any changes still need a short written record.**
 
 ## Requirement Traceability
 
 | Source | Requirement | Strategic coverage / follow-up |
 |---|---|---|
-| Assessment Brief pp.3–5, p.14 | Whole-enterprise strategic BPMN, responsibilities, external interactions and two substantial candidates | Six lanes, four external parties, F1/F2 highlighted; peer/tutor review pending |
+| Assessment Brief pp.3–5, p.14 | Whole-enterprise strategic BPMN, responsibilities, external interactions and two substantial candidates | Six lanes, four external parties and F1/F2 highlighted. Tasks #4/#5 marked complete; written decisions/findings to add |
 | Case Study pp.1–2; Use Cases p.1 | Product information, conditional organic checks, correction/failure handling | F1; detailed alternative paths in the later operational model |
 | Case Study pp.1–2; Use Cases p.1 | Quantity and seasonal availability, zero stock, replenishment | F2; confirm expiry/concurrency assumptions |
 | Case Study pp.1–2 | Multi-vendor responsibilities and minimum 48-hour preparation lead time | Order/fulfilment area; lead-time rule recorded in task documentation |
@@ -98,15 +98,15 @@ Owners below are planned responsibilities. A drafted artefact is not evidence of
 
 | ID | Priority | Backlog item | Planned owner / reviewer | Completion criteria | Status |
 |---|---|---|---|---|---|
-| S1-01 | Must | Review enterprise requirements and stakeholders | Jiaqi / Jilong | Each principal requirement has a source and an owner; assumptions are listed | Draft mapped; group review pending |
-| S1-02 | Must | Strategic BPMN of the whole enterprise | Jiaqi + Yunze / all members | Major areas and external interactions represented; diagram readable; modeling checks reviewed | Baseline saved in Camunda and exported to models/strategic/; group review pending |
-| S1-03 | Must | Scope F1 and F2 | Jiaqi + Yunze / module team | Boundaries, triggers, outcomes and exceptions documented; tutor decision recorded | Scope drafted; approval pending |
-| S1-04 | Must | Review BPMN semantics and coverage | Jilong + Haodong / joint BPMN leads | Review notes identify gaps and record their resolution | To do |
-| S1-05 | Must | Repository and project-board evidence | Jiaqi / all members | BPMN and readable export stored, board links accessible, meaningful actual contributions recorded | Model files and scope notes synchronized; board verified; marking-team access/contribution evidence pending |
-| S1-06 | Must | Sprint review video and ZIP | All members | All members introduce themselves and demonstrate progress/project management in MP4 <=10 min; links and video in one ZIP before 29 October 14:00 UK | Format selected; recording/upload pending |
+| S1-01 | Must | Review enterprise requirements and stakeholders | Jiaqi / Jilong | Each principal requirement has a source and an owner; assumptions are listed | Draft mapped. Review task #5 marked complete; findings to add |
+| S1-02 | Must | Strategic BPMN of the whole enterprise | Jiaqi + Yunze / all members | Major areas and external interactions represented; diagram readable; modeling checks reviewed | Baseline saved and exported. Review task #5 marked complete; findings to add |
+| S1-03 | Must | Scope F1 and F2 | Jiaqi + Yunze / module team | Boundaries, triggers, outcomes and exceptions documented; tutor decision recorded | Scope drafted. Tutor-confirmation task #4 marked complete; decision record to add |
+| S1-04 | Must | Review BPMN semantics and coverage | Jilong + Haodong / joint BPMN leads | Review notes identify gaps and record their resolution | Marked complete in issue #5. Add reviewers, date and brief findings |
+| S1-05 | Must | Repository and project-board evidence | Jiaqi / all members | BPMN and readable export stored, board links accessible, meaningful actual contributions recorded | Model files saved; repository and board publicly accessible; group contribution matrix uploaded |
+| S1-06 | Must | Sprint review video and ZIP | All members | All members introduce themselves and demonstrate progress/project management in MP4 <=10 min; links and video in one ZIP before 29 October 14:00 UK | Recording: complete (group reported). Blackboard upload: not yet confirmed |
 | S2-01 | Must | i* SD and SR models | Joint BPMN leads / all members | Goals, dependencies and rationale trace to strategic/operational choices | Planned |
-| S2-02 | Must | Detailed operational BPMN for F1 | Jiaqi / Jilong | Correction, certification failure/outage and publication paths traced end to end | Blocked by scope agreement |
-| S2-03 | Must | Detailed operational BPMN for F2 | Yunze / Haodong | Zero stock, replenishment, season boundaries and update failures represented | Blocked by scope agreement |
+| S2-02 | Must | Detailed operational BPMN for F1 | Jiaqi / Jilong | Correction, certification failure/outage and publication paths traced end to end | Planned; record the tutor decision before detailed implementation |
+| S2-03 | Must | Detailed operational BPMN for F2 | Yunze / Haodong | Zero stock, replenishment, season boundaries and update failures represented | Planned; record the tutor decision before detailed implementation |
 | S2-04 | Must | Initial executable processes and Forms | Function leads / paired reviewers | User tasks, variables, gateways and initial services can be demonstrated | Planned after operational modelling |
 | S3-01 | Must | End-to-end integration and exception testing | All members | Both functions run; test evidence covers normal and exception paths | Planned |
 | S3-02 | Should | Evaluate legal, ethical, social and professional issues | All members | Issues linked to concrete data/service/design choices and explained in Q&A | Planned |
@@ -118,7 +118,7 @@ Owners below are planned responsibilities. A drafted artefact is not evidence of
 3. Review F1/F2 against the selected use case. Take scope proposals to the module team and record the actual decision.
 4. Record review findings with an owner and resolution, then revise the model where justified.
 5. Export BPMN XML and PNG/SVG, add them to the repository with an accurate change description, and link the current project board.
-6. Record the selected Option B presentation: MP4, maximum 10 minutes, with all members introducing their full name/student ID and presenting their own contribution. Include technical progress and Kanban planning/tracking. Attend Standup 3 separately.
+6. The group reports that the Option B video is recorded. Check the actual MP4 is no longer than 10 minutes, all members introduce their full name/student ID and present their contribution, and technical progress and Kanban planning/tracking are covered. Attend Standup 3 separately.
 7. Add the MP4, repository/board links document and slides if used to one ZIP; check marking-team access and upload to Blackboard before 29 October 2026, 14:00 UK time.
 
 Sprint 1 group-mark criteria: strategic BPMN 50%; business analysis/scope/planning 30%; progress/version control/professional practice 20%. Sprint 1 contributes 20% of the Task 1 Group Mark. i* models may start now but are summatively evaluated in Sprint 2. Full executable automation is a later-sprint objective.
@@ -143,16 +143,28 @@ The Camunda preparation work is complete for the current Sprint 1 baseline. This
 | Strategic model of the overall enterprise | Six responsibility lanes, 18 high-level activities, four external participants and message exchanges | Prepared |
 | Organisational responsibilities and interactions | Lane names, participant boundaries, task documentation and strategic reading guide | Prepared |
 | Relationships between principal processes | Reading-guide mapping of catalogue/stock, orders, settlement, traceability and community information | Documented; detailed integration is a later-sprint task |
-| Two candidate major functionalities | F1/F2 highlighted in the diagram; boundaries, inputs, outcomes and exception scope in README | Prepared; tutor agreement pending |
+| Two candidate major functionalities | F1/F2 highlighted in the diagram; boundaries, inputs, outcomes and exception scope in README | Prepared. Confirmation task #4 marked complete; decision record to add |
 | Initial backlog and Sprint plan | 12 prioritised items with proposed owners, completion criteria, status and review sequence | Prepared |
 | Visual and structural review | Order-outcome and quality-notification message routes adjusted to avoid activities/end events; narrow labels repositioned | Corrected |
 | Model validation | Camunda Design panel reported Problems 0 after the corrected model was uploaded | Passed at strategic-model level |
 | Model history | Sprint 1 - Reviewed baseline 2026-10-28 | Saved |
-| External submission/evidence | Repository model exports and existing board verified; group review, actual contributions, marking-team access and tutor decision still require evidence | Outside this Camunda completion status |
+| External submission/evidence | Model exports saved; repository and board publicly accessible; group contribution matrix uploaded. Tasks #4/#5 marked complete, with written findings/decision to add | Blackboard upload not yet confirmed |
 
 
 ## Sprint 1 Contribution Record
 
-The [contribution matrix review copy](Sprint-1-Contributions-Matrix-For-Review.docx) contains member details and the proposed overall allocation supplied by the group. Component percentages, evidence, discussion details and signatures still require group confirmation. It is not the signed final matrix.
+The current [group-provided contribution matrix](Group-26-Sprint-1-Contribution-Matrix.docx) contains the component allocations, overall allocation, discussion details and entered signature fields supplied by the group. The uploaded file is unchanged. The earlier For-Review document is a superseded draft.
 
 The group reports that the video is recorded. Use the [submission checklist](submission-checklist.md) to assemble the actual MP4 and links into the final Blackboard ZIP.
+
+## Review and Access Status
+
+| Item | Current status | Record to keep |
+|---|---|---|
+| Group model review | [Issue #5](https://github.com/jensenxie-max/DESD-Group-26/issues/5) marked complete | Names of reviewers, date, model version, main findings and changes |
+| Tutor confirmation of F1/F2 | [Issue #4](https://github.com/jensenxie-max/DESD-Group-26/issues/4) marked complete | Tutor name, date, decision and any scope changes |
+| Repository and board access | Public access verified on 29 October 2026 | Both links open without signing in |
+| Video | Recording complete according to the group | Actual MP4, with duration and playback checked |
+| Blackboard submission | Upload not yet confirmed | Submission receipt |
+
+The task cards are marked complete. Add a short note showing what the group checked and what the tutor agreed.

@@ -24,13 +24,13 @@ https://github.com/jensenxie-max/DESD-Group-26/blob/main/docs/Use-Case-1-Require
 
 REVIEW AND CONTRIBUTION EVIDENCE
 https://github.com/jensenxie-max/DESD-Group-26/issues
-https://github.com/jensenxie-max/DESD-Group-26/blob/main/docs/sprint-1/Sprint-1-Contributions-Matrix-For-Review.docx
-Review copy only: component allocations and signatures still require group confirmation.
+https://github.com/jensenxie-max/DESD-Group-26/blob/main/docs/sprint-1/Group-26-Sprint-1-Contribution-Matrix.docx
+Current group-provided matrix, uploaded unchanged.
 
 ACCESS NOTE
-The repository is Public, verified on 29 October 2026. Project board access must be checked separately; public access or marking-team permission has not yet been confirmed. A board screenshot does not replace permission to inspect the technical contribution. GitHub model downloads are available in the repository if the cloud Camunda link requires a separate account.
+The repository is Public and the project board opens without signing in. Public access to both links was verified on 29 October 2026. A board screenshot does not replace permission to inspect the technical contribution. GitHub model downloads are available in the repository if the cloud Camunda link requires a separate account.
 
-The group reports that the MP4 has been recorded. Include the actual MP4 in the final ZIP. This links document does not certify playback/duration checks or Blackboard submission.
+The group reports that the MP4 has been recorded. Include the actual MP4 in the final ZIP. Playback/duration checks and Blackboard upload are not yet confirmed in this record.
 
 SUBMISSION CHECKLIST
 https://github.com/jensenxie-max/DESD-Group-26/blob/main/docs/sprint-1/submission-checklist.md

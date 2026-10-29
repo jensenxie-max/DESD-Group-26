@@ -38,7 +38,7 @@ The planned working pairs are Jiaqi Xie with Jilong Cheng, and Yunze Yu with Hao
 - [Camunda strategic BPMN](https://hub.camunda.io/diagrams/0e4d3877-3211-460d-b58e-656a9d09e7f3--strategic-bpmn-bristol-food-network)
 - [Camunda project README](https://hub.camunda.io/readmes/1e2f8e97-d53d-43ec-af65-957c8362ca3e--readme/)
 - [BPMN source](models/strategic/Strategic-BPMN.bpmn) and [full-resolution diagram](models/strategic/Strategic-BPMN.png)
-- [Repository issues](https://github.com/jensenxie-max/DESD-Group-26/issues) and [Sprint 1 project board](https://github.com/users/jensenxie-max/projects/2) (marking-team access still to verify)
+- [Repository issues](https://github.com/jensenxie-max/DESD-Group-26/issues) and [Sprint 1 project board](https://github.com/users/jensenxie-max/projects/2) (public access verified on 29 October 2026)
 
 Camunda and GitHub are maintained separately. After model changes, export the BPMN source and readable diagram to `models/strategic/` and commit the corresponding documentation.
 
@@ -47,7 +47,7 @@ Camunda and GitHub are maintained separately. After model changes, export the BP
 1. **Product validation and publishing**
 2. **Inventory and seasonal availability management**
 
-Both proposals require agreement from the module team before detailed implementation begins.
+The [tutor-confirmation task #4](https://github.com/jensenxie-max/DESD-Group-26/issues/4) is marked complete. Add the tutor decision and any scope changes to the written record before detailed implementation.
 
 ## Repository Organisation
 
@@ -56,7 +56,7 @@ Both proposals require agreement from the module team before detailed implementa
 | `README.md` | Project overview, planned responsibilities and progress |
 | [`docs/Use-Case-1-Requirements.xlsm`](docs/Use-Case-1-Requirements.xlsm) | Existing requirements workbook |
 | [`docs/sprint-1/README.md`](docs/sprint-1/README.md) | Strategic scope, traceability, backlog and sprint plan |
-| [`docs/sprint-1/Sprint-1-Contributions-Matrix-For-Review.docx`](docs/sprint-1/Sprint-1-Contributions-Matrix-For-Review.docx) | Sprint 1 contribution matrix awaiting group confirmation and signatures |
+| [`docs/sprint-1/Group-26-Sprint-1-Contribution-Matrix.docx`](docs/sprint-1/Group-26-Sprint-1-Contribution-Matrix.docx) | Group-provided Sprint 1 contribution matrix |
 | [`models/strategic/`](models/strategic/) | Current strategic BPMN source, readable PNG and opening instructions |
 | [`docs/sprint-1/submission-checklist.md`](docs/sprint-1/submission-checklist.md) | Video ZIP contents, access checks and contribution matrix completion |
 
@@ -69,8 +69,9 @@ The strategic model has one canonical repository location: `models/strategic/`. 
 - Six business responsibility lanes, four external participants, 18 high-level tasks and F1/F2 candidate scope prepared.
 - Camunda Design reported **Problems 0** for the saved strategic baseline on 28 October 2026. This does not certify business approval or executable readiness.
 - Scope, source traceability, a 12-item prioritised backlog and Sprint 1 plan are available in [`docs/sprint-1/README.md`](docs/sprint-1/README.md).
-- Group review, tutor agreement and actual individual contribution evidence remain open.
-- The existing [Sprint 1 board](https://github.com/users/jensenxie-max/projects/2) was checked in the signed-in browser: Todo 3 (#4/#5/#6), In Progress 2 (#2/#7), Done 2 (#1/#3). Marking-team access still needs verification.
+- Model review (#5) and tutor confirmation (#4) are marked complete in GitHub. Brief review findings and the tutor decision still need a written record. The group-provided contribution matrix is available in `docs/sprint-1/`.
+- The [Sprint 1 board](https://github.com/users/jensenxie-max/projects/2) opens without signing in. Repository and board public access were verified on 29 October 2026.
+- Video recording is complete according to the group. Blackboard upload has not yet been confirmed.
 - Later operational modelling and automation remain planned work.
 
 ## Planned Later Development

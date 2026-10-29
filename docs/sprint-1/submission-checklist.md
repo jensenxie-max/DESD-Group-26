@@ -10,11 +10,11 @@
 
 | Item | Requirement | Current handoff status |
 |---|---|---|
-| Recorded presentation MP4 | Required; maximum 10 minutes; all members introduce their full name and student ID and present with clear audio and video | The group reports that recording is complete. Add the actual MP4 and check playback and duration before packaging |
-| [Repository and project management links](submission-links.txt) | Required; the marking team must be able to open the repository and board | Repository Public status verified. Board access still needs confirmation |
+| Recorded presentation MP4 | Required; maximum 10 minutes; all members introduce their full name and student ID and present with clear audio and video | Recording complete according to the group. Check playback/duration and include the actual MP4. Blackboard upload not yet confirmed |
+| [Repository and project management links](submission-links.txt) | Required; the marking team must be able to open the repository and board | Repository and board both open without signing in, verified on 29 October 2026 |
 | Board screenshots | Useful supporting evidence; screenshots do not replace access to the linked board | Screenshots are available in this folder |
 | Slides | Include only if used | Include the exact presentation version if applicable |
-| Signed contribution matrix | Task 1 requires this through the group repository. It can also be included in the ZIP for convenience; the Sprint 1 portal does not separately list it as a mandatory ZIP item | [Review copy](Sprint-1-Contributions-Matrix-For-Review.docx) is not signed. Complete the component allocations, justification, discussion record and signatures before treating it as the signed matrix |
+| Signed contribution matrix | Task 1 requires this through the group repository. It can also be included in the ZIP for convenience; the Sprint 1 portal does not separately list it as a mandatory ZIP item | [Group-provided matrix](Group-26-Sprint-1-Contribution-Matrix.docx) uploaded unchanged, including the completed allocation and confirmation/signature fields supplied by the group |
 
 Suggested ZIP contents:
 
@@ -37,19 +37,17 @@ A formal written report is not required. The repository supplies the technical a
 - Issues, actual review findings, development history and the project board.
 - The contribution matrix, with its scope and approval state clearly identified. Preserve prior versions in Git.
 
-## Contribution matrix completion
+## Contribution Matrix
 
-The linked DOCX is an unsigned review copy based on the supplied template. It contains the four members' details and the overall split supplied by the group. The component percentages are marked **TBC** because the actual split for each component has not been confirmed. Implementation work not undertaken during Sprint 1 is marked **N/A**.
-
-Before signing, the group must complete each applicable component to a total of 100%, verify the justifications, enter the actual tutor and discussion information, and have each member sign and date their own entry. Do not present this review copy as the signed final matrix.
+Use the current [group-provided matrix](Group-26-Sprint-1-Contribution-Matrix.docx). It contains the completed allocations and discussion/signature entries supplied by the group and has been uploaded unchanged. The earlier `For-Review` document is a superseded draft.
 
 ## Final checks
 
 - [ ] Play the actual MP4, check the maximum 10-minute duration, and confirm all members' introductions, contributions and clear audio/video.
-- [ ] Verify both repository and board links without relying on the owner's signed-in account, or confirm marking-team permissions.
+- [x] Repository and board links open without signing in, verified on 29 October 2026.
 - [ ] Include the latest links document and any slides actually used.
 - [ ] Reopen the final ZIP and check that the MP4 is present and plays after extraction.
 - [ ] Upload the ZIP to Blackboard by the deadline and retain the submission receipt.
 - [ ] Attend Standup 3 separately, as required for video groups.
 
-The existing `PREPARATION-DRAFT.zip` was made before the MP4 was supplied. It is not the final video submission. This checklist does not assert that Blackboard upload, tutor agreement, group review or signing has occurred.
+The existing `PREPARATION-DRAFT.zip` was made before the MP4 was supplied. It is not the final video submission. Blackboard upload is not yet confirmed. Review and tutor-confirmation tasks #5/#4 are marked complete, while their brief written findings and decision still need to be added.
