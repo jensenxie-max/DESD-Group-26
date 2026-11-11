@@ -1,0 +1,21 @@
+{
+  "details": {
+    "name": "Carrots",
+    "description": "Fresh local carrots",
+    "category": "Vegetables",
+    "farmOrigin": "Bristol Farm",
+    "price": 2.5,
+    "quantity": 0,
+    "startDate": "2026-11-01",
+    "endDate": "2026-11-30",
+    "organicClaim": true,
+    "certificationReference": "CERT-UPDATED-002",
+    "harvestDate": null,
+    "bestBefore": null
+  },
+  "allergenEntries": [
+    {
+      "name": "Mustard"
+    }
+  ]
+}
