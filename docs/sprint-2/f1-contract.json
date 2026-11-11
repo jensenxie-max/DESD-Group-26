@@ -1,0 +1,253 @@
+{
+  "contractVersion": "0.2-forms-configured-local-rules",
+  "scope": "F1 one-submission business-rule demonstration for the Thursday stand-up. This is not a Camunda deployment, real certification check, persistent product store, or complete food-information compliance validator.",
+  "attribution": {
+    "status": "Local draft awaiting review",
+    "reviewPlan": {
+      "JiaqiXie": "Review F1 business paths and publication contract",
+      "JilongCheng": "Review configured form fields, preview results, validation rules and test cases"
+    },
+    "completedStudentContributions": "Not asserted by this draft"
+  },
+  "sources": [
+    {
+      "path": "review-evidence/forms-2026-11-11/F1-saved.bpmn",
+      "nodes": [
+        "F1_Submit",
+        "F1_Edit",
+        "F1_Validate",
+        "F1_Valid",
+        "F1_Claim",
+        "F1_Verify",
+        "F1_Result",
+        "F1_Correction",
+        "F1_Pending",
+        "F1_Publish",
+        "F1_Availability"
+      ]
+    },
+    {
+      "path": "docs/sprint-1/README.md",
+      "section": "F1 — Product validation and publishing"
+    }
+  ],
+  "implementation": {
+    "module": "sprint2_demo.f1",
+    "call": "evaluate_listing(details: dict, business_date: str, verification_outcome: str | None = None) -> dict",
+    "stdlibOnly": true,
+    "mutatesInput": false,
+    "sharedAvailabilityRule": "sprint2_demo.common.sale_available",
+    "businessDate": "Explicit strict YYYY-MM-DD date string supplied by caller; no wall clock or timezone inference",
+    "invocationErrors": "Non-dict details, invalid business_date or unsupported verification_outcome raise ValueError. These are not producer certificate errors.",
+    "unknownFields": "Ignored and not copied into the output product."
+  },
+  "formProposal": {
+    "statusAsOf": "2026-11-11",
+    "status": "Both Forms are created in Camunda and associated with F1_Submit/F1_Edit. All three project Forms show Problems 0. Runtime mappings still require process-instance verification.",
+    "createdAndLinked": true,
+    "deployed": false,
+    "processExecutable": false,
+    "previewChecked": ["Required fields block empty submission", "Organic claim exposes required certification reference", "Dynamic allergen entry can be added", "Date output is YYYY-MM-DD", "Correction shows original input and validationErrors", "Corrected certificate reference appears in preview output"],
+    "formFiles": ["review-evidence/forms-2026-11-11/proposed/F1-Product-Details.form", "review-evidence/forms-2026-11-11/proposed/F1-Correct-Product-Details.form"],
+    "previewOutputs": ["review-evidence/forms-2026-11-11/F1-submit-preview-output.json", "review-evidence/forms-2026-11-11/F1-correct-preview-output.json"],
+    "actualFormDataShape": "Form field keys use details.<field>; allergenEntries is a list of {name}. Task output mapping normalizes that list to details.allergens and omits empty optional fields. Engine execution of mappings remains unverified.",
+    "ids": [
+      "f1-submit-product-proposed",
+      "f1-correct-product-proposed"
+    ],
+    "bpmnUserTasks": [
+      "F1_Submit",
+      "F1_Edit"
+    ],
+    "fields": [
+      {
+        "key": "name",
+        "type": "text",
+        "required": true,
+        "proposedRule": "Non-blank string; trim surrounding whitespace",
+        "validationNode": "F1_Validate"
+      },
+      {
+        "key": "description",
+        "type": "textarea",
+        "required": true,
+        "proposedRule": "Non-blank string; trim surrounding whitespace",
+        "validationNode": "F1_Validate"
+      },
+      {
+        "key": "category",
+        "type": "text",
+        "required": true,
+        "proposedRule": "Non-blank string; no category catalogue implemented",
+        "validationNode": "F1_Validate"
+      },
+      {
+        "key": "price",
+        "type": "number",
+        "required": true,
+        "proposedRule": "Numeric int/float, finite and >= 0; reject bool and numeric strings. No artificial maximum or currency precision limit.",
+        "policyStatus": "Nonnegative price and JSON numeric shape are review proposals, not an exact official field constraint.",
+        "validationNode": "F1_Validate"
+      },
+      {
+        "key": "quantity",
+        "type": "integer",
+        "required": true,
+        "proposedRule": "Whole units >= 0; reject bool, floats and numeric strings",
+        "policyStatus": "Integer units are the shared prototype representation; weighted/fractional units remain unresolved.",
+        "validationNode": "F1_Validate"
+      },
+      {
+        "key": "startDate",
+        "type": "date",
+        "required": true,
+        "proposedRule": "Strict calendar-valid YYYY-MM-DD",
+        "validationNode": "F1_Validate"
+      },
+      {
+        "key": "endDate",
+        "type": "date",
+        "required": true,
+        "proposedRule": "Strict calendar-valid YYYY-MM-DD; endDate >= startDate",
+        "validationNode": "F1_Validate"
+      },
+      {
+        "key": "farmOrigin",
+        "type": "text",
+        "required": true,
+        "proposedRule": "Non-blank string; location evidence not checked",
+        "validationNode": "F1_Validate"
+      },
+      {
+        "key": "organicClaim",
+        "type": "checkbox",
+        "required": false,
+        "default": false,
+        "proposedRule": "If supplied, must be a boolean; true activates the certification path",
+        "validationNodes": [
+          "F1_Validate",
+          "F1_Claim"
+        ]
+      },
+      {
+        "key": "certificationReference",
+        "type": "text",
+        "requiredWhen": "organicClaim == true",
+        "proposedRule": "Non-blank reference text; exact reference format and evidence checks unimplemented",
+        "policyStatus": "The reference field and conditional presence rule are proposed form choices. A reference is not evidence of a valid certificate.",
+        "validationNodes": [
+          "F1_Validate",
+          "F1_Verify"
+        ]
+      },
+      {
+        "key": "harvestDate",
+        "type": "date",
+        "required": false,
+        "proposedRule": "If supplied, must be strict YYYY-MM-DD",
+        "coverage": "Format only; category-specific applicability and chronology are NOT implemented",
+        "validationNode": "F1_Validate"
+      },
+      {
+        "key": "allergens",
+        "type": "text-list",
+        "required": false,
+        "proposedRule": "If supplied, list of non-blank strings; [] passes this shape check",
+        "coverage": "List shape only; completeness, recognised allergens and category-specific declarations are NOT implemented",
+        "validationNode": "F1_Validate"
+      },
+      {
+        "key": "bestBefore",
+        "type": "date",
+        "required": false,
+        "proposedRule": "If supplied, must be strict YYYY-MM-DD",
+        "coverage": "Format only; applicability, expiry/sale restrictions and relation to harvest date are NOT implemented",
+        "validationNode": "F1_Validate"
+      }
+    ]
+  },
+  "providerSimulation": {
+    "realServiceCalled": false,
+    "acceptedOutcomes": [
+      "verified",
+      "invalid",
+      "unavailable",
+      null
+    ],
+    "noClaim": "Bypass provider outcome; publication can follow field validation.",
+    "trueClaim": {
+      "verified": "Publish only after basic field validation; this injected string is trusted for demonstration and does not prove evidence was checked.",
+      "invalid": "Remain unpublished; return correction_required with certification_invalid, following F1_Result -> Gateway_1tq8q8b -> F1_Correction -> F1_Edit.",
+      "unavailable": "Remain unpublished; verification_pending, errors [], followUpRequired true. This includes an upstream adapter's timeout mapped to unavailable and must not be changed to invalid.",
+      "null": "Remain unpublished while waiting at F1_Verify; pendingReason awaiting_verification, followUpRequired false."
+    },
+    "adapterLimit": "No timeout detector, connector, retry scheduling, follow-up recording or notification delivery is implemented."
+  },
+  "output": {
+    "statusEnum": [
+      "published",
+      "correction_required",
+      "verification_pending"
+    ],
+    "properties": {
+      "status": "Business-rule result only; published means the local publication branch was selected.",
+      "product": "Null if basic validation fails; otherwise a new normalised draft/product dict. Includes published, available, name, description, category, price, quantity, startDate, endDate, farmOrigin and organicClaim; supplied supported optional fields are copied. No product identity or durable write is created.",
+      "errors": "List of {field, code, message}. Provider outages do not produce an invalid-certificate input error.",
+      "verificationStatusEnum": [
+        "not_checked",
+        "not_required",
+        "verified",
+        "invalid",
+        "unavailable"
+      ],
+      "pendingReasonEnum": [
+        null,
+        "awaiting_verification",
+        "provider_unavailable"
+      ],
+      "followUpRequired": "True only for the provider-unavailable branch; no follow-up is actually saved.",
+      "nextNode": "Suggested BPMN handoff/wait node, not a running engine token.",
+      "trace": "Conceptual BPMN node path for review; not evidence that tasks or notifications executed."
+    },
+    "availabilityRule": "published AND quantity > 0 AND startDate <= business_date <= endDate",
+    "publicationVsSale": "A validated zero-stock, future-dated or expired-period product can be published while available is false.",
+    "resubmission": "Call the function again with corrected details; validation repeats from the entry path. There is no stored waiting process or linked request history."
+  },
+  "limitations": [
+    "Producer registration/authentication and ownership are preconditions only; no login/session or permission checks.",
+    "Food-specific applicability, mandatory allergen completeness, harvest/best-before chronology and certificate issuer/scope/expiry/evidence are not fully validated. A published demo result must not be read as a complete compliance decision.",
+    "Exact price/currency policies, fractional stock units, allowed category catalogue and timezone/business-date policy need group review.",
+    "Forms are created, linked and preview-checked, but there is no real provider call, deployed Camunda process/Form, connector, worker or executable gateway expression.",
+    "No database, product identifier allocation, atomic persistence, idempotency, concurrency protection or integration with real F2/order processing.",
+    "No actual producer notifications, retry/reminder/cancellation or follow-up scheduling.",
+    "The saved diagram and repository notes do not constitute tutor approval; this draft asserts no tutor confirmation or individual student completion."
+  ],
+  "demonstration": {
+    "businessDate": "2026-11-12",
+    "validDetails": {
+      "name": "Carrots",
+      "description": "Fresh local carrots",
+      "category": "Vegetables",
+      "price": 2.5,
+      "quantity": 12,
+      "startDate": "2026-11-01",
+      "endDate": "2026-11-30",
+      "farmOrigin": "Bristol Farm",
+      "organicClaim": false
+    },
+    "scenarios": [
+      "Valid non-organic submission -> published and available",
+      "Negative quantity -> correction_required",
+      "Claim plus simulated verified -> published",
+      "Claim plus simulated invalid -> correction_required",
+      "Claim plus simulated unavailable -> verification_pending, unpublished",
+      "Zero quantity -> published, unavailable"
+    ]
+  },
+  "checks": {
+    "command": "PYTHONPATH=src python -m unittest discover -s tests -p test_f1.py -v",
+    "testModule": "tests/test_f1.py",
+    "testMethodCount": 18,
+    "scope": "Local standard-library business-path checks, not deployed-engine or real-provider tests"
+  }
+}
