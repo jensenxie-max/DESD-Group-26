@@ -1,0 +1,117 @@
+{
+  "contractVersion": "0.2-form-configured-local-prototype",
+  "entryPoint": "sprint2_demo.f2.evaluate_inventory_update(product, update, business_date)",
+  "language": "Python standard library",
+  "scope": "Pure local business-rule prototype. Simulates one returned versioned state; no database write, actual atomic transaction, Camunda worker, authentication, payment check, messaging or customer-view synchronisation.",
+  "sources": [
+    {"path": "review-evidence/forms-2026-11-11/F2-saved.bpmn", "processId": "F2_Process", "isExecutable": false},
+    {"path": "docs/sprint-1/README.md", "section": "F2 — Inventory and seasonal availability management", "qualification": "Candidate scope and design proposals; not evidence of tutor approval."}
+  ],
+  "formConfiguration": {
+    "statusAsOf": "2026-11-11",
+    "createdAndLinked": true,
+    "formId": "f2-stock-dates-proposed",
+    "userTask": "F2_EnterStockChange",
+    "position": "F2_Source Producer update branch -> F2_EnterStockChange -> F2_Producer. Order and seasonal branches do not wait for this task.",
+    "currentNodeCount": 28,
+    "currentSequenceFlowCount": 30,
+    "processExecutable": false,
+    "deployed": false,
+    "formFile": "review-evidence/forms-2026-11-11/proposed/F2-Stock-and-Sale-Dates.form",
+    "previewOutput": "review-evidence/forms-2026-11-11/F2-preview-output.json",
+    "previewChecked": ["Current quantity 0 and version 7 are read-only", "New quantity -1 is blocked by minimum 0", "New quantity 8 produces preview output", "Sale dates use YYYY-MM-DD"],
+    "dataBoundary": "productId and update.source exist before load/source routing. On task activation, product.version is copied to local loadedVersion. Read-only display is separate from producerQuantity/producerStartDate/producerEndDate. Whitelisted outputs target update fields and expectedVersion=loadedVersion, never stored product.",
+    "runtimeLimit": "Form Preview does not execute task mappings, gateway conditions, service workers or database writes. Process-instance execution and trusted identity integration remain pending."
+  },
+  "product": {
+    "additionalProperties": "Preserved by deep copy; no inventory update may change published or arbitrary metadata.",
+    "required": ["producerId", "published", "quantity", "startDate", "endDate", "version", "processedChangeIds"],
+    "fields": {
+      "producerId": {"type": "string", "constraint": "Nonblank, no surrounding whitespace; exact case-sensitive comparison only.", "assumption": true, "sourceNodes": ["F2_Producer"]},
+      "published": {"type": "boolean", "constraint": "Never changed by F2.", "sourceNodes": ["F2_Prepare", "F2_Assess"]},
+      "quantity": {"type": "integer", "minimum": 0, "booleansAccepted": false, "sourceNodes": ["F2_Load", "F2_Producer", "F2_Deduct"]},
+      "startDate": {"type": "string", "format": "strict YYYY-MM-DD, real Gregorian date", "sourceNodes": ["F2_Producer", "F2_Assess"]},
+      "endDate": {"type": "string", "format": "strict YYYY-MM-DD, real Gregorian date", "constraint": "startDate <= endDate", "sourceNodes": ["F2_Producer", "F2_Assess"]},
+      "version": {"type": "integer", "minimum": 0, "booleansAccepted": false, "assumption": true, "sourceNodes": ["F2_Load", "F2_Save", "F2_Saved"]},
+      "processedChangeIds": {"type": "array", "items": "unique nonblank strings without surrounding whitespace", "assumption": true, "sourceNodes": ["F2_Load", "F2_Order", "F2_Save"]},
+      "available": {"type": "boolean", "requiredOnAppliedOutput": true, "requiredOnInput": false, "mapsToModelValues": {"true": "AVAILABLE", "false": "UNAVAILABLE"}, "sourceNodes": ["F2_Assess", "F2_CanSell", "F2_Available", "F2_Unavailable"]}
+    }
+  },
+  "update": {
+    "unknownFields": "Rejected rather than silently ignored.",
+    "commonRequired": {
+      "source": {"enum": ["producer", "order", "season-check"], "sourceNodes": ["F2_Source"]},
+      "expectedVersion": {"type": "integer", "minimum": 0, "booleansAccepted": false, "assumption": true, "sourceNodes": ["F2_Save", "F2_Saved"]}
+    },
+    "variants": {
+      "producer": {
+        "required": ["source", "expectedVersion", "producerId"],
+        "atLeastOne": ["quantity", "startDate", "endDate"],
+        "fields": {
+          "producerId": "Must equal stored producerId; self-reported consistency check, NOT authentication or authorization.",
+          "quantity": "Optional absolute nonnegative integer, excluding bool. Replaces stock; not a delta.",
+          "startDate": "Optional strict YYYY-MM-DD; omitted date is retained.",
+          "endDate": "Optional strict YYYY-MM-DD; omitted date is retained. Validate the resulting whole date range."
+        },
+        "sourceNodes": ["F2_Producer", "F2_InputValid", "F2_RejectInput", "F2_Prepare"]
+      },
+      "order": {
+        "required": ["source", "expectedVersion", "confirmed", "changeId", "deduction"],
+        "fields": {
+          "confirmed": "Exactly boolean true; upstream simulation assertion, not proof of payment or actual order confirmation.",
+          "changeId": "Nonblank string without surrounding whitespace; exact, case-sensitive key scoped to this product.",
+          "deduction": "Positive integer excluding bool, no greater than current stock for a new change."
+        },
+        "sourceNodes": ["F2_Order", "F2_OrderValid", "F2_Deduct", "F2_RejectOrder", "F2_Save"]
+      },
+      "season-check": {
+        "required": ["source", "expectedVersion"],
+        "fields": {},
+        "effect": "Retain quantity and sale dates; recompute available using explicit business_date.",
+        "proposalNotRunningTimer": true,
+        "sourceNodes": ["F2_Season", "F2_Assess"]
+      }
+    }
+  },
+  "businessDate": {
+    "parameter": "business_date",
+    "type": "strict YYYY-MM-DD string",
+    "invalidInput": "Raises ValueError, consistent with the F1 prototype; this is a caller/configuration error.",
+    "clockOrTimezoneLookup": false,
+    "sourceNodes": ["F2_Assess", "F2_Season"]
+  },
+  "availabilityRule": {
+    "expression": "published is true AND quantity > 0 AND startDate <= businessDate <= endDate",
+    "boundaryInclusivity": "Both endpoints included; explicit design assumption from model documentation, not asserted as a tutor requirement.",
+    "sourceNodes": ["F2_Assess", "F2_CanSell", "F2_Available", "F2_Unavailable"]
+  },
+  "result": {
+    "fields": {"status": "enum below", "product": "Independent deep copy, proposed new state only for applied; unchanged contents for other outcomes.", "errors": "Array of {field, code, message}; empty for applied and duplicate."},
+    "statusEnum": ["applied", "correction-required", "rejected", "duplicate", "conflict", "invalid-product"],
+    "outcomes": {
+      "applied": "Simulated update accepted. Compute available, increment version once, append changeId only for a new order.",
+      "correction-required": "Producer request validation or self-reported owner-ID consistency fails. Return original state.",
+      "rejected": "Unknown source, malformed update, unconfirmed/invalid/insufficient-stock order or disallowed fields. Return original state.",
+      "duplicate": "Valid order request has a previously processed changeId. Return existing state before checking stale expectedVersion; do not deduct or increment version.",
+      "conflict": "New valid change has a different expectedVersion. Return original state and require reload/review.",
+      "invalid-product": "Stored product shape, quantity, dates, tracking IDs or version is invalid; no silent repair."
+    }
+  },
+  "prototypeAssumptions": [
+    {"id": "A1", "statement": "Stock uses whole discrete units. Fractional weights, unit conversion and numeric strings are unsupported; bool is never an integer quantity.", "sourceNodes": ["F2_Producer", "F2_Order"]},
+    {"id": "A2", "statement": "producerId and confirmed are self-reported simulation inputs. Equality/boolean checks provide no authentication, authorization, payment validation or order lookup.", "sourceNodes": ["F2_Producer", "F2_Order"]},
+    {"id": "A3", "statement": "expectedVersion is required for all three sources. Each accepted nonduplicate request increments version once, even if only a seasonal recomputation or a no-op producer update.", "sourceNodes": ["F2_Save", "F2_Saved"]},
+    {"id": "A4", "statement": "For a structurally valid order, processed changeId is checked before version conflict and current-stock sufficiency, so replay after a successful deduction returns duplicate. A real implementation must atomically verify version and uniqueness.", "sourceNodes": ["F2_Order", "F2_RejectOrder", "F2_Save"]},
+    {"id": "A5", "statement": "Deduplication stores IDs only, not payload hashes. Reuse of an ID with different positive deduction data returns duplicate; changed-payload detection and retention policy remain unimplemented.", "sourceNodes": ["F2_Load", "F2_Order", "F2_Save"]},
+    {"id": "A6", "statement": "Caller chooses business_date and its timezone policy. Inclusive date boundaries and the proposed season-check source are prototype policies, not a running schedule.", "sourceNodes": ["F2_Season", "F2_Assess"]},
+    {"id": "A7", "statement": "A confirmed-order input can deduct adequate stock regardless of the current published/seasonal flag; upstream order confirmation/checkout eligibility is outside this function. Available is recomputed afterwards.", "sourceNodes": ["F2_Order", "F2_Deduct", "F2_Assess"]},
+    {"id": "A8", "statement": "Unknown source-specific fields are rejected. Producer updates cannot overwrite publication, version, processed IDs or available directly; extra product metadata is preserved.", "sourceNodes": ["F2_Prepare", "F2_Save"]}
+  ],
+  "notImplementedOrTested": [
+    "Real concurrent requests, atomic database commits, uniqueness constraints, persistence failures or crash recovery.",
+    "Camunda workers, process-instance execution, BPMN expressions or Tasklist form completion. A separate Form Preview check has been completed and recorded above.",
+    "Authentication/authorization or real order/payment confirmation.",
+    "Customer-view synchronisation, queues, retry scheduling, seasonal timers, manual follow-up and operational monitoring.",
+    "Fractional stock, cross-product orders, change-ID payload fingerprints and deduplication retention limits."
+  ]
+}

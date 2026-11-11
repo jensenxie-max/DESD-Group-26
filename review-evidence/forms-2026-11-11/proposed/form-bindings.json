@@ -1,0 +1,116 @@
+{
+  "status": "Configuration proposal; schema checked, engine execution still to be verified",
+  "F1_Submit": {
+    "formId": "f1-submit-product-proposed",
+    "input": [
+      {
+        "source": "= if details = null then {organicClaim: false} else details",
+        "target": "details"
+      },
+      {
+        "source": "= if details.allergens = null then [] else for allergen in details.allergens return {name: allergen}",
+        "target": "allergenEntries"
+      }
+    ],
+    "output": [
+      {
+        "source": "= details",
+        "target": "lastSubmittedDetails"
+      },
+      {
+        "source": "= allergenEntries",
+        "target": "lastSubmittedAllergenEntries"
+      },
+      {
+        "source": "= context merge([{name: details.name, description: details.description, category: details.category, farmOrigin: details.farmOrigin, price: details.price, quantity: details.quantity, startDate: details.startDate, endDate: details.endDate, organicClaim: details.organicClaim = true, allergens: if allergenEntries = null then [] else for entry in allergenEntries return entry.name}, if details.certificationReference = null or details.certificationReference = \"\" then {} else {certificationReference: details.certificationReference}, if details.harvestDate = null or details.harvestDate = \"\" then {} else {harvestDate: details.harvestDate}, if details.bestBefore = null or details.bestBefore = \"\" then {} else {bestBefore: details.bestBefore}])",
+        "target": "details"
+      }
+    ]
+  },
+  "F1_Edit": {
+    "formId": "f1-correct-product-proposed",
+    "input": [
+      {
+        "source": "= if lastSubmittedDetails != null then lastSubmittedDetails else details",
+        "target": "details"
+      },
+      {
+        "source": "= if lastSubmittedAllergenEntries != null then lastSubmittedAllergenEntries else if details.allergens = null then [] else for allergen in details.allergens return {name: allergen}",
+        "target": "allergenEntries"
+      }
+    ],
+    "output": [
+      {
+        "source": "= details",
+        "target": "lastSubmittedDetails"
+      },
+      {
+        "source": "= allergenEntries",
+        "target": "lastSubmittedAllergenEntries"
+      },
+      {
+        "source": "= context merge([{name: details.name, description: details.description, category: details.category, farmOrigin: details.farmOrigin, price: details.price, quantity: details.quantity, startDate: details.startDate, endDate: details.endDate, organicClaim: details.organicClaim = true, allergens: if allergenEntries = null then [] else for entry in allergenEntries return entry.name}, if details.certificationReference = null or details.certificationReference = \"\" then {} else {certificationReference: details.certificationReference}, if details.harvestDate = null or details.harvestDate = \"\" then {} else {harvestDate: details.harvestDate}, if details.bestBefore = null or details.bestBefore = \"\" then {} else {bestBefore: details.bestBefore}])",
+        "target": "details"
+      }
+    ]
+  },
+  "F2_EnterStockChange": {
+    "formId": "f2-stock-dates-proposed",
+    "input": [
+      {
+        "source": "= product.version",
+        "target": "loadedVersion"
+      },
+      {
+        "source": "= {productId: productId, quantity: product.quantity, version: loadedVersion}",
+        "target": "display"
+      },
+      {
+        "source": "= product.quantity",
+        "target": "producerQuantity"
+      },
+      {
+        "source": "= product.startDate",
+        "target": "producerStartDate"
+      },
+      {
+        "source": "= product.endDate",
+        "target": "producerEndDate"
+      }
+    ],
+    "output": [
+      {
+        "source": "= \"producer\"",
+        "target": "update.source"
+      },
+      {
+        "source": "= producerQuantity",
+        "target": "update.quantity"
+      },
+      {
+        "source": "= producerStartDate",
+        "target": "update.startDate"
+      },
+      {
+        "source": "= producerEndDate",
+        "target": "update.endDate"
+      },
+      {
+        "source": "= loadedVersion",
+        "target": "update.expectedVersion"
+      }
+    ]
+  },
+  "notes": [
+    "Form keys contain full paths. Do not add a details group path around them, or the result becomes details.details.*.",
+    "The dynamic list outputs [{name: \"Milk\"}], not string[]. The F1 output mapping converts its entries into details.allergens string[].",
+    "Empty optional dates and empty optional certificate reference are omitted during F1 normalization. Required dates remain strings in YYYY-MM-DD format.",
+    "Keep lastSubmittedDetails and lastSubmittedAllergenEntries so correction can restore the original inputs even when validation returns product=null.",
+    "F1 validation should return validationErrors for the correction table. The current local evaluator uses errors, so its future worker adapter must explicitly map errors to validationErrors.",
+    "Only whitelist user-task outputs. Read-only display fields are not written back to stored product; producer inputs remain candidates until the commit task.",
+    "F2 productId and update.source must already be present before F2_Load/F2_Source. EnterStockChange is only on the Producer update branch.",
+    "Take a task-local loadedVersion snapshot of product.version on entering the User Task; use that unchanged snapshot as the expected version. The display.version field must never become the authoritative version. Identity/ownership still comes from the trusted session, not the Form.",
+    "Date ordering, optional-field applicability and provider checks remain service validation. Form required/min settings alone do not implement those business rules.",
+    "Add zeebe:userTask and zeebe:formDefinition formId matching each form id. Keep processes non-executable until all task implementations and conditions are configured."
+  ]
+}
