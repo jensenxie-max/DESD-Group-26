@@ -1,0 +1,145 @@
+$ python tools/build_sprint2_executable.py --check
+{
+  "staticChecks": "passed",
+  "targetCamundaVersion": "8.10",
+  "models": {
+    "F1": {
+      "processIds": [
+        "F1_ProducerProcess",
+        "F1_Process"
+      ],
+      "pools": 3,
+      "lanes": 2,
+      "conditionExpressions": 7,
+      "staticChecks": "passed",
+      "resource": "F1-Operational.bpmn",
+      "source": "review-evidence/responsibilities-2026-11-17/F1-saved.bpmn",
+      "sourceSha256": "07fbedb8176b153c041e81bcb28242a19e72a87746a3070a04eb399c1dbabf6d",
+      "sha256": "9cab6dea3ab48aeaa0c3d5058061b24cfb014814715b38b0801af07debe8067c"
+    },
+    "F2": {
+      "processIds": [
+        "F2_Process",
+        "F2_ProducerProcess"
+      ],
+      "pools": 2,
+      "lanes": 2,
+      "conditionExpressions": 15,
+      "staticChecks": "passed",
+      "resource": "F2-Operational.bpmn",
+      "source": "review-evidence/responsibilities-2026-11-17/F2-saved.bpmn",
+      "sourceSha256": "ab13af645d31df37e6f053cc4508a2e672faba7139434f02dd1415a67f16d3df",
+      "sha256": "9e59bc9cd363a9c6d8db5926f934e4faaa85663023fda32963caf81fe438dc3e"
+    }
+  }
+}
+
+Exit code: 0
+
+$ python models/istar/validate_models.py
+{
+  "status": "PASS",
+  "scope": "Static semantic/reference checks, not tutor review or Camunda runtime validation",
+  "actors": 5,
+  "intentional_elements": 67,
+  "dependencies": 19,
+  "intentional_links": 64,
+  "checks": [
+    "Unique IDs",
+    "Same-actor intentional links",
+    "Link endpoint types",
+    "AND/OR arity and exclusivity",
+    "No refinement cycles",
+    "Distinct dependency actors",
+    "Optional dependency endpoints valid",
+    "Concern/order conditions separated; certification has explicit no-claim/verification alternatives",
+    "Both SVG views contain the same actors/dependencies; SR includes every intentional element",
+    "Editable drawio pages have unique native cells and resolvable edge endpoints",
+    "All strategic activity references resolve",
+    "Traceability references resolve across iStar, strategic and F1/F2 models"
+  ]
+}
+
+Exit code: 0
+
+$ python tools/review_sprint2_models.py
+{
+  "status": "PASS_WITH_DOCUMENTED_PROTOTYPE_BOUNDARIES",
+  "bpmnFiles": 5,
+  "istar": "PASS",
+  "traceabilityRows": 20,
+  "alternativeRoutes": 14,
+  "output": "docs/sprint-2/evidence/model-review-2026-11-18.json"
+}
+
+Exit code: 0
+
+$ python -m unittest discover -s tests -v
+test_boolean_is_not_a_stock_count (test_common.AvailabilityTests.test_boolean_is_not_a_stock_count) ... ok
+test_inclusive_boundaries_and_dates_outside_period (test_common.AvailabilityTests.test_inclusive_boundaries_and_dates_outside_period) ... ok
+test_invalid_dates_do_not_silently_become_available (test_common.AvailabilityTests.test_invalid_dates_do_not_silently_become_available) ... ok
+test_reversed_period_is_rejected (test_common.AvailabilityTests.test_reversed_period_is_rejected) ... ok
+test_zero_stock_and_unpublished_listing_are_unavailable (test_common.AvailabilityTests.test_zero_stock_and_unpublished_listing_are_unavailable) ... ok
+test_completed_instances_without_rejection_notification_do_not_pass (test_engine_demo.EvidenceHarnessTests.test_completed_instances_without_rejection_notification_do_not_pass) ... ok
+test_illegal_projection_write_is_detected_even_when_instances_complete (test_engine_demo.EvidenceHarnessTests.test_illegal_projection_write_is_detected_even_when_instances_complete) ... ok
+test_unchanged_state_with_observed_rejection_preserves_submitted_evidence (test_engine_demo.EvidenceHarnessTests.test_unchanged_state_with_observed_rejection_preserves_submitted_evidence) ... ok
+test_claim_needs_reference_before_provider_result_can_publish (test_f1.F1ListingTests.test_claim_needs_reference_before_provider_result_can_publish) ... ok
+test_input_is_not_mutated_and_resubmission_is_revalidated (test_f1.F1ListingTests.test_input_is_not_mutated_and_resubmission_is_revalidated) ... ok
+test_invalid_certificate_enters_correction_path (test_f1.F1ListingTests.test_invalid_certificate_enters_correction_path) ... ok
+test_invalid_invocation_is_not_a_producer_certificate_failure (test_f1.F1ListingTests.test_invalid_invocation_is_not_a_producer_certificate_failure) ... ok
+test_missing_provider_result_waits_without_publication (test_f1.F1ListingTests.test_missing_provider_result_waits_without_publication) ... ok
+test_missing_required_fields_return_field_errors (test_f1.F1ListingTests.test_missing_required_fields_return_field_errors) ... ok
+test_negative_fractional_and_boolean_quantity_are_rejected (test_f1.F1ListingTests.test_negative_fractional_and_boolean_quantity_are_rejected) ... ok
+test_non_organic_listing_publishes_without_provider (test_f1.F1ListingTests.test_non_organic_listing_publishes_without_provider) ... ok
+test_optional_information_checks_format_only (test_f1.F1ListingTests.test_optional_information_checks_format_only) ... ok
+test_organic_claim_must_be_boolean (test_f1.F1ListingTests.test_organic_claim_must_be_boolean) ... ok
+test_proposed_price_shape_and_nonnegative_finite_rule (test_f1.F1ListingTests.test_proposed_price_shape_and_nonnegative_finite_rule) ... ok
+test_provider_outage_stays_unpublished_without_invalid_certificate_error (test_f1.F1ListingTests.test_provider_outage_stays_unpublished_without_invalid_certificate_error) ... ok
+test_reversed_selling_dates_require_correction (test_f1.F1ListingTests.test_reversed_selling_dates_require_correction) ... ok
+test_sale_window_uses_inclusive_dates (test_f1.F1ListingTests.test_sale_window_uses_inclusive_dates) ... ok
+test_strict_real_dates (test_f1.F1ListingTests.test_strict_real_dates) ... ok
+test_text_must_be_non_blank (test_f1.F1ListingTests.test_text_must_be_non_blank) ... ok
+test_verified_organic_claim_publishes (test_f1.F1ListingTests.test_verified_organic_claim_publishes) ... ok
+test_zero_stock_publishes_but_is_not_available (test_f1.F1ListingTests.test_zero_stock_publishes_but_is_not_available) ... ok
+test_bad_business_date_is_a_caller_error (test_f2.InventoryUpdateTests.test_bad_business_date_is_a_caller_error) ... ok
+test_bad_producer_quantities_are_not_coerced (test_f2.InventoryUpdateTests.test_bad_producer_quantities_are_not_coerced) ... ok
+test_date_only_update_can_close_the_season (test_f2.InventoryUpdateTests.test_date_only_update_can_close_the_season) ... ok
+test_each_new_source_requires_the_current_version (test_f2.InventoryUpdateTests.test_each_new_source_requires_the_current_version) ... ok
+test_insufficient_stock_does_not_record_an_order_as_processed (test_f2.InventoryUpdateTests.test_insufficient_stock_does_not_record_an_order_as_processed) ... ok
+test_invalid_stored_stock_or_tracking_is_not_repaired_silently (test_f2.InventoryUpdateTests.test_invalid_stored_stock_or_tracking_is_not_repaired_silently) ... ok
+test_order_exactly_exhausts_stock_and_records_change_once (test_f2.InventoryUpdateTests.test_order_exactly_exhausts_stock_and_records_change_once) ... ok
+test_orders_require_confirmed_flag_positive_integer_and_change_id (test_f2.InventoryUpdateTests.test_orders_require_confirmed_flag_positive_integer_and_change_id) ... ok
+test_owner_mismatch_and_publication_overwrite_do_not_change_product (test_f2.InventoryUpdateTests.test_owner_mismatch_and_publication_overwrite_do_not_change_product) ... ok
+test_producer_value_replaces_stock_and_keeps_publication (test_f2.InventoryUpdateTests.test_producer_value_replaces_stock_and_keeps_publication) ... ok
+test_replaying_an_applied_order_with_old_version_does_not_deduct_twice (test_f2.InventoryUpdateTests.test_replaying_an_applied_order_with_old_version_does_not_deduct_twice) ... ok
+test_restock_cannot_publish_an_unapproved_product (test_f2.InventoryUpdateTests.test_restock_cannot_publish_an_unapproved_product) ... ok
+test_restock_within_season_reopens_an_approved_product (test_f2.InventoryUpdateTests.test_restock_within_season_reopens_an_approved_product) ... ok
+test_results_and_inputs_do_not_share_mutable_product_state (test_f2.InventoryUpdateTests.test_results_and_inputs_do_not_share_mutable_product_state) ... ok
+test_reversed_or_malformed_producer_dates_require_correction (test_f2.InventoryUpdateTests.test_reversed_or_malformed_producer_dates_require_correction) ... ok
+test_season_recheck_preserves_quantity_and_includes_both_boundaries (test_f2.InventoryUpdateTests.test_season_recheck_preserves_quantity_and_includes_both_boundaries) ... ok
+test_unknown_sources_and_mutating_season_payload_are_rejected (test_f2.InventoryUpdateTests.test_unknown_sources_and_mutating_season_payload_are_rejected) ... ok
+test_zero_stock_and_restock_outside_season_stay_unavailable (test_f2.InventoryUpdateTests.test_zero_stock_and_restock_outside_season_stay_unavailable) ... ok
+test_correct_endpoint_payloads_without_network (test_sprint2_runtime.RestContractTests.test_correct_endpoint_payloads_without_network) ... ok
+test_action_header_cannot_redirect_a_different_task (test_sprint2_runtime.RuntimeTests.test_action_header_cannot_redirect_a_different_task) ... ok
+test_bad_producer_change_leaves_database_unchanged (test_sprint2_runtime.RuntimeTests.test_bad_producer_change_leaves_database_unchanged) ... ok
+test_competing_workers_cannot_commit_two_writes_for_one_version (test_sprint2_runtime.RuntimeTests.test_competing_workers_cannot_commit_two_writes_for_one_version) ... ok
+test_duplicate_order_new_job_is_not_applied (test_sprint2_runtime.RuntimeTests.test_duplicate_order_new_job_is_not_applied) ... ok
+test_invalid_details_and_invalid_certificate_cannot_publish (test_sprint2_runtime.RuntimeTests.test_invalid_details_and_invalid_certificate_cannot_publish) ... ok
+test_late_season_check_disables_customer_availability (test_sprint2_runtime.RuntimeTests.test_late_season_check_disables_customer_availability) ... ok
+test_message_uses_manifest_allowlist_and_request_correlation (test_sprint2_runtime.RuntimeTests.test_message_uses_manifest_allowlist_and_request_correlation) ... ok
+test_missing_product_is_a_visible_incident_not_a_false_outcome (test_sprint2_runtime.RuntimeTests.test_missing_product_is_a_visible_incident_not_a_false_outcome) ... job=load-1 element=F2_Load failed: Product 'carrots' does not exist; seed it or complete F1 first
+ok
+test_publication_is_persisted_and_replayed_without_duplicate_write (test_sprint2_runtime.RuntimeTests.test_publication_is_persisted_and_replayed_without_duplicate_write) ... ok
+test_retry_after_completion_failure_does_not_deduct_twice (test_sprint2_runtime.RuntimeTests.test_retry_after_completion_failure_does_not_deduct_twice) ... job=100 element=F2_Save failed: Camunda HTTP 503: unavailable
+ok
+test_same_order_concurrent_instance_is_acknowledged_without_followup (test_sprint2_runtime.RuntimeTests.test_same_order_concurrent_instance_is_acknowledged_without_followup) ... ok
+test_transient_activation_failure_recovers_but_auth_failure_is_visible (test_sprint2_runtime.RuntimeTests.test_transient_activation_failure_recovers_but_auth_failure_is_visible) ... activation temporarily unavailable for desd.business: Camunda HTTP 503: busy
+ok
+test_unavailable_certification_records_followup_without_listing (test_sprint2_runtime.RuntimeTests.test_unavailable_certification_records_followup_without_listing) ... ok
+
+----------------------------------------------------------------------
+Ran 58 tests in 0.103s
+
+OK
+
+Exit code: 0

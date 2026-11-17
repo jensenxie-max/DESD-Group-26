@@ -1,0 +1,247 @@
+{
+  "status": "completed",
+  "runId": "a404ff8f-d14a-4faa-a153-b354851654a6",
+  "formInteraction": "Tasklist UI; this launcher never completes user tasks",
+  "updatedAt": "2026-11-17T17:07:28.272208+00:00",
+  "productId": "manual-a404ff8f-d14a-4faa-a153-b354851654a6",
+  "businessDate": "2026-11-18",
+  "deploymentKey": "2251799813687290",
+  "f1InstanceKey": "2251799813687291",
+  "f1TaskKey": "2251799813687303",
+  "f1Completed": {
+    "processDefinitionId": "F1_ProducerProcess",
+    "processDefinitionName": "Producer - Submit and correct product details",
+    "processDefinitionVersion": 1,
+    "processDefinitionVersionTag": null,
+    "startDate": "2026-11-17T16:59:04.879Z",
+    "endDate": "2026-11-17T17:06:40.634Z",
+    "state": "COMPLETED",
+    "suspendedDate": null,
+    "hasIncident": false,
+    "tenantId": "<default>",
+    "processInstanceKey": "2251799813687291",
+    "processDefinitionKey": "2251799813685330",
+    "parentProcessInstanceKey": null,
+    "parentElementInstanceKey": null,
+    "rootProcessInstanceKey": "2251799813687291",
+    "tags": [],
+    "businessId": null
+  },
+  "beforeStockUpdate": {
+    "allergens": [],
+    "available": true,
+    "category": "Vegetables",
+    "description": "Carrots sold by the box",
+    "endDate": "2026-11-30",
+    "farmOrigin": "Demo Bristol farm",
+    "name": "Local carrots",
+    "organicClaim": false,
+    "price": 2.5,
+    "processedChangeIds": [],
+    "producerId": "demo-producer",
+    "productId": "manual-a404ff8f-d14a-4faa-a153-b354851654a6",
+    "published": true,
+    "quantity": 10,
+    "startDate": "2026-11-01",
+    "version": 0
+  },
+  "f2InstanceKey": "2251799813690580",
+  "f2TaskKey": "2251799813690639",
+  "f2Completed": {
+    "processDefinitionId": "F2_ProducerProcess",
+    "processDefinitionName": "Producer stock and sale-date request",
+    "processDefinitionVersion": 1,
+    "processDefinitionVersionTag": null,
+    "startDate": "2026-11-17T17:06:40.960Z",
+    "endDate": "2026-11-17T17:07:27.937Z",
+    "state": "COMPLETED",
+    "suspendedDate": null,
+    "hasIncident": false,
+    "tenantId": "<default>",
+    "processInstanceKey": "2251799813690580",
+    "processDefinitionKey": "2251799813685327",
+    "parentProcessInstanceKey": null,
+    "parentElementInstanceKey": null,
+    "rootProcessInstanceKey": "2251799813690580",
+    "tags": [],
+    "businessId": null
+  },
+  "platformInstances": [
+    {
+      "processDefinitionId": "F1_Process",
+      "processDefinitionName": "F1 - Marketplace product validation and publication",
+      "processDefinitionVersion": 1,
+      "processDefinitionVersionTag": null,
+      "startDate": "2026-11-17T17:06:39.662Z",
+      "endDate": "2026-11-17T17:06:40.640Z",
+      "state": "COMPLETED",
+      "suspendedDate": null,
+      "hasIncident": false,
+      "tenantId": "<default>",
+      "processInstanceKey": "2251799813690497",
+      "processDefinitionKey": "2251799813685331",
+      "parentProcessInstanceKey": null,
+      "parentElementInstanceKey": null,
+      "rootProcessInstanceKey": "2251799813690497",
+      "tags": [],
+      "businessId": null
+    },
+    {
+      "processDefinitionId": "F2_Process",
+      "processDefinitionName": "F2 - Inventory and seasonal availability - Initial draft",
+      "processDefinitionVersion": 1,
+      "processDefinitionVersionTag": null,
+      "startDate": "2026-11-17T17:06:40.971Z",
+      "endDate": "2026-11-17T17:07:27.943Z",
+      "state": "COMPLETED",
+      "suspendedDate": null,
+      "hasIncident": false,
+      "tenantId": "<default>",
+      "processInstanceKey": "2251799813690594",
+      "processDefinitionKey": "2251799813685326",
+      "parentProcessInstanceKey": null,
+      "parentElementInstanceKey": null,
+      "rootProcessInstanceKey": "2251799813690594",
+      "tags": [],
+      "businessId": null
+    }
+  ],
+  "product": {
+    "allergens": [],
+    "available": true,
+    "category": "Vegetables",
+    "description": "Carrots sold by the box",
+    "endDate": "2026-11-30",
+    "farmOrigin": "Demo Bristol farm",
+    "name": "Local carrots",
+    "organicClaim": false,
+    "price": 2.5,
+    "processedChangeIds": [],
+    "producerId": "demo-producer",
+    "productId": "manual-a404ff8f-d14a-4faa-a153-b354851654a6",
+    "published": true,
+    "quantity": 6,
+    "startDate": "2026-11-01",
+    "version": 1
+  },
+  "customerAvailability": {
+    "product_id": "manual-a404ff8f-d14a-4faa-a153-b354851654a6",
+    "version": 1,
+    "available": 1
+  },
+  "completedJobs": [
+    {
+      "jobKey": "2251799813690492",
+      "elementId": "F1_SendDetails",
+      "processInstanceKey": "2251799813687291",
+      "requestId": "f1-a404ff8f-d14a-4faa-a153-b354851654a6",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813690515",
+      "elementId": "F1_Validate",
+      "processInstanceKey": "2251799813690497",
+      "requestId": "f1-a404ff8f-d14a-4faa-a153-b354851654a6",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813690544",
+      "elementId": "F1_Publish",
+      "processInstanceKey": "2251799813690497",
+      "requestId": "f1-a404ff8f-d14a-4faa-a153-b354851654a6",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813690551",
+      "elementId": "F1_Availability",
+      "processInstanceKey": "2251799813690497",
+      "requestId": "f1-a404ff8f-d14a-4faa-a153-b354851654a6",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813690558",
+      "elementId": "F1_Notify",
+      "processInstanceKey": "2251799813690497",
+      "requestId": "f1-a404ff8f-d14a-4faa-a153-b354851654a6",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813690590",
+      "elementId": "F2_RequestContext",
+      "processInstanceKey": "2251799813690580",
+      "requestId": "f2-a404ff8f-d14a-4faa-a153-b354851654a6",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813690609",
+      "elementId": "F2_Load",
+      "processInstanceKey": "2251799813690594",
+      "requestId": "f2-a404ff8f-d14a-4faa-a153-b354851654a6",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813690623",
+      "elementId": "F2_SendContext",
+      "processInstanceKey": "2251799813690594",
+      "requestId": "f2-a404ff8f-d14a-4faa-a153-b354851654a6",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813690967",
+      "elementId": "F2_SubmitStockChange",
+      "processInstanceKey": "2251799813690580",
+      "requestId": "f2-a404ff8f-d14a-4faa-a153-b354851654a6",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813690979",
+      "elementId": "F2_Producer",
+      "processInstanceKey": "2251799813690594",
+      "requestId": "f2-a404ff8f-d14a-4faa-a153-b354851654a6",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813690996",
+      "elementId": "F2_Prepare",
+      "processInstanceKey": "2251799813690594",
+      "requestId": "f2-a404ff8f-d14a-4faa-a153-b354851654a6",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813691004",
+      "elementId": "F2_Assess",
+      "processInstanceKey": "2251799813690594",
+      "requestId": "f2-a404ff8f-d14a-4faa-a153-b354851654a6",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813691013",
+      "elementId": "F2_Available",
+      "processInstanceKey": "2251799813690594",
+      "requestId": "f2-a404ff8f-d14a-4faa-a153-b354851654a6",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813691021",
+      "elementId": "F2_Save",
+      "processInstanceKey": "2251799813690594",
+      "requestId": "f2-a404ff8f-d14a-4faa-a153-b354851654a6",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813691031",
+      "elementId": "F2_Sync",
+      "processInstanceKey": "2251799813690594",
+      "requestId": "f2-a404ff8f-d14a-4faa-a153-b354851654a6",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813691040",
+      "elementId": "F2_Notify",
+      "processInstanceKey": "2251799813690594",
+      "requestId": "f2-a404ff8f-d14a-4faa-a153-b354851654a6",
+      "state": "COMPLETED"
+    }
+  ],
+  "engineExecuted": true
+}

@@ -1,0 +1,33 @@
+UFCFTR-30-3 — Task 1, Sprint 2 Review
+Group 26 — Bristol Regional Food Network
+Use Case 1 — Producer Product Listing and Inventory Management
+Review deadline: 19 November 2026, 14:00 UK time
+
+REPOSITORY
+https://github.com/jensenxie-max/DESD-Group-26
+
+SPRINT 2 PROJECT MANAGEMENT BOARD
+https://github.com/users/jensenxie-max/projects/4
+
+SPRINT 2 TASKS
+https://github.com/jensenxie-max/DESD-Group-26/issues/8
+https://github.com/jensenxie-max/DESD-Group-26/issues/9
+https://github.com/jensenxie-max/DESD-Group-26/issues/10
+https://github.com/jensenxie-max/DESD-Group-26/issues/11
+https://github.com/jensenxie-max/DESD-Group-26/issues/12
+https://github.com/jensenxie-max/DESD-Group-26/issues/13
+
+CAMUNDA DESIGN LINKS
+Strategic BPMN:
+https://hub.camunda.io/diagrams/0e4d3877-3211-460d-b58e-656a9d09e7f3--strategic-bpmn-bristol-food-network
+F1:
+https://hub.camunda.io/diagrams/a40f98c3-f487-46e9-9ace-faeb69eafb14--f1-operational-draft
+F2:
+https://hub.camunda.io/diagrams/212d217c-07b2-46c9-a4e6-701c1d28c746--f2-operational-draft
+
+BEFORE FINAL PACKAGING
+Confirm the final sources and evidence have actually been uploaded to the
+repository. Camunda design links may require an account, so include readable
+model exports in the repository. Check marking-team access to the repository
+and Sprint 2 board. A local runtime URL is not remotely accessible evidence.
+This links document is prepared; final ZIP submission is not asserted.

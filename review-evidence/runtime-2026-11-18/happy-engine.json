@@ -1,0 +1,421 @@
+{
+  "runId": "e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+  "scenario": "happy",
+  "recordedAt": "2026-11-17T17:36:59.692069+00:00",
+  "businessDate": "2026-11-18",
+  "productId": "demo-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+  "engineExecuted": true,
+  "certificationMode": "mock fixtures; no external certification provider contacted",
+  "formInteraction": "Automated REST completion of actual Camunda user tasks",
+  "producerInstances": [
+    {
+      "processDefinitionId": "F1_ProducerProcess",
+      "processDefinitionName": "Producer - Submit and correct product details",
+      "processDefinitionVersion": 1,
+      "processDefinitionVersionTag": null,
+      "startDate": "2026-11-17T17:36:54.963Z",
+      "endDate": "2026-11-17T17:36:56.359Z",
+      "state": "COMPLETED",
+      "suspendedDate": null,
+      "hasIncident": false,
+      "tenantId": "<default>",
+      "processInstanceKey": "2251799813696331",
+      "processDefinitionKey": "2251799813685330",
+      "parentProcessInstanceKey": null,
+      "parentElementInstanceKey": null,
+      "rootProcessInstanceKey": "2251799813696331",
+      "tags": [],
+      "businessId": null
+    },
+    {
+      "processDefinitionId": "F2_ProducerProcess",
+      "processDefinitionName": "Producer stock and sale-date request",
+      "processDefinitionVersion": 1,
+      "processDefinitionVersionTag": null,
+      "startDate": "2026-11-17T17:36:56.702Z",
+      "endDate": "2026-11-17T17:36:59.360Z",
+      "state": "COMPLETED",
+      "suspendedDate": null,
+      "hasIncident": false,
+      "tenantId": "<default>",
+      "processInstanceKey": "2251799813696441",
+      "processDefinitionKey": "2251799813685327",
+      "parentProcessInstanceKey": null,
+      "parentElementInstanceKey": null,
+      "rootProcessInstanceKey": "2251799813696441",
+      "tags": [],
+      "businessId": null
+    }
+  ],
+  "platformInstances": [
+    {
+      "processDefinitionId": "F1_Process",
+      "processDefinitionName": "F1 - Marketplace product validation and publication",
+      "processDefinitionVersion": 1,
+      "processDefinitionVersionTag": null,
+      "startDate": "2026-11-17T17:36:55.324Z",
+      "endDate": "2026-11-17T17:36:56.362Z",
+      "state": "COMPLETED",
+      "suspendedDate": null,
+      "hasIncident": false,
+      "tenantId": "<default>",
+      "processInstanceKey": "2251799813696358",
+      "processDefinitionKey": "2251799813685331",
+      "parentProcessInstanceKey": null,
+      "parentElementInstanceKey": null,
+      "rootProcessInstanceKey": "2251799813696358",
+      "tags": [],
+      "businessId": null
+    },
+    {
+      "processDefinitionId": "F2_Process",
+      "processDefinitionName": "F2 - Inventory and seasonal availability - Initial draft",
+      "processDefinitionVersion": 1,
+      "processDefinitionVersionTag": null,
+      "startDate": "2026-11-17T17:36:56.710Z",
+      "endDate": "2026-11-17T17:36:59.364Z",
+      "state": "COMPLETED",
+      "suspendedDate": null,
+      "hasIncident": false,
+      "tenantId": "<default>",
+      "processInstanceKey": "2251799813696455",
+      "processDefinitionKey": "2251799813685326",
+      "parentProcessInstanceKey": null,
+      "parentElementInstanceKey": null,
+      "rootProcessInstanceKey": "2251799813696455",
+      "tags": [],
+      "businessId": null
+    }
+  ],
+  "boundaryInstances": [],
+  "stateSnapshots": [
+    {
+      "label": "after F1 outcome",
+      "product": {
+        "allergens": [],
+        "available": true,
+        "category": "Vegetables",
+        "description": "Carrots sold by the box",
+        "endDate": "2026-11-30",
+        "farmOrigin": "Demo Bristol farm",
+        "name": "Local carrots",
+        "organicClaim": false,
+        "price": 2.5,
+        "processedChangeIds": [],
+        "producerId": "demo-producer",
+        "productId": "demo-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+        "published": true,
+        "quantity": 10,
+        "startDate": "2026-11-01",
+        "version": 0
+      },
+      "customerAvailability": {
+        "product_id": "demo-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+        "version": 0,
+        "available": 1
+      },
+      "followUps": [],
+      "requestId": "f1-e7621eab-c52a-48c6-a9b8-98dc26aff37a"
+    },
+    {
+      "label": "after valid F2 stock update",
+      "product": {
+        "allergens": [],
+        "available": true,
+        "category": "Vegetables",
+        "description": "Carrots sold by the box",
+        "endDate": "2026-11-30",
+        "farmOrigin": "Demo Bristol farm",
+        "name": "Local carrots",
+        "organicClaim": false,
+        "price": 2.5,
+        "processedChangeIds": [],
+        "producerId": "demo-producer",
+        "productId": "demo-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+        "published": true,
+        "quantity": 6,
+        "startDate": "2026-11-01",
+        "version": 1
+      },
+      "customerAvailability": {
+        "product_id": "demo-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+        "version": 1,
+        "available": 1
+      },
+      "followUps": [],
+      "requestId": "f2-e7621eab-c52a-48c6-a9b8-98dc26aff37a"
+    }
+  ],
+  "taskCompletions": [
+    {
+      "userTaskKey": "2251799813696343",
+      "elementId": "F1_Submit",
+      "method": "REST user-task completion",
+      "variables": {
+        "details": {
+          "name": "Local carrots",
+          "description": "Carrots sold by the box",
+          "category": "Vegetables",
+          "farmOrigin": "Demo Bristol farm",
+          "price": 2.5,
+          "quantity": 10,
+          "startDate": "2026-11-01",
+          "endDate": "2026-11-30",
+          "organicClaim": false,
+          "allergens": []
+        },
+        "allergenEntries": []
+      }
+    },
+    {
+      "userTaskKey": "2251799813696500",
+      "elementId": "F2_EnterStockChange",
+      "method": "REST user-task completion",
+      "variables": {
+        "producerQuantity": 6,
+        "producerStartDate": "2026-11-01",
+        "producerEndDate": "2026-11-30"
+      }
+    }
+  ],
+  "completedJobs": [
+    {
+      "jobKey": "2251799813696354",
+      "elementId": "F1_SendDetails",
+      "processInstanceKey": "2251799813696331",
+      "requestId": "f1-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813696376",
+      "elementId": "F1_Validate",
+      "processInstanceKey": "2251799813696358",
+      "requestId": "f1-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813696406",
+      "elementId": "F1_Publish",
+      "processInstanceKey": "2251799813696358",
+      "requestId": "f1-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813696413",
+      "elementId": "F1_Availability",
+      "processInstanceKey": "2251799813696358",
+      "requestId": "f1-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813696420",
+      "elementId": "F1_Notify",
+      "processInstanceKey": "2251799813696358",
+      "requestId": "f1-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813696451",
+      "elementId": "F2_RequestContext",
+      "processInstanceKey": "2251799813696441",
+      "requestId": "f2-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813696470",
+      "elementId": "F2_Load",
+      "processInstanceKey": "2251799813696455",
+      "requestId": "f2-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813696484",
+      "elementId": "F2_SendContext",
+      "processInstanceKey": "2251799813696455",
+      "requestId": "f2-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813696512",
+      "elementId": "F2_SubmitStockChange",
+      "processInstanceKey": "2251799813696441",
+      "requestId": "f2-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813696524",
+      "elementId": "F2_Producer",
+      "processInstanceKey": "2251799813696455",
+      "requestId": "f2-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813696544",
+      "elementId": "F2_Prepare",
+      "processInstanceKey": "2251799813696455",
+      "requestId": "f2-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813696552",
+      "elementId": "F2_Assess",
+      "processInstanceKey": "2251799813696455",
+      "requestId": "f2-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813696561",
+      "elementId": "F2_Available",
+      "processInstanceKey": "2251799813696455",
+      "requestId": "f2-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813696569",
+      "elementId": "F2_Save",
+      "processInstanceKey": "2251799813696455",
+      "requestId": "f2-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813696579",
+      "elementId": "F2_Sync",
+      "processInstanceKey": "2251799813696455",
+      "requestId": "f2-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED"
+    },
+    {
+      "jobKey": "2251799813696588",
+      "elementId": "F2_Notify",
+      "processInstanceKey": "2251799813696455",
+      "requestId": "f2-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED"
+    }
+  ],
+  "businessResults": [
+    {
+      "jobKey": "2251799813696376",
+      "elementId": "F1_Validate",
+      "processInstanceKey": "2251799813696358",
+      "requestId": "f1-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED",
+      "result": {
+        "candidateProduct": {
+          "allergens": [],
+          "available": false,
+          "category": "Vegetables",
+          "description": "Carrots sold by the box",
+          "endDate": "2026-11-30",
+          "farmOrigin": "Demo Bristol farm",
+          "name": "Local carrots",
+          "organicClaim": false,
+          "price": 2.5,
+          "published": false,
+          "quantity": 10,
+          "startDate": "2026-11-01"
+        },
+        "informationValid": true,
+        "organicClaim": false,
+        "status": "validated",
+        "validationErrors": [],
+        "verificationStatus": "not_checked"
+      }
+    },
+    {
+      "jobKey": "2251799813696524",
+      "elementId": "F2_Producer",
+      "processInstanceKey": "2251799813696455",
+      "requestId": "f2-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED",
+      "result": {
+        "candidateProduct": {
+          "allergens": [],
+          "available": true,
+          "category": "Vegetables",
+          "description": "Carrots sold by the box",
+          "endDate": "2026-11-30",
+          "farmOrigin": "Demo Bristol farm",
+          "name": "Local carrots",
+          "organicClaim": false,
+          "price": 2.5,
+          "processedChangeIds": [],
+          "producerId": "demo-producer",
+          "productId": "demo-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+          "published": true,
+          "quantity": 6,
+          "startDate": "2026-11-01",
+          "version": 1
+        },
+        "errors": [],
+        "producerInputValid": true,
+        "status": "applied",
+        "validationErrors": []
+      }
+    },
+    {
+      "jobKey": "2251799813696569",
+      "elementId": "F2_Save",
+      "processInstanceKey": "2251799813696455",
+      "requestId": "f2-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+      "state": "COMPLETED",
+      "result": {
+        "candidateProduct": {
+          "allergens": [],
+          "available": true,
+          "category": "Vegetables",
+          "description": "Carrots sold by the box",
+          "endDate": "2026-11-30",
+          "farmOrigin": "Demo Bristol farm",
+          "name": "Local carrots",
+          "organicClaim": false,
+          "price": 2.5,
+          "processedChangeIds": [],
+          "producerId": "demo-producer",
+          "productId": "demo-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+          "published": true,
+          "quantity": 6,
+          "startDate": "2026-11-01",
+          "version": 1
+        },
+        "commitConfirmed": true,
+        "errors": [],
+        "followUpRequired": false,
+        "product": {
+          "allergens": [],
+          "available": true,
+          "category": "Vegetables",
+          "description": "Carrots sold by the box",
+          "endDate": "2026-11-30",
+          "farmOrigin": "Demo Bristol farm",
+          "name": "Local carrots",
+          "organicClaim": false,
+          "price": 2.5,
+          "processedChangeIds": [],
+          "producerId": "demo-producer",
+          "productId": "demo-e7621eab-c52a-48c6-a9b8-98dc26aff37a",
+          "published": true,
+          "quantity": 6,
+          "startDate": "2026-11-01",
+          "version": 1
+        },
+        "status": "applied",
+        "validationErrors": []
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "check": "F1 published persisted listing",
+      "passed": true
+    },
+    {
+      "check": "F2 changed stock and incremented version once",
+      "passed": true
+    },
+    {
+      "check": "customer availability projection matches latest version",
+      "passed": true
+    }
+  ],
+  "allAssertionsPassed": true
+}

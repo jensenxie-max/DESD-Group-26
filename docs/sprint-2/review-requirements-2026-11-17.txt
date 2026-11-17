@@ -1,0 +1,82 @@
+Sprint 2 review: verified requirements and completion gates
+Group 26 | Checked against Blackboard on 17 November 2026
+
+AUTHORITATIVE COURSE MATERIAL
+Assessment brief, pp.3-6 and Sprint 2 rubric p.15:
+https://blackboard.uwe.ac.uk/ultra/courses/_385767_1/document/_13162430_1?view=content&state=view
+Sprint 2 submission point:
+https://blackboard.uwe.ac.uk/ultra/courses/_385767_1/assessment/_13162707_1/overview?courseId=_385767_1
+Announcement: Sprint 2 Review: Submission Point Open:
+https://blackboard.uwe.ac.uk/ultra/courses/_385767_1/announcements/announcement-detail?courseId=_385767_1&announcementId=_1437049_1
+Case study:
+https://blackboard.uwe.ac.uk/ultra/courses/_385767_1/document/_13162411_1?view=content&state=view
+
+DEADLINE AND FORMAT
+Use 19 November 2026, 14:00 UK / 22:00 Beijing as the deadline.
+The portal displays 22:01; the earlier explicit instruction is the safe cutoff.
+One ZIP per group is required for either option. A formal report is not required;
+slides are optional. Include a document containing repository and PM-board links.
+
+Option A: live presentation, 10 minutes, all members physically present and
+presenting their contribution. Stand-up 6 is combined with the review. Upload
+the ZIP before the presentation.
+Option B: an MP4 of at most 10 minutes, clearly audible and readable, included
+in the ZIP. Stand-up 6 remains separate.
+All members introduce their full names and student IDs in either option.
+Present project management: task allocation, planning, tracking and progress.
+The announcement says the tutors assume video unless they hear otherwise.
+The group's actual selection and any tutor communication must be confirmed.
+
+RUBRIC AND COMPLETION GATES
+30% — i* Strategic Dependency and Strategic Rationale:
+  Actual readable SD and SR models, actors, dependencies, internal rationale,
+  goals/qualities, tasks/resources, stakeholder expectations and consistent scope.
+35% — Two detailed operational BPMN models:
+  F1/F2, correct ownership, relevant alternative/exception paths and consistency
+  with the strategic model and i*. Record the agreed function scope.
+25% — Initial Camunda automation:
+  Executable models, human tasks/forms, variables, gateway/business logic and
+  initial service implementations where appropriate. Demonstrate running core
+  paths. Static XML, Form Preview and Python tests alone do not meet this gate.
+10% — Progress, traceability and version control:
+  Explain i* → strategic → operational → implementation links, iterations,
+  actual contributions and task status with accessible repository/PM evidence.
+
+Full robust end-to-end integration is developed further in Sprint 3. For
+Sprint 2, demonstrate meaningful executable core paths and state prototype
+boundaries accurately. Do not add every possible BPMN symbol without a purpose.
+
+TEACHER FEEDBACK ALREADY ADDRESSED IN CLOUD DESIGN
+The provided feedback accepts the names/logic but asks who performs each task.
+Tasks must belong to the correct participant pool or internal responsibility
+lane. Finance/warehouse/customer service were examples, not a requirement to
+add unrelated departments to F1/F2. The 17 November cloud exports capture the
+pool/lane changes under review-evidence/responsibilities-2026-11-17/.
+
+GROUP DECISIONS STILL TO RECORD
+1. Existing SD/SR location, if any, before replacing any earlier group diagrams.
+2. Runtime environment and permission to accept official Camunda download terms.
+3. Video or live presentation, and what the tutors have actually been told.
+4. Actual date/tutor/scope of F1/F2 approval: issue #4 is Closed, but its body
+   still says approval pending. The written record is inconsistent; do not
+   infer the approval decision from the Closed badge alone.
+
+TECHNICAL DEMO BOUNDARIES
+Certification uses named demo fixtures, not a real certification provider.
+Producer identity and confirmed orders are supplied by the demo setup; this
+does not implement production authentication or a real order system.
+The existing explicit businessDate, integer stock and inclusive sale-date
+rules remain visible design assumptions. No production timezone is inferred.
+No real payment or financial data is needed for the selected F1/F2 demo.
+
+SUBMISSION CHECK
+[ ] SD/SR readable and group-reviewed; source files included in repository.
+[ ] Strategic-to-operational traceability checked against actual element IDs.
+[ ] F1/F2 deployed and core/alternative paths evidenced in the real engine.
+[ ] Models/forms/code and meaningful tests uploaded by the relevant members.
+[ ] PM board status and contribution notes reflect actual work.
+[ ] Repository and board are accessible to the marking team.
+[ ] All four members rehearse their own part and identity introduction.
+[ ] If video: actual MP4 duration <= 10 minutes; audio/text checked.
+[ ] ZIP contains actual final links document and, if applicable, the MP4.
+[ ] Group performs Blackboard final submission and checks the receipt.

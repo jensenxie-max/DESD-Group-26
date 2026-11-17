@@ -1,0 +1,88 @@
+Sprint 2 review walkthrough — rehearsal draft
+Target: 9 minutes 40 seconds; leave 20 seconds spare.
+Use only results which the group has actually checked. Replace placeholders
+with real instance keys, commits and personal review observations.
+
+0:00–0:45 — All members
+Introduce full name and student ID, one after another:
+Jiaqi Xie — 25028285
+Yunze Yu — 25028284
+Jilong Cheng — 25028281
+Haodong Yang — 25061288
+Show project title and repository. State Use Case 1 and the selected F1/F2 scope.
+
+0:45–2:25 — Jiaqi: SD and F1 rationale
+Show models/istar/SD.svg, then the strategic catalogue scope and F1 BPMN.
+Explain Producer → Marketplace dependency for publication, Marketplace →
+Producer dependency for correct product data, and certification when claimed.
+Point to the actual producer pool and marketplace responsibility lanes.
+Explain why invalid information returns for correction and why unavailable
+verification remains pending rather than publishing an unverified claim.
+Suggested English:
+"The SD model shows who depends on whom. The producer needs the marketplace
+to publish a validated listing, while the marketplace needs accurate product
+details from the producer. F1 makes these responsibilities operational."
+中文提示：从依赖关系指到具体节点，说明谁提供信息、谁验证、谁发布。
+
+2:25–4:05 — Yunze: SR, F2 and traceability
+Show models/istar/SR.svg, inventory rationale and docs/sprint-2/traceability.md.
+Explain how validating changes and checking versions support accurate
+availability; checking conflicts can delay immediate completion.
+Point to the F2 producer, order and season branches, the commit gateway and
+customer availability update. Explain message flow across pools and sequence
+flow inside one process. Show one complete mapping using the actual IDs.
+Suggested English:
+"The SR model explains why these tasks exist. Version checks protect accurate
+stock, and the operational process handles an unsuccessful commit explicitly.
+The traceability table links this goal to the strategic task, F2 elements and
+the corresponding implementation and checks."
+中文提示：说明目标如何落到 F2，不只介绍符号或从头朗读流程。
+
+4:05–6:10 — Jilong: F1 actual execution and form checks
+Open the approved runtime Tasklist/Operate, not only the diagram editor.
+Show the real submission form, one invalid/correction example and a completed
+publication path. Explain which checks are form-level and which are service
+business checks. Show an actual instance key and stored published product.
+If only the CLI demo was run, say the real user task was completed through
+REST; do not call that a manual Tasklist-form recording.
+Certification demo references: DEMO-VALID, DEMO-INVALID, DEMO-UNAVAILABLE.
+Say these are fixture responses, not results from an external certifier.
+Suggested English, only after verifying the actual run:
+"This instance uses the deployed F1 model. Here is the submission task and the
+validation result. After correction, the listing is published and stored.
+The certification response in this demonstration is simulated."
+中文提示：讲本人确实检查的输入、预期、结果；演示真实流程实例。
+
+6:10–8:20 — Haodong: F2 actual execution and data boundaries
+Show a real F2 stock-change form and the resulting version/availability.
+Then show zero stock, duplicate order and stale-version results. Point to
+the relevant branch and the persisted data before/after. Show that a rejected
+or duplicate change does not make a second stock deduction.
+Use actual engine evidence for claims about BPMN execution. Unit-test output
+is separate evidence for the business and storage layer.
+Suggested English, only after checking the actual results:
+"The stock change is saved with a version check. Zero stock becomes unavailable.
+The repeated order does not deduct stock again, and a conflicting update does
+not overwrite the newer value. These are the recorded inputs and outcomes."
+中文提示：对比库存、版本、available 三个值，不只展示绿色测试结果。
+
+8:20–9:15 — Project management, Jiaqi/Yunze with individual observations
+Open https://github.com/users/jensenxie-max/projects/4
+Show the six Sprint 2 tasks, actual owners and status. Explain the working
+pairs: Jiaqi/Jilong for F1; Yunze/Haodong for F2; SD/SR led jointly.
+Show real commits or reviewed changes, not just planned assignments.
+Each member states one actual check/change and the evidence they contributed.
+
+9:15–9:40 — Scope and next iteration
+State verified executable paths and any paths still unverified.
+Prototype boundaries include mock certification, supplied demo identity/order
+confirmation and manual season-trigger command. Production authentication,
+real external integrations and robust recovery remain later development.
+Do not present Sprint 3 work as already implemented.
+
+RECORDING CHECK
+Run the chosen cases before recording. Make text legible at normal playback;
+do not spend the video waiting for installations, deployments or long polling.
+All four voices and identity introductions must be audible. Keep the final
+MP4 at or below 10 minutes. Review the complete final recording before ZIP.
+The group chooses video/live and performs the final Blackboard submission.
