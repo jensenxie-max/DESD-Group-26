@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" id="Definitions_F1" targetNamespace="https://desd-group26.example/models" exporter="Camunda Web Modeler" exporterVersion="61e4b3b" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.10.0">
+  <bpmn:collaboration id="F1_Collaboration">
+    <bpmn:participant id="F1_Pool" name="F1 - Product validation and publication - Initial draft" processRef="F1_Process" />
+  </bpmn:collaboration>
+  <bpmn:process id="F1_Process" name="F1 - Product validation and publication - Initial draft" isExecutable="false">
+    <bpmn:documentation>Initial operational design, 5 November 2026. Tasks describe intended responsibilities. Two Forms are linked to the submission and correction user tasks, with input/output mappings for draft preservation and field normalisation. The process is not deployed; service workers and gateway conditions remain unconfigured. F1 starts with a registered producer using the marketplace workflow. User tasks belong to the producer; service tasks belong to marketplace components. Certification verification calls an external or simulated provider; its checked/failed/unavailable result is an abstract returned status, not a running connector. A pending outcome keeps the listing unpublished and records follow-up; retry timing is deferred. Publication does not imply sale availability: stock and the selling period must still permit sale. Full order and payment processing are excluded.</bpmn:documentation>
+    <bpmn:sequenceFlow id="F1_Flow_12" sourceRef="F1_PendingNotify" targetRef="F1_PendingEnd" />
+    <bpmn:sequenceFlow id="F1_Flow_11" sourceRef="F1_Pending" targetRef="F1_PendingNotify" />
+    <bpmn:sequenceFlow id="F1_Flow_20" sourceRef="F1_Correction" targetRef="F1_Edit" />
+    <bpmn:sequenceFlow id="Flow_1hnym9h" sourceRef="Gateway_1tq8q8b" targetRef="F1_Correction" />
+    <bpmn:sequenceFlow id="F1_Flow_10" sourceRef="F1_Notify" targetRef="F1_End" />
+    <bpmn:sequenceFlow id="F1_Flow_09" sourceRef="F1_Availability" targetRef="F1_Notify" />
+    <bpmn:sequenceFlow id="F1_Flow_08" sourceRef="F1_Publish" targetRef="F1_Availability" />
+    <bpmn:sequenceFlow id="F1_Flow_07" sourceRef="F1_Ready" targetRef="F1_Publish" />
+    <bpmn:sequenceFlow id="Flow_0tt0k2k" name="Invalid certification" sourceRef="F1_Result" targetRef="Gateway_1tq8q8b" />
+    <bpmn:sequenceFlow id="F1_Flow_19" name="Unavailable" sourceRef="F1_Result" targetRef="F1_Pending" />
+    <bpmn:sequenceFlow id="F1_Flow_16" name="Verified" sourceRef="F1_Result" targetRef="F1_Ready" />
+    <bpmn:sequenceFlow id="F1_Flow_06" sourceRef="F1_Verify" targetRef="F1_Result" />
+    <bpmn:sequenceFlow id="F1_Flow_15" name="No claim" sourceRef="F1_Claim" targetRef="F1_Ready" />
+    <bpmn:sequenceFlow id="F1_Flow_05" name="Yes" sourceRef="F1_Claim" targetRef="F1_Verify" />
+    <bpmn:sequenceFlow id="Flow_1ql8ek8" name="No" sourceRef="F1_Valid" targetRef="Gateway_1tq8q8b" />
+    <bpmn:sequenceFlow id="F1_Flow_13" name="Yes" sourceRef="F1_Valid" targetRef="F1_Claim" />
+    <bpmn:sequenceFlow id="F1_Flow_04" sourceRef="F1_Validate" targetRef="F1_Valid" />
+    <bpmn:sequenceFlow id="F1_Flow_03" sourceRef="F1_Entry" targetRef="F1_Validate" />
+    <bpmn:sequenceFlow id="F1_Flow_21" name="Resubmitted" sourceRef="F1_Edit" targetRef="F1_Entry" />
+    <bpmn:sequenceFlow id="F1_Flow_02" sourceRef="F1_Submit" targetRef="F1_Entry" />
+    <bpmn:sequenceFlow id="F1_Flow_01" sourceRef="F1_Start" targetRef="F1_Submit" />
+    <bpmn:exclusiveGateway id="Gateway_1tq8q8b">
+      <bpmn:incoming>Flow_1ql8ek8</bpmn:incoming>
+      <bpmn:incoming>Flow_0tt0k2k</bpmn:incoming>
+      <bpmn:outgoing>Flow_1hnym9h</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="F1_PendingEnd" name="Verification follow-up recorded">
+      <bpmn:incoming>F1_Flow_12</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sendTask id="F1_PendingNotify" name="Notify producer of pending status">
+      <bpmn:incoming>F1_Flow_11</bpmn:incoming>
+      <bpmn:outgoing>F1_Flow_12</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:serviceTask id="F1_Pending" name="Record pending verification">
+      <bpmn:documentation>Keep listing unpublished, record verification failure reason and follow-up state. This is an unresolved business outcome, not successful publication. Retry policy will be designed next week.</bpmn:documentation>
+      <bpmn:incoming>F1_Flow_19</bpmn:incoming>
+      <bpmn:outgoing>F1_Flow_11</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="F1_Edit" name="Correct and resubmit details">
+      <bpmn:documentation>Producer corrects the information or certification claim. The initial draft waits for correction; reminder/cancellation policy is not assumed.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:formDefinition formId="f1-correct-product-proposed" />
+        <zeebe:userTask />
+        <zeebe:ioMapping>
+          <zeebe:input source="= if lastSubmittedDetails != null then lastSubmittedDetails else details" target="details" />
+          <zeebe:input source="= if lastSubmittedAllergenEntries != null then lastSubmittedAllergenEntries else if details.allergens = null then [] else for allergen in details.allergens return {name: allergen}" target="allergenEntries" />
+          <zeebe:output source="= details" target="lastSubmittedDetails" />
+          <zeebe:output source="= allergenEntries" target="lastSubmittedAllergenEntries" />
+          <zeebe:output source="= context merge([{name: details.name, description: details.description, category: details.category, farmOrigin: details.farmOrigin, price: details.price, quantity: details.quantity, startDate: details.startDate, endDate: details.endDate, organicClaim: details.organicClaim = true, allergens: if allergenEntries = null then [] else for entry in allergenEntries return entry.name}, if details.certificationReference = null or details.certificationReference = &#34;&#34; then {} else {certificationReference: details.certificationReference}, if details.harvestDate = null or details.harvestDate = &#34;&#34; then {} else {harvestDate: details.harvestDate}, if details.bestBefore = null or details.bestBefore = &#34;&#34; then {} else {bestBefore: details.bestBefore}])" target="details" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F1_Flow_20</bpmn:incoming>
+      <bpmn:outgoing>F1_Flow_21</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sendTask id="F1_Correction" name="Request corrected details">
+      <bpmn:documentation>Explain missing or invalid fields or the failed certification claim. Keep listing unpublished. A producer may correct evidence or remove an unsupported organic claim; all submitted information is revalidated.</bpmn:documentation>
+      <bpmn:incoming>Flow_1hnym9h</bpmn:incoming>
+      <bpmn:outgoing>F1_Flow_20</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="F1_End" name="Listing published">
+      <bpmn:incoming>F1_Flow_10</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sendTask id="F1_Notify" name="Notify producer of publication">
+      <bpmn:documentation>Send the listing result to the producer. Notification delivery failure handling remains a later implementation concern.</bpmn:documentation>
+      <bpmn:incoming>F1_Flow_09</bpmn:incoming>
+      <bpmn:outgoing>F1_Flow_10</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:serviceTask id="F1_Availability" name="Set initial sale availability">
+      <bpmn:documentation>Initial availability requires published listing, quantity greater than zero and current business date within the selling period. No sale before the period begins. This calculation is shared with F2.</bpmn:documentation>
+      <bpmn:incoming>F1_Flow_08</bpmn:incoming>
+      <bpmn:outgoing>F1_Flow_09</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="F1_Publish" name="Publish validated listing">
+      <bpmn:documentation>Only valid required information and a verified claim, or no organic claim, reach publication. Persist product identity and validated details.</bpmn:documentation>
+      <bpmn:incoming>F1_Flow_07</bpmn:incoming>
+      <bpmn:outgoing>F1_Flow_08</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="F1_Ready" name="">
+      <bpmn:incoming>F1_Flow_15</bpmn:incoming>
+      <bpmn:incoming>F1_Flow_16</bpmn:incoming>
+      <bpmn:outgoing>F1_Flow_07</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="F1_Result" name="Verification outcome?">
+      <bpmn:incoming>F1_Flow_06</bpmn:incoming>
+      <bpmn:outgoing>F1_Flow_16</bpmn:outgoing>
+      <bpmn:outgoing>F1_Flow_19</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0tt0k2k</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="F1_Verify" name="Check certification with provider">
+      <bpmn:documentation>External or simulated certification verification. Return one of verified, invalid, unavailable; unavailable includes timeout. No connector or worker exists yet. Do not treat an outage as a failed certificate.</bpmn:documentation>
+      <bpmn:incoming>F1_Flow_05</bpmn:incoming>
+      <bpmn:outgoing>F1_Flow_06</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="F1_Claim" name="Organic claim?">
+      <bpmn:incoming>F1_Flow_13</bpmn:incoming>
+      <bpmn:outgoing>F1_Flow_05</bpmn:outgoing>
+      <bpmn:outgoing>F1_Flow_15</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="F1_Valid" name="Information valid?">
+      <bpmn:incoming>F1_Flow_04</bpmn:incoming>
+      <bpmn:outgoing>F1_Flow_13</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1ql8ek8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="F1_Validate" name="Validate required information">
+      <bpmn:documentation>Marketplace validates required fields, applicable information, quantity and price ranges and date ordering. Exact field-level constraints need group review. Corrected information is revalidated.</bpmn:documentation>
+      <bpmn:incoming>F1_Flow_03</bpmn:incoming>
+      <bpmn:outgoing>F1_Flow_04</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="F1_Entry" name="">
+      <bpmn:incoming>F1_Flow_02</bpmn:incoming>
+      <bpmn:incoming>F1_Flow_21</bpmn:incoming>
+      <bpmn:outgoing>F1_Flow_03</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="F1_Submit" name="Submit product details">
+      <bpmn:documentation>Registered producer enters name, description, category, price, quantity, availability period, farm origin and applicable harvest, allergen, organic certification and best-before information. Authentication is a precondition, not implemented in this draft.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:formDefinition formId="f1-submit-product-proposed" />
+        <zeebe:userTask />
+        <zeebe:ioMapping>
+          <zeebe:input source="= if details = null then {organicClaim: false} else details" target="details" />
+          <zeebe:input source="= if details.allergens = null then [] else for allergen in details.allergens return {name: allergen}" target="allergenEntries" />
+          <zeebe:output source="= details" target="lastSubmittedDetails" />
+          <zeebe:output source="= allergenEntries" target="lastSubmittedAllergenEntries" />
+          <zeebe:output source="= context merge([{name: details.name, description: details.description, category: details.category, farmOrigin: details.farmOrigin, price: details.price, quantity: details.quantity, startDate: details.startDate, endDate: details.endDate, organicClaim: details.organicClaim = true, allergens: if allergenEntries = null then [] else for entry in allergenEntries return entry.name}, if details.certificationReference = null or details.certificationReference = &#34;&#34; then {} else {certificationReference: details.certificationReference}, if details.harvestDate = null or details.harvestDate = &#34;&#34; then {} else {harvestDate: details.harvestDate}, if details.bestBefore = null or details.bestBefore = &#34;&#34; then {} else {bestBefore: details.bestBefore}])" target="details" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F1_Flow_01</bpmn:incoming>
+      <bpmn:outgoing>F1_Flow_02</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:startEvent id="F1_Start" name="Listing started">
+      <bpmn:outgoing>F1_Flow_01</bpmn:outgoing>
+    </bpmn:startEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="F1_Diagram">
+    <bpmndi:BPMNPlane id="F1_Plane" bpmnElement="F1_Collaboration">
+      <bpmndi:BPMNShape id="F1_Pool_di" bpmnElement="F1_Pool" isHorizontal="true">
+        <dc:Bounds x="0" y="0" width="2360" height="840" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1tq8q8b_di" bpmnElement="Gateway_1tq8q8b" isMarkerVisible="true">
+        <dc:Bounds x="1000" y="455" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_PendingEnd_di" bpmnElement="F1_PendingEnd">
+        <dc:Bounds x="2030" y="702" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1975" y="751.5" width="146" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_PendingNotify_di" bpmnElement="F1_PendingNotify">
+        <dc:Bounds x="1800" y="680" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_Pending_di" bpmnElement="F1_Pending">
+        <dc:Bounds x="1570" y="680" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_Edit_di" bpmnElement="F1_Edit">
+        <dc:Bounds x="520" y="560" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_Correction_di" bpmnElement="F1_Correction">
+        <dc:Bounds x="750" y="560" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_End_di" bpmnElement="F1_End">
+        <dc:Bounds x="2260" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2205" y="333" width="146" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_Notify_di" bpmnElement="F1_Notify">
+        <dc:Bounds x="2030" y="260" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_Availability_di" bpmnElement="F1_Availability">
+        <dc:Bounds x="1800" y="260" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_Publish_di" bpmnElement="F1_Publish">
+        <dc:Bounds x="1570" y="260" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_Ready_di" bpmnElement="F1_Ready" isMarkerVisible="true">
+        <dc:Bounds x="1450" y="275" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1505" y="353" width="160" height="45" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_Result_di" bpmnElement="F1_Result" isMarkerVisible="true">
+        <dc:Bounds x="1250" y="275" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1195" y="238" width="160" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_Verify_di" bpmnElement="F1_Verify">
+        <dc:Bounds x="1020" y="260" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_Claim_di" bpmnElement="F1_Claim" isMarkerVisible="true">
+        <dc:Bounds x="900" y="275" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="845" y="343" width="160" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_Valid_di" bpmnElement="F1_Valid" isMarkerVisible="true">
+        <dc:Bounds x="750" y="275" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="695" y="238" width="160" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_Validate_di" bpmnElement="F1_Validate">
+        <dc:Bounds x="520" y="260" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_Entry_di" bpmnElement="F1_Entry" isMarkerVisible="true">
+        <dc:Bounds x="400" y="275" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="345" y="353" width="160" height="45" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_Submit_di" bpmnElement="F1_Submit">
+        <dc:Bounds x="170" y="260" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F1_Start_di" bpmnElement="F1_Start">
+        <dc:Bounds x="80" y="282" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="25" y="333" width="146" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="F1_Flow_12_di" bpmnElement="F1_Flow_12">
+        <di:waypoint x="1960" y="720" />
+        <di:waypoint x="2030" y="720" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F1_Flow_11_di" bpmnElement="F1_Flow_11">
+        <di:waypoint x="1730" y="720" />
+        <di:waypoint x="1800" y="720" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F1_Flow_20_di" bpmnElement="F1_Flow_20">
+        <di:waypoint x="750" y="600" />
+        <di:waypoint x="680" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1hnym9h_di" bpmnElement="Flow_1hnym9h">
+        <di:waypoint x="1025" y="505" />
+        <di:waypoint x="1025" y="600" />
+        <di:waypoint x="910" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F1_Flow_10_di" bpmnElement="F1_Flow_10">
+        <di:waypoint x="2190" y="300" />
+        <di:waypoint x="2260" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F1_Flow_09_di" bpmnElement="F1_Flow_09">
+        <di:waypoint x="1960" y="300" />
+        <di:waypoint x="2030" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F1_Flow_08_di" bpmnElement="F1_Flow_08">
+        <di:waypoint x="1730" y="300" />
+        <di:waypoint x="1800" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F1_Flow_07_di" bpmnElement="F1_Flow_07">
+        <di:waypoint x="1500" y="300" />
+        <di:waypoint x="1570" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tt0k2k_di" bpmnElement="Flow_0tt0k2k">
+        <di:waypoint x="1262.5" y="312.5" />
+        <di:waypoint x="1262.5" y="480" />
+        <di:waypoint x="1050" y="480" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1105.5" y="452" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F1_Flow_19_di" bpmnElement="F1_Flow_19">
+        <di:waypoint x="1287.5" y="312.5" />
+        <di:waypoint x="1287.5" y="720" />
+        <di:waypoint x="1570" y="720" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1280" y="578" width="130" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F1_Flow_16_di" bpmnElement="F1_Flow_16">
+        <di:waypoint x="1300" y="300" />
+        <di:waypoint x="1450" y="300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1310" y="272" width="130" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F1_Flow_06_di" bpmnElement="F1_Flow_06">
+        <di:waypoint x="1180" y="300" />
+        <di:waypoint x="1250" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F1_Flow_15_di" bpmnElement="F1_Flow_15">
+        <di:waypoint x="925" y="275" />
+        <di:waypoint x="925" y="140" />
+        <di:waypoint x="1475" y="140" />
+        <di:waypoint x="1475" y="275" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1125" y="112" width="130" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F1_Flow_05_di" bpmnElement="F1_Flow_05">
+        <di:waypoint x="950" y="300" />
+        <di:waypoint x="1020" y="300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="920" y="272" width="130" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ql8ek8_di" bpmnElement="Flow_1ql8ek8">
+        <di:waypoint x="775" y="325" />
+        <di:waypoint x="775" y="480" />
+        <di:waypoint x="1000" y="480" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="790.5" y="393" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F1_Flow_13_di" bpmnElement="F1_Flow_13">
+        <di:waypoint x="800" y="300" />
+        <di:waypoint x="900" y="300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="785" y="272" width="130" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F1_Flow_04_di" bpmnElement="F1_Flow_04">
+        <di:waypoint x="680" y="300" />
+        <di:waypoint x="750" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F1_Flow_03_di" bpmnElement="F1_Flow_03">
+        <di:waypoint x="450" y="300" />
+        <di:waypoint x="520" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F1_Flow_21_di" bpmnElement="F1_Flow_21">
+        <di:waypoint x="520" y="600" />
+        <di:waypoint x="425" y="600" />
+        <di:waypoint x="425" y="325" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="407" y="568" width="130" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F1_Flow_02_di" bpmnElement="F1_Flow_02">
+        <di:waypoint x="330" y="300" />
+        <di:waypoint x="400" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F1_Flow_01_di" bpmnElement="F1_Flow_01">
+        <di:waypoint x="116" y="300" />
+        <di:waypoint x="170" y="300" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

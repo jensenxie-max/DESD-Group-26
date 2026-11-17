@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_Sprint1Learning" targetNamespace="https://example.org/desd-group26/learning" exporter="Camunda Web Modeler" exporterVersion="5acd1b5" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.10.0">
+  <bpmn:collaboration id="Collaboration_FoodNetwork">
+    <bpmn:participant id="Participant_Network" name="BRISTOL REGIONAL FOOD NETWORK" processRef="Process_Strategic" />
+    <bpmn:participant id="Participant_Producer" name="PRODUCERS" />
+    <bpmn:participant id="Participant_Verifier" name="Certification verification service (external or simulated)" />
+    <bpmn:participant id="Participant_Customers" name="CUSTOMERS / COMMUNITY BUYERS" />
+    <bpmn:participant id="Participant_Payments" name="Payment / settlement service (sandbox)" />
+    <bpmn:messageFlow id="Msg_Listing" name="Product details" sourceRef="Participant_Producer" targetRef="Catalog_Start" />
+    <bpmn:messageFlow id="Msg_Updates" name="Stock / season updates" sourceRef="Participant_Producer" targetRef="Inventory_Start" />
+    <bpmn:messageFlow id="Msg_ListingReply" name="Listing outcome" sourceRef="Task_CatalogResponse" targetRef="Participant_Producer" />
+    <bpmn:messageFlow id="Msg_Verify" name="Certification check (when claimed)" sourceRef="Task_F1" targetRef="Participant_Verifier" />
+    <bpmn:messageFlow id="Msg_Verified" name="Verification result / failure" sourceRef="Participant_Verifier" targetRef="Task_F1" />
+    <bpmn:messageFlow id="Msg_Order" name="Order request" sourceRef="Participant_Customers" targetRef="Orders_Start" />
+    <bpmn:messageFlow id="Msg_OrderReply" name="Order outcome" sourceRef="Task_Complete" targetRef="Participant_Customers" />
+    <bpmn:messageFlow id="Msg_PayRequest" name="Payment request" sourceRef="Task_Payment" targetRef="Participant_Payments" />
+    <bpmn:messageFlow id="Msg_PayResult" name="Payment result" sourceRef="Participant_Payments" targetRef="Task_Payment" />
+    <bpmn:messageFlow id="Msg_Fulfil" name="Producer-specific order / preparation notice" sourceRef="Task_Fulfil" targetRef="Participant_Producer" />
+    <bpmn:messageFlow id="Msg_Settle" name="Settlement instruction" sourceRef="Task_Settle" targetRef="Participant_Payments" />
+    <bpmn:messageFlow id="Msg_Incident" name="Quality concern" sourceRef="Participant_Customers" targetRef="Quality_Start" />
+    <bpmn:messageFlow id="Msg_Alert" name="Affected-customer notice / follow-up" sourceRef="Task_Respond" targetRef="Participant_Customers" />
+    <bpmn:messageFlow id="Msg_Content" name="Offers / education / sustainability information" sourceRef="Task_Miles" targetRef="Participant_Customers" />
+    <bpmn:textAnnotation id="Note_Title">
+      <bpmn:text>SPRINT 1 | Enterprise strategic process overview
+Enterprise scope, responsibilities, interactions and candidate scope.
+Independent business cycles; high-level tasks abstract detailed decisions and exceptions.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Note_Scope">
+      <bpmn:text>BLUE ACTIVITIES = selected Use Case 1 candidates
+F1: validation and publishing. F2: inventory and seasonal availability.
+Tutor agreement: PENDING. Detailed executable processes: Sprint 2 / 3.</bpmn:text>
+    </bpmn:textAnnotation>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Strategic" name="Enterprise strategic overview" isExecutable="false">
+    <bpmn:documentation>Strategic scope covers the whole enterprise. Rows are independent event-triggered business cycles. Task boxes denote high-level business capabilities; detailed operational paths and executable configuration belong to later sprints. Candidate F1/F2 require tutor agreement. Lane ownership is a proposed responsibility allocation, not a case-study fact.</bpmn:documentation>
+    <bpmn:laneSet id="LaneSet_Enterprise">
+      <bpmn:lane id="Lane_Community" name="Community and sustainability">
+        <bpmn:flowNodeRef>Community_Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Surplus</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Content</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Miles</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Community_End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Quality" name="Quality and traceability">
+        <bpmn:flowNodeRef>Quality_Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Trace</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Investigate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Respond</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Review</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Quality_End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Finance" name="Finance and settlement">
+        <bpmn:flowNodeRef>Finance_Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Reconcile</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Settle</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Audit</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Finance_End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Orders" name="Order and fulfilment coordination">
+        <bpmn:flowNodeRef>Orders_Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Order</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Payment</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Fulfil</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Complete</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Orders_End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Inventory" name="Inventory and availability">
+        <bpmn:flowNodeRef>Inventory_Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_F2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Visibility</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Inventory_End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Catalogue" name="Catalogue and producer support">
+        <bpmn:flowNodeRef>Catalog_Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_F1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CatalogResponse</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Catalog_End</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Catalog_Start" name="Listing request received">
+      <bpmn:outgoing>Catalog_Flow_0</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="Catalog_Start_definition" />
+    </bpmn:startEvent>
+    <bpmn:task id="Task_F1" name="F1 | Validate and publish product">
+      <bpmn:documentation>Candidate major functionality F1. Includes mandatory-field validation, correction loop, conditional organic certification verification, failure/unavailable-service handling and publication only after validation. A strategic activity does not assert that every request succeeds. Scope: Use Cases p1; case study pp1-2.</bpmn:documentation>
+      <bpmn:incoming>Catalog_Flow_0</bpmn:incoming>
+      <bpmn:outgoing>Catalog_Flow_1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_CatalogResponse" name="Communicate listing outcome">
+      <bpmn:incoming>Catalog_Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Catalog_Flow_End</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Catalog_End" name="Listing request handled">
+      <bpmn:incoming>Catalog_Flow_End</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="Inventory_Start" name="Stock / availability update received">
+      <bpmn:outgoing>Inventory_Flow_0</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="Inventory_Start_definition" />
+    </bpmn:startEvent>
+    <bpmn:task id="Task_F2" name="F2 | Manage stock and seasonal availability">
+      <bpmn:documentation>Candidate major functionality F2. Producer updates and confirmed-order deductions affect quantities. Zero stock makes product unavailable; replenishment reactivates it only within its availability period. Expiry handling is a proposed design rule. Detailed concurrency and exception paths belong to the operational model.</bpmn:documentation>
+      <bpmn:incoming>Inventory_Flow_0</bpmn:incoming>
+      <bpmn:outgoing>Inventory_Flow_1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Visibility" name="Synchronise customer-facing availability">
+      <bpmn:incoming>Inventory_Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Inventory_Flow_End</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Inventory_End" name="Availability updated">
+      <bpmn:incoming>Inventory_Flow_End</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="Orders_Start" name="Customer order received">
+      <bpmn:outgoing>Orders_Flow_0</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="Orders_Start_definition" />
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Order" name="Manage basket, availability and checkout">
+      <bpmn:documentation>Enterprise context, not a third selected implementation functionality. Include product search/browsing before ordering, multi-vendor allocation and stock checks.</bpmn:documentation>
+      <bpmn:incoming>Orders_Flow_0</bpmn:incoming>
+      <bpmn:outgoing>Orders_Flow_1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Payment" name="Manage payment and order confirmation">
+      <bpmn:documentation>Use sandbox/simulated payment; unsuccessful payments and service outages handled inside this high-level capability. Confirmed orders update inventory.</bpmn:documentation>
+      <bpmn:incoming>Orders_Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Orders_Flow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Fulfil" name="Coordinate producer fulfilment and collection / delivery">
+      <bpmn:documentation>Communicate producer-specific responsibilities and allow the minimum 48-hour preparation lead time from the case study. Delivery may be producer-led or collection; no separate courier is assumed.</bpmn:documentation>
+      <bpmn:incoming>Orders_Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Orders_Flow_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Complete" name="Record completion and customer outcome">
+      <bpmn:incoming>Orders_Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Orders_Flow_End</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Orders_End" name="Order handled">
+      <bpmn:incoming>Orders_Flow_End</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="Finance_Start" name="Weekly settlement due">
+      <bpmn:outgoing>Finance_Flow_0</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="Finance_Start_definition">
+        <bpmn:timeCycle>R/P7D</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Reconcile" name="Reconcile sales and calculate 5% commission">
+      <bpmn:incoming>Finance_Flow_0</bpmn:incoming>
+      <bpmn:outgoing>Finance_Flow_1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Settle" name="Settle producer balances">
+      <bpmn:documentation>Weekly settlement required. Failed transfers/reconciliation issues require follow-up; detailed paths deferred. Test payment systems only.</bpmn:documentation>
+      <bpmn:incoming>Finance_Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Finance_Flow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Audit" name="Maintain statements and audit trail">
+      <bpmn:incoming>Finance_Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Finance_Flow_End</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Finance_End" name="Settlement cycle handled">
+      <bpmn:incoming>Finance_Flow_End</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="Quality_Start" name="Quality concern received">
+      <bpmn:outgoing>Quality_Flow_0</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="Quality_Start_definition" />
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Trace" name="Identify affected products, producers and orders">
+      <bpmn:incoming>Quality_Flow_0</bpmn:incoming>
+      <bpmn:outgoing>Quality_Flow_1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Investigate" name="Investigate risk and decide response">
+      <bpmn:incoming>Quality_Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Quality_Flow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Respond" name="Coordinate suspension, notification and follow-up">
+      <bpmn:documentation>If risk is confirmed, suspend sale where appropriate, notify affected customers and record outcomes. Failed notifications need alternate/manual follow-up. If no genuine risk is found, closure is possible without notifications. These branches are abstracted at strategic level.</bpmn:documentation>
+      <bpmn:incoming>Quality_Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Quality_Flow_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Review" name="Review actions and close or request more work">
+      <bpmn:incoming>Quality_Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Quality_Flow_End</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Quality_End" name="Incident handled">
+      <bpmn:incoming>Quality_Flow_End</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="Community_Start" name="Community / reporting cycle starts">
+      <bpmn:outgoing>Community_Flow_0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Surplus" name="Coordinate surplus offers and discounts">
+      <bpmn:incoming>Community_Flow_0</bpmn:incoming>
+      <bpmn:outgoing>Community_Flow_1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Content" name="Share recipes, storage advice and farm stories">
+      <bpmn:incoming>Community_Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Community_Flow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Miles" name="Report food miles and sustainability">
+      <bpmn:documentation>Postcode-based distance measurement is required by the case study. Trigger and sequential arrangement are illustrative assumptions; these capabilities may operate independently.</bpmn:documentation>
+      <bpmn:incoming>Community_Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Community_Flow_End</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Community_End" name="Community cycle completed">
+      <bpmn:incoming>Community_Flow_End</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Catalog_Flow_0" sourceRef="Catalog_Start" targetRef="Task_F1" />
+    <bpmn:sequenceFlow id="Catalog_Flow_1" sourceRef="Task_F1" targetRef="Task_CatalogResponse" />
+    <bpmn:sequenceFlow id="Catalog_Flow_End" sourceRef="Task_CatalogResponse" targetRef="Catalog_End" />
+    <bpmn:sequenceFlow id="Inventory_Flow_0" sourceRef="Inventory_Start" targetRef="Task_F2" />
+    <bpmn:sequenceFlow id="Inventory_Flow_1" sourceRef="Task_F2" targetRef="Task_Visibility" />
+    <bpmn:sequenceFlow id="Inventory_Flow_End" sourceRef="Task_Visibility" targetRef="Inventory_End" />
+    <bpmn:sequenceFlow id="Orders_Flow_0" sourceRef="Orders_Start" targetRef="Task_Order" />
+    <bpmn:sequenceFlow id="Orders_Flow_1" sourceRef="Task_Order" targetRef="Task_Payment" />
+    <bpmn:sequenceFlow id="Orders_Flow_2" sourceRef="Task_Payment" targetRef="Task_Fulfil" />
+    <bpmn:sequenceFlow id="Orders_Flow_3" sourceRef="Task_Fulfil" targetRef="Task_Complete" />
+    <bpmn:sequenceFlow id="Orders_Flow_End" sourceRef="Task_Complete" targetRef="Orders_End" />
+    <bpmn:sequenceFlow id="Finance_Flow_0" sourceRef="Finance_Start" targetRef="Task_Reconcile" />
+    <bpmn:sequenceFlow id="Finance_Flow_1" sourceRef="Task_Reconcile" targetRef="Task_Settle" />
+    <bpmn:sequenceFlow id="Finance_Flow_2" sourceRef="Task_Settle" targetRef="Task_Audit" />
+    <bpmn:sequenceFlow id="Finance_Flow_End" sourceRef="Task_Audit" targetRef="Finance_End" />
+    <bpmn:sequenceFlow id="Quality_Flow_0" sourceRef="Quality_Start" targetRef="Task_Trace" />
+    <bpmn:sequenceFlow id="Quality_Flow_1" sourceRef="Task_Trace" targetRef="Task_Investigate" />
+    <bpmn:sequenceFlow id="Quality_Flow_2" sourceRef="Task_Investigate" targetRef="Task_Respond" />
+    <bpmn:sequenceFlow id="Quality_Flow_3" sourceRef="Task_Respond" targetRef="Task_Review" />
+    <bpmn:sequenceFlow id="Quality_Flow_End" sourceRef="Task_Review" targetRef="Quality_End" />
+    <bpmn:sequenceFlow id="Community_Flow_0" sourceRef="Community_Start" targetRef="Task_Surplus" />
+    <bpmn:sequenceFlow id="Community_Flow_1" sourceRef="Task_Surplus" targetRef="Task_Content" />
+    <bpmn:sequenceFlow id="Community_Flow_2" sourceRef="Task_Content" targetRef="Task_Miles" />
+    <bpmn:sequenceFlow id="Community_Flow_End" sourceRef="Task_Miles" targetRef="Community_End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_Strategic">
+    <bpmndi:BPMNPlane id="Plane_Strategic" bpmnElement="Collaboration_FoodNetwork">
+      <bpmndi:BPMNShape id="Participant_Network_di" bpmnElement="Participant_Network" isHorizontal="true" color:background-color="#ffffff">
+        <dc:Bounds x="430" y="240" width="1900" height="1650" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Community_di" bpmnElement="Lane_Community" isHorizontal="true" color:background-color="#ffffff">
+        <dc:Bounds x="460" y="1630" width="1870" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Quality_di" bpmnElement="Lane_Quality" isHorizontal="true" color:background-color="#f8fafc">
+        <dc:Bounds x="460" y="1340" width="1870" height="290" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Finance_di" bpmnElement="Lane_Finance" isHorizontal="true" color:background-color="#ffffff">
+        <dc:Bounds x="460" y="1080" width="1870" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Orders_di" bpmnElement="Lane_Orders" isHorizontal="true" color:background-color="#f8fafc">
+        <dc:Bounds x="460" y="780" width="1870" height="300" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Inventory_di" bpmnElement="Lane_Inventory" isHorizontal="true" color:background-color="#ffffff">
+        <dc:Bounds x="460" y="510" width="1870" height="270" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Catalogue_di" bpmnElement="Lane_Catalogue" isHorizontal="true" color:background-color="#f8fafc">
+        <dc:Bounds x="460" y="240" width="1870" height="270" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Catalog_Start_di" bpmnElement="Catalog_Start">
+        <dc:Bounds x="540" y="352" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="498" y="396" width="120" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_F1_di" bpmnElement="Task_F1" color:background-color="#dbeafe">
+        <dc:Bounds x="700" y="330" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CatalogResponse_di" bpmnElement="Task_CatalogResponse">
+        <dc:Bounds x="1020" y="330" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Catalog_End_di" bpmnElement="Catalog_End">
+        <dc:Bounds x="2010" y="352" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1968" y="396" width="120" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Inventory_Start_di" bpmnElement="Inventory_Start">
+        <dc:Bounds x="540" y="622" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="498" y="666" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_F2_di" bpmnElement="Task_F2" color:background-color="#dbeafe">
+        <dc:Bounds x="700" y="600" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Visibility_di" bpmnElement="Task_Visibility">
+        <dc:Bounds x="1020" y="600" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Inventory_End_di" bpmnElement="Inventory_End">
+        <dc:Bounds x="2010" y="622" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1968" y="666" width="120" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Orders_Start_di" bpmnElement="Orders_Start">
+        <dc:Bounds x="540" y="897" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="498" y="941" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Order_di" bpmnElement="Task_Order">
+        <dc:Bounds x="700" y="875" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Payment_di" bpmnElement="Task_Payment">
+        <dc:Bounds x="1020" y="875" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Fulfil_di" bpmnElement="Task_Fulfil">
+        <dc:Bounds x="1340" y="875" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Complete_di" bpmnElement="Task_Complete">
+        <dc:Bounds x="1660" y="875" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Orders_End_di" bpmnElement="Orders_End">
+        <dc:Bounds x="2010" y="897" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1968" y="941" width="120" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Finance_Start_di" bpmnElement="Finance_Start">
+        <dc:Bounds x="540" y="1192" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="498" y="1236" width="120" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Reconcile_di" bpmnElement="Task_Reconcile">
+        <dc:Bounds x="700" y="1170" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Settle_di" bpmnElement="Task_Settle">
+        <dc:Bounds x="1020" y="1170" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Audit_di" bpmnElement="Task_Audit">
+        <dc:Bounds x="1340" y="1170" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Finance_End_di" bpmnElement="Finance_End">
+        <dc:Bounds x="2010" y="1192" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1968" y="1236" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Quality_Start_di" bpmnElement="Quality_Start">
+        <dc:Bounds x="540" y="1462" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="498" y="1506" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Trace_di" bpmnElement="Task_Trace">
+        <dc:Bounds x="700" y="1440" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Investigate_di" bpmnElement="Task_Investigate">
+        <dc:Bounds x="1020" y="1440" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Respond_di" bpmnElement="Task_Respond">
+        <dc:Bounds x="1340" y="1440" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Review_di" bpmnElement="Task_Review">
+        <dc:Bounds x="1660" y="1440" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Quality_End_di" bpmnElement="Quality_End">
+        <dc:Bounds x="2010" y="1462" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1968" y="1506" width="120" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Community_Start_di" bpmnElement="Community_Start">
+        <dc:Bounds x="540" y="1742" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="498" y="1786" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Surplus_di" bpmnElement="Task_Surplus">
+        <dc:Bounds x="700" y="1720" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Content_di" bpmnElement="Task_Content">
+        <dc:Bounds x="1020" y="1720" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Miles_di" bpmnElement="Task_Miles">
+        <dc:Bounds x="1340" y="1720" width="220" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Community_End_di" bpmnElement="Community_End">
+        <dc:Bounds x="2010" y="1742" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1968" y="1786" width="120" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Catalog_Flow_0_di" bpmnElement="Catalog_Flow_0">
+        <di:waypoint x="576" y="370" />
+        <di:waypoint x="700" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Catalog_Flow_1_di" bpmnElement="Catalog_Flow_1">
+        <di:waypoint x="920" y="370" />
+        <di:waypoint x="1020" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Catalog_Flow_End_di" bpmnElement="Catalog_Flow_End">
+        <di:waypoint x="1240" y="370" />
+        <di:waypoint x="2010" y="370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Inventory_Flow_0_di" bpmnElement="Inventory_Flow_0">
+        <di:waypoint x="576" y="640" />
+        <di:waypoint x="700" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Inventory_Flow_1_di" bpmnElement="Inventory_Flow_1">
+        <di:waypoint x="920" y="640" />
+        <di:waypoint x="1020" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Inventory_Flow_End_di" bpmnElement="Inventory_Flow_End">
+        <di:waypoint x="1240" y="640" />
+        <di:waypoint x="2010" y="640" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Orders_Flow_0_di" bpmnElement="Orders_Flow_0">
+        <di:waypoint x="576" y="915" />
+        <di:waypoint x="700" y="915" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Orders_Flow_1_di" bpmnElement="Orders_Flow_1">
+        <di:waypoint x="920" y="915" />
+        <di:waypoint x="1020" y="915" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Orders_Flow_2_di" bpmnElement="Orders_Flow_2">
+        <di:waypoint x="1240" y="915" />
+        <di:waypoint x="1340" y="915" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Orders_Flow_3_di" bpmnElement="Orders_Flow_3">
+        <di:waypoint x="1560" y="915" />
+        <di:waypoint x="1660" y="915" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Orders_Flow_End_di" bpmnElement="Orders_Flow_End">
+        <di:waypoint x="1880" y="915" />
+        <di:waypoint x="2010" y="915" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Finance_Flow_0_di" bpmnElement="Finance_Flow_0">
+        <di:waypoint x="576" y="1210" />
+        <di:waypoint x="700" y="1210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Finance_Flow_1_di" bpmnElement="Finance_Flow_1">
+        <di:waypoint x="920" y="1210" />
+        <di:waypoint x="1020" y="1210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Finance_Flow_2_di" bpmnElement="Finance_Flow_2">
+        <di:waypoint x="1240" y="1210" />
+        <di:waypoint x="1340" y="1210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Finance_Flow_End_di" bpmnElement="Finance_Flow_End">
+        <di:waypoint x="1560" y="1210" />
+        <di:waypoint x="2010" y="1210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Quality_Flow_0_di" bpmnElement="Quality_Flow_0">
+        <di:waypoint x="576" y="1480" />
+        <di:waypoint x="700" y="1480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Quality_Flow_1_di" bpmnElement="Quality_Flow_1">
+        <di:waypoint x="920" y="1480" />
+        <di:waypoint x="1020" y="1480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Quality_Flow_2_di" bpmnElement="Quality_Flow_2">
+        <di:waypoint x="1240" y="1480" />
+        <di:waypoint x="1340" y="1480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Quality_Flow_3_di" bpmnElement="Quality_Flow_3">
+        <di:waypoint x="1560" y="1480" />
+        <di:waypoint x="1660" y="1480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Quality_Flow_End_di" bpmnElement="Quality_Flow_End">
+        <di:waypoint x="1880" y="1480" />
+        <di:waypoint x="2010" y="1480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Community_Flow_0_di" bpmnElement="Community_Flow_0">
+        <di:waypoint x="576" y="1760" />
+        <di:waypoint x="700" y="1760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Community_Flow_1_di" bpmnElement="Community_Flow_1">
+        <di:waypoint x="920" y="1760" />
+        <di:waypoint x="1020" y="1760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Community_Flow_2_di" bpmnElement="Community_Flow_2">
+        <di:waypoint x="1240" y="1760" />
+        <di:waypoint x="1340" y="1760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Community_Flow_End_di" bpmnElement="Community_Flow_End">
+        <di:waypoint x="1560" y="1760" />
+        <di:waypoint x="2010" y="1760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_Producer_di" bpmnElement="Participant_Producer" isHorizontal="false" color:background-color="#eef2ff">
+        <dc:Bounds x="150" y="240" width="170" height="540" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_Verifier_di" bpmnElement="Participant_Verifier" isHorizontal="true" color:background-color="#eef2ff">
+        <dc:Bounds x="2420" y="240" width="300" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_Customers_di" bpmnElement="Participant_Customers" isHorizontal="false" color:background-color="#eef2ff">
+        <dc:Bounds x="2460" y="780" width="170" height="850" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_Payments_di" bpmnElement="Participant_Payments" isHorizontal="false" color:background-color="#eef2ff">
+        <dc:Bounds x="150" y="840" width="170" height="500" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Note_Title_di" bpmnElement="Note_Title">
+        <dc:Bounds x="510" y="80" width="1500" height="105" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Note_Scope_di" bpmnElement="Note_Scope">
+        <dc:Bounds x="530" y="1930" width="1450" height="95" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Msg_Listing_di" bpmnElement="Msg_Listing">
+        <di:waypoint x="320" y="370" />
+        <di:waypoint x="540" y="370" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="325" y="330" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Msg_Verified_di" bpmnElement="Msg_Verified">
+        <di:waypoint x="2420" y="330" />
+        <di:waypoint x="2360" y="330" />
+        <di:waypoint x="2360" y="450" />
+        <di:waypoint x="810" y="450" />
+        <di:waypoint x="810" y="410" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1540" y="418" width="220" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Msg_Verify_di" bpmnElement="Msg_Verify">
+        <di:waypoint x="810" y="330" />
+        <di:waypoint x="810" y="275" />
+        <di:waypoint x="2380" y="275" />
+        <di:waypoint x="2380" y="270" />
+        <di:waypoint x="2420" y="270" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1470" y="242" width="230" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Msg_ListingReply_di" bpmnElement="Msg_ListingReply">
+        <di:waypoint x="1130" y="410" />
+        <di:waypoint x="1130" y="475" />
+        <di:waypoint x="370" y="475" />
+        <di:waypoint x="370" y="440" />
+        <di:waypoint x="320" y="440" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="660" y="442" width="180" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Msg_Updates_di" bpmnElement="Msg_Updates">
+        <di:waypoint x="320" y="640" />
+        <di:waypoint x="540" y="640" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="325" y="595" width="100" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Msg_Order_di" bpmnElement="Msg_Order">
+        <di:waypoint x="2460" y="820" />
+        <di:waypoint x="2380" y="820" />
+        <di:waypoint x="558" y="820" />
+        <di:waypoint x="558" y="897" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1280" y="788" width="180" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Msg_PayResult_di" bpmnElement="Msg_PayResult">
+        <di:waypoint x="320" y="1055" />
+        <di:waypoint x="1130" y="1055" />
+        <di:waypoint x="1130" y="955" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="720" y="1024" width="160" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Msg_PayRequest_di" bpmnElement="Msg_PayRequest">
+        <di:waypoint x="1130" y="955" />
+        <di:waypoint x="1130" y="1020" />
+        <di:waypoint x="380" y="1020" />
+        <di:waypoint x="380" y="960" />
+        <di:waypoint x="320" y="960" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="610" y="988" width="170" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Msg_Fulfil_di" bpmnElement="Msg_Fulfil">
+        <di:waypoint x="1450" y="875" />
+        <di:waypoint x="1450" y="800" />
+        <di:waypoint x="395" y="800" />
+        <di:waypoint x="395" y="740" />
+        <di:waypoint x="320" y="740" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="760" y="765" width="330" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Msg_OrderReply_di" bpmnElement="Msg_OrderReply">
+        <di:waypoint x="1770" y="955" />
+        <di:waypoint x="1770" y="990" />
+        <di:waypoint x="2410" y="990" />
+        <di:waypoint x="2410" y="915" />
+        <di:waypoint x="2460" y="915" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2010" y="958" width="170" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Msg_Settle_di" bpmnElement="Msg_Settle">
+        <di:waypoint x="1130" y="1250" />
+        <di:waypoint x="1130" y="1300" />
+        <di:waypoint x="320" y="1300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="680" y="1267" width="190" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Msg_Incident_di" bpmnElement="Msg_Incident">
+        <di:waypoint x="2460" y="1380" />
+        <di:waypoint x="2380" y="1380" />
+        <di:waypoint x="558" y="1380" />
+        <di:waypoint x="558" y="1462" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1290" y="1348" width="160" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Msg_Alert_di" bpmnElement="Msg_Alert">
+        <di:waypoint x="1450" y="1520" />
+        <di:waypoint x="1450" y="1580" />
+        <di:waypoint x="2410" y="1580" />
+        <di:waypoint x="2410" y="1480" />
+        <di:waypoint x="2460" y="1480" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1860" y="1548" width="260" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Msg_Content_di" bpmnElement="Msg_Content">
+        <di:waypoint x="1450" y="1720" />
+        <di:waypoint x="1450" y="1670" />
+        <di:waypoint x="2550" y="1670" />
+        <di:waypoint x="2550" y="1630" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1770" y="1638" width="340" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

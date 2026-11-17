@@ -1,0 +1,584 @@
+{
+  "status": "Draft for group review",
+  "date": "2026-11-17",
+  "meaning": "This is evidence of requirements/model coverage and exact reference checks. It is not evidence that every referenced functionality has executed.",
+  "model": "models/istar/enterprise-model.json",
+  "source_register": [
+    {
+      "id": "UC1",
+      "path": "docs/Use-Case-1-Requirements.xlsm",
+      "evidence": "R1-R10 read directly; original use-case reference retained"
+    },
+    {
+      "id": "CASE",
+      "path": "review-evidence/requirements-2026-11-18/case-study-preview.txt",
+      "url": "https://blackboard.uwe.ac.uk/ultra/courses/_385767_1/document/_13162411_1?view=content&state=view",
+      "evidence": "Direct reading of saved Blackboard-visible two-page case text"
+    },
+    {
+      "id": "STRATEGIC",
+      "path": "models/strategic/Strategic-BPMN.bpmn",
+      "evidence": "Existing strategic process baseline"
+    },
+    {
+      "id": "F1",
+      "path": "review-evidence/responsibilities-2026-11-17/F1-saved.bpmn",
+      "evidence": "Responsibility revision"
+    },
+    {
+      "id": "F2",
+      "path": "review-evidence/responsibilities-2026-11-17/F2-saved.bpmn",
+      "evidence": "Responsibility revision"
+    }
+  ],
+  "rows": [
+    {
+      "id": "R1",
+      "requirement": "Registered producer submits a new product",
+      "basis": "Workbook R1 / Use Case 1",
+      "sd": [
+        "D01",
+        "D02",
+        "D18"
+      ],
+      "sr": [
+        "PRODUCER_T1",
+        "CAT_T1"
+      ],
+      "strategic": [
+        "Task_F1"
+      ],
+      "operational": [
+        "F1_Submit",
+        "F1_SendDetails",
+        "F1_Validate"
+      ],
+      "implementation": "F1 product-details form; src/sprint2_demo/f1.py",
+      "qualification": "Producer registration is a precondition, not implemented account registration."
+    },
+    {
+      "id": "R2",
+      "requirement": "Product name, description, category, price, quantity, availability period and origin",
+      "basis": "Workbook R2 / Use Case 1",
+      "sd": [
+        "D01",
+        "D09"
+      ],
+      "sr": [
+        "CAT_R",
+        "CAT_T1",
+        "CAT_Q1"
+      ],
+      "strategic": [
+        "Task_F1"
+      ],
+      "operational": [
+        "F1_Submit",
+        "F1_Validate"
+      ],
+      "implementation": "F1 form and validation contract",
+      "qualification": "Model mapping is verified; execution must demonstrate mandatory-field checks."
+    },
+    {
+      "id": "R3",
+      "requirement": "Relevant harvest date, allergen, certification and best-before information",
+      "basis": "Workbook R3 / Use Case 1",
+      "sd": [
+        "D01",
+        "D07",
+        "D09"
+      ],
+      "sr": [
+        "CAT_R",
+        "CAT_T1",
+        "CAT_Q1",
+        "QLT_R"
+      ],
+      "strategic": [
+        "Task_F1",
+        "Task_Trace"
+      ],
+      "operational": [
+        "F1_Submit",
+        "F1_Validate",
+        "F1_Claim"
+      ],
+      "implementation": "F1 form and validation contract",
+      "qualification": "Whether each field is always mandatory or conditionally relevant remains a business-rule decision."
+    },
+    {
+      "id": "R4",
+      "requirement": "Check information and request correction of invalid or missing details",
+      "basis": "Workbook R4 / Use Case 1",
+      "sd": [
+        "D01",
+        "D02"
+      ],
+      "sr": [
+        "CAT_T1",
+        "CAT_Q1",
+        "PRODUCER_T1"
+      ],
+      "strategic": [
+        "Task_F1",
+        "Task_CatalogResponse"
+      ],
+      "operational": [
+        "F1_Validate",
+        "F1_Valid",
+        "F1_Correction",
+        "F1_Edit",
+        "F1_ReceiveCorrected"
+      ],
+      "implementation": "F1 correction form; src/sprint2_demo/f1.py",
+      "qualification": "The model includes the correction loop. Do not infer a tested Camunda loop from the diagram alone."
+    },
+    {
+      "id": "R5",
+      "requirement": "Verify a claimed organic certificate using an external or simulated service",
+      "basis": "Workbook R5 / Use Case 1",
+      "sd": [
+        "D13",
+        "D09"
+      ],
+      "sr": [
+        "CAT_T2",
+        "CAT_T_NO_CLAIM",
+        "CAT_T_VERIFY",
+        "CAT_Q1",
+        "VERIFIER_T1",
+        "VERIFIER_R"
+      ],
+      "strategic": [
+        "Task_F1"
+      ],
+      "operational": [
+        "F1_Claim",
+        "F1_Verify",
+        "F1_Result"
+      ],
+      "implementation": "F1 certification outcome input / service adapter",
+      "qualification": "D13 is conditional on the claim. A simulated result must be presented as a simulation."
+    },
+    {
+      "id": "R6",
+      "requirement": "Publish only after successful validation",
+      "basis": "Workbook R6 / Use Case 1",
+      "sd": [
+        "D02",
+        "D09"
+      ],
+      "sr": [
+        "CAT_G",
+        "CAT_T1",
+        "CAT_T2",
+        "CAT_T_NO_CLAIM",
+        "CAT_T_VERIFY",
+        "CAT_T3"
+      ],
+      "strategic": [
+        "Task_F1",
+        "Task_CatalogResponse"
+      ],
+      "operational": [
+        "F1_Valid",
+        "F1_Result",
+        "F1_Publish",
+        "F1_Availability",
+        "F1_Notify"
+      ],
+      "implementation": "src/sprint2_demo/f1.py",
+      "qualification": "Publication correctness and sale availability are separate decisions; F2 does not grant publication."
+    },
+    {
+      "id": "R7",
+      "requirement": "Producer can update quantity and seasonal availability",
+      "basis": "Workbook R7 / Use Case 1",
+      "sd": [
+        "D03",
+        "D04",
+        "D18"
+      ],
+      "sr": [
+        "PRODUCER_T2",
+        "INV_R",
+        "INV_T1"
+      ],
+      "strategic": [
+        "Task_F2"
+      ],
+      "operational": [
+        "F2_Load",
+        "F2_EnterStockChange",
+        "F2_Producer",
+        "F2_Prepare"
+      ],
+      "implementation": "F2 stock/date form; src/sprint2_demo/f2.py",
+      "qualification": "Loaded stock and version must reach the form; runtime data transfer is a separate execution check."
+    },
+    {
+      "id": "R8",
+      "requirement": "Zero stock makes the product unavailable for new orders",
+      "basis": "Workbook R8 / Use Case 1",
+      "sd": [
+        "D04",
+        "D09"
+      ],
+      "sr": [
+        "INV_G",
+        "INV_T2",
+        "INV_T3",
+        "INV_Q1"
+      ],
+      "strategic": [
+        "Task_F2",
+        "Task_Visibility"
+      ],
+      "operational": [
+        "F2_Assess",
+        "F2_CanSell",
+        "F2_Unavailable",
+        "F2_Save",
+        "F2_Sync"
+      ],
+      "implementation": "src/sprint2_demo/common.py; src/sprint2_demo/f2.py",
+      "qualification": "Shared availability rule must be exercised in the engine and persisted result, not just shown on a diagram."
+    },
+    {
+      "id": "R9",
+      "requirement": "Replenishment restores availability only inside the availability period",
+      "basis": "Workbook R9 / Use Case 1",
+      "sd": [
+        "D03",
+        "D04",
+        "D09"
+      ],
+      "sr": [
+        "INV_T1",
+        "INV_T2",
+        "INV_T3",
+        "INV_Q1"
+      ],
+      "strategic": [
+        "Task_F2",
+        "Task_Visibility"
+      ],
+      "operational": [
+        "F2_Assess",
+        "F2_CanSell",
+        "F2_Available",
+        "F2_Unavailable",
+        "F2_Save",
+        "F2_Sync"
+      ],
+      "implementation": "src/sprint2_demo/common.py; src/sprint2_demo/f2.py",
+      "qualification": "Boundary dates and timezone are design decisions; an unpublished product must remain unavailable."
+    },
+    {
+      "id": "R10",
+      "requirement": "Handle invalid input and unavailable verification service",
+      "basis": "Workbook R10 / Use Case 1",
+      "sd": [
+        "D01",
+        "D02",
+        "D13"
+      ],
+      "sr": [
+        "CAT_T1",
+        "CAT_T2",
+        "CAT_Q1",
+        "CAT_Q2"
+      ],
+      "strategic": [
+        "Task_F1",
+        "Task_CatalogResponse"
+      ],
+      "operational": [
+        "F1_Correction",
+        "F1_Result",
+        "F1_Pending",
+        "F1_PendingNotify"
+      ],
+      "implementation": "F1 validation/certification handling",
+      "qualification": "Current design keeps unavailable verification pending; automatic retry limits are not specified by the case."
+    },
+    {
+      "id": "C01",
+      "requirement": "Easy product/stock updates for producers with differing technical capability",
+      "basis": "Case Study: Producers",
+      "sd": [
+        "D18"
+      ],
+      "sr": [
+        "PRODUCER_G",
+        "PRODUCER_T1",
+        "PRODUCER_T2",
+        "PRODUCER_T4",
+        "PRODUCER_Q",
+        "CAT_T1",
+        "INV_T1"
+      ],
+      "strategic": [
+        "Task_F1",
+        "Task_F2"
+      ],
+      "operational": [
+        "F1_Submit",
+        "F1_Edit",
+        "F2_EnterStockChange"
+      ],
+      "implementation": "Three task forms",
+      "qualification": "Forms support this quality, but usability has not been measured or user-tested."
+    },
+    {
+      "id": "C02",
+      "requirement": "Convenient local shopping, reliable institutional supply and less restaurant supplier administration",
+      "basis": "Case Study: three customer segments",
+      "sd": [
+        "D08",
+        "D09",
+        "D19"
+      ],
+      "sr": [
+        "ORD_G",
+        "ORD_Q1",
+        "CUSTOMER_G",
+        "CUSTOMER_T1",
+        "CUSTOMER_T3",
+        "CUSTOMER_Q",
+        "CUSTOMER_Q_SUPPLY",
+        "CUSTOMER_Q_ADMIN",
+        "CUSTOMER_R"
+      ],
+      "strategic": [
+        "Task_Order",
+        "Task_Fulfil",
+        "Task_Complete"
+      ],
+      "operational": [],
+      "implementation": "Enterprise context",
+      "qualification": "The three segments are aggregated into one actor; this records their distinct needs without inventing three systems."
+    },
+    {
+      "id": "C03",
+      "requirement": "Product browsing/search/categories and transparent multi-vendor responsibilities",
+      "basis": "Case Study: Customers / Core functionality",
+      "sd": [
+        "D08",
+        "D09",
+        "D10",
+        "D19"
+      ],
+      "sr": [
+        "ORD_T1",
+        "ORD_T3",
+        "CUSTOMER_T1",
+        "CUSTOMER_T3",
+        "CUSTOMER_R"
+      ],
+      "strategic": [
+        "Task_Order",
+        "Task_Fulfil",
+        "Task_Complete"
+      ],
+      "operational": [],
+      "implementation": "Enterprise context",
+      "qualification": "Strategic activities cover these at a high level. Search/checkout are not claimed as F1/F2 operational implementations."
+    },
+    {
+      "id": "C04",
+      "requirement": "At least 48 hours producer preparation lead time and clear delivery/collection arrangements",
+      "basis": "Case Study: Producers / Customers",
+      "sd": [
+        "D05",
+        "D08"
+      ],
+      "sr": [
+        "PRODUCER_G_ORDER",
+        "PRODUCER_T3",
+        "ORD_T1",
+        "ORD_T3"
+      ],
+      "strategic": [
+        "Task_Order",
+        "Task_Fulfil",
+        "Task_Complete"
+      ],
+      "operational": [],
+      "implementation": "Enterprise context",
+      "qualification": "Lead-time validation belongs to order handling, not product listing or inventory updates."
+    },
+    {
+      "id": "C05",
+      "requirement": "Weekly settlements, 5% commission and transparent accounting trail",
+      "basis": "Case Study: Producers / Core functionality",
+      "sd": [
+        "D06",
+        "D14",
+        "D15",
+        "D16"
+      ],
+      "sr": [
+        "PRODUCER_Q_INCOME",
+        "FIN_G",
+        "FIN_T1",
+        "FIN_T2",
+        "FIN_T3",
+        "FIN_Q1",
+        "PAYMENTS_T1",
+        "PAYMENTS_T2"
+      ],
+      "strategic": [
+        "Task_Payment",
+        "Task_Reconcile",
+        "Task_Settle",
+        "Task_Audit"
+      ],
+      "operational": [],
+      "implementation": "Enterprise context; sandbox/simulation only",
+      "qualification": "No real payment execution or payment compliance result is asserted."
+    },
+    {
+      "id": "C06",
+      "requirement": "Link customers, products and producers to respond rapidly to safety concerns",
+      "basis": "Case Study: Quality assurance",
+      "sd": [
+        "D07",
+        "D11",
+        "D17"
+      ],
+      "sr": [
+        "CUSTOMER_G_CONCERN",
+        "CUSTOMER_T2",
+        "QLT_G",
+        "QLT_R",
+        "QLT_T1",
+        "QLT_T2",
+        "QLT_T3",
+        "QLT_Q1"
+      ],
+      "strategic": [
+        "Task_Trace",
+        "Task_Investigate",
+        "Task_Respond",
+        "Task_Review"
+      ],
+      "operational": [],
+      "implementation": "Enterprise context",
+      "qualification": "Modelled response context does not constitute a working incident-management service."
+    },
+    {
+      "id": "C07",
+      "requirement": "Postcode-based food miles, surplus discounts, recipes, storage guidance and farm stories",
+      "basis": "Case Study: Community features",
+      "sd": [
+        "D12"
+      ],
+      "sr": [
+        "COM_G",
+        "COM_R",
+        "COM_T1",
+        "COM_T2",
+        "COM_T3",
+        "COM_Q1"
+      ],
+      "strategic": [
+        "Task_Surplus",
+        "Task_Content",
+        "Task_Miles"
+      ],
+      "operational": [],
+      "implementation": "Enterprise context",
+      "qualification": "No geography API, discount engine or community publishing service is claimed."
+    },
+    {
+      "id": "A01",
+      "requirement": "Preserve accuracy under stale, duplicate and concurrent updates",
+      "basis": "Existing F2 design proposal; not an additional case requirement",
+      "sd": [
+        "D04",
+        "D09"
+      ],
+      "sr": [
+        "INV_T1",
+        "INV_T2",
+        "INV_T3",
+        "INV_Q1",
+        "INV_Q2"
+      ],
+      "strategic": [
+        "Task_F2",
+        "Task_Visibility"
+      ],
+      "operational": [
+        "F2_Load",
+        "F2_Order",
+        "F2_OrderValid",
+        "F2_RejectOrder",
+        "F2_Save",
+        "F2_Saved",
+        "F2_Failed"
+      ],
+      "implementation": "Versioned inventory and processed change IDs",
+      "qualification": "The model says version/atomic commit; actual persistence and concurrent-instance evidence are required to substantiate this."
+    },
+    {
+      "id": "A02",
+      "requirement": "Trade trust against shortest listing time",
+      "basis": "Reasoned SR contribution judgement",
+      "sd": [
+        "D02",
+        "D09",
+        "D13"
+      ],
+      "sr": [
+        "CAT_T_VERIFY",
+        "CAT_Q1",
+        "CAT_Q2"
+      ],
+      "strategic": [
+        "Task_F1"
+      ],
+      "operational": [
+        "F1_Verify",
+        "F1_Result",
+        "F1_Pending"
+      ],
+      "implementation": "Certification-check and pending path",
+      "qualification": "help/hurt indicates expected direction of effect, not a measured latency or quality score."
+    },
+    {
+      "id": "A03",
+      "requirement": "Respect separate organisations and internal responsibilities",
+      "basis": "Teacher feedback supplied in screenshots plus current BPMN design",
+      "sd": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D13"
+      ],
+      "sr": [
+        "PRODUCER_T1",
+        "PRODUCER_T2",
+        "CAT_T1",
+        "INV_T1",
+        "VERIFIER_T1"
+      ],
+      "strategic": [
+        "Task_F1",
+        "Task_F2"
+      ],
+      "operational": [
+        "F1_Submit",
+        "F1_Edit",
+        "F1_Validate",
+        "F1_Verify",
+        "F2_EnterStockChange",
+        "F2_Producer"
+      ],
+      "implementation": "Producer/marketplace pools, platform lanes and message exchanges",
+      "qualification": "The teacher requested correct task ownership. The exact five-actor iStar decomposition is the model design, not a quoted tutor instruction."
+    }
+  ]
+}
