@@ -1,0 +1,10 @@
+{
+  "display": {
+    "productId": "PRODUCT-DEMO-001",
+    "quantity": 0,
+    "version": 7
+  },
+  "producerQuantity": 8,
+  "producerStartDate": "2026-11-01",
+  "producerEndDate": "2026-11-30"
+}
