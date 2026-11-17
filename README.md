@@ -47,7 +47,7 @@ Camunda and GitHub are maintained separately. After model changes, export the BP
 1. **Product validation and publishing**
 2. **Inventory and seasonal availability management**
 
-The [tutor-confirmation task #4](https://github.com/jensenxie-max/DESD-Group-26/issues/4) is awaiting tutor confirmation. F1/F2 remain candidate functionalities and have not yet been confirmed by the tutor. Record the decision and any scope changes after confirmation is received, before detailed implementation.
+The [tutor-confirmation task #4](https://github.com/jensenxie-max/DESD-Group-26/issues/4) is Closed, while its description still says confirmation is pending. Record the actual tutor decision, date and agreed scope to resolve this inconsistency. The later feedback accepts the process logic and asks for clearer task ownership; the cloud diagrams now separate participant pools and responsibility lanes accordingly.
 
 ## Repository Organisation
 
@@ -69,18 +69,37 @@ The strategic model has one canonical repository location: `models/strategic/`. 
 - Six business responsibility lanes, four external participants, 18 high-level tasks and F1/F2 candidate scope prepared.
 - Camunda Design reported **Problems 0** for the saved strategic baseline on 28 October 2026. This does not certify business approval or executable readiness.
 - Scope, source traceability, a 12-item prioritised backlog and Sprint 1 plan are available in [`docs/sprint-1/README.md`](docs/sprint-1/README.md).
-- Model review (#5) is marked complete in GitHub; brief review findings still need a written record. Tutor confirmation (#4) remains pending. The group-provided contribution matrix is available in `docs/sprint-1/`.
+- Model review (#5) is marked complete in GitHub. The scope-approval record in #4 is inconsistent and still needs the actual decision recorded. The group-provided Sprint 1 contribution matrix is available in `docs/sprint-1/`.
 - The [Sprint 1 board](https://github.com/users/jensenxie-max/projects/2) opens without signing in. Repository and board public access were verified on 29 October 2026.
 - Video recording is complete according to the group. Blackboard upload has not yet been confirmed.
-- Later operational modelling and automation remain planned work.
+- F1/F2 operational drafts now exist in Camunda; the saved 11 November exports remain non-executable. The strategic model in `models/strategic/` is still the Sprint 1 repository baseline.
+
+### Sprint 2 implementation on 18 November 2026
+
+The [Sprint 2 board](https://github.com/users/jensenxie-max/projects/4) tracks SD/SR, F1, F2, automation and the two verification tasks. [Current files and instructions](docs/sprint-2/README.md), [Blackboard requirements](docs/sprint-2/review-requirements-2026-11-17.txt) and [submission links](docs/sprint-2/submission-links.txt) are prepared.
+
+The [operational models](models/operational/README.txt) preserve the saved responsibility revision and add execution configuration, 22 gateway conditions, cross-pool message correlation and three deployment-bound Forms. Real deployment and F1/F2 execution succeeded on local Camunda Run 8.10.9. The normal path publishes a product, then changes stock 10 → 6; correction, certification, invalid input, depletion, duplicate order, version conflict and seasonal paths also have recorded results. See [runtime validation](docs/sprint-2/runtime-validation-2026-11-18.md).
+
+Double-click [Run-Sprint2.cmd](Run-Sprint2.cmd) for a manual Tasklist walkthrough on the configured Windows computer. The [runtime package](src/sprint2_runtime/README.txt) implements worker jobs and SQLite persistence around the existing business-rule modules. Certification is a fixture adapter; identity/order confirmation are supplied inputs and seasonal checks are invoked explicitly.
+
+The [SD/SR models](models/istar/README.md), [technical model review](docs/sprint-2/model-review-2026-11-18.md) and [traceability register](docs/sprint-2/traceability.md) cover the enterprise context and selected functionality. [Current verification](docs/sprint-2/evidence/implementation-check-2026-11-18.json) records 58 Python tests and 45 passing engine assertions across seven scenarios.
+
+Four individual GitHub upload packages are available under `outputs/sprint2-github-2026-11-18/`; see [who uploads what](docs/sprint-2/individual-files-2026-11-18.txt). These files have been prepared locally. Remote upload, each member's own review/contribution, final video and Blackboard submission remain group actions.
+
+### Earlier preparation on 11 November 2026
+
+See the [Thursday preparation pack](docs/sprint-2/README.md) for four individual work cards, F1/F2 field contracts, a node-specific Camunda review and a local Python business-rule example with tests. These preparation materials still need individual review and actual work records.
+
+Three Camunda Forms are now saved and linked: F1 submission, F1 correction, and F2 stock and sale dates. F2 also has a new producer input task. Form Preview checks and variable-mapping checks passed; current exports and preview evidence are in `review-evidence/forms-2026-11-11/`.
+
+These earlier files were preparation and Form Preview evidence. They do not prove engine execution; use the 18 November implementation and verification records for current progress.
 
 ## Planned Later Development
 
-- i* Strategic Dependency and Strategic Rationale models.
-- Two detailed operational BPMN models.
-- Executable Camunda processes and Forms.
-- Supporting business logic, interfaces and data handling.
-- Alternative flows, exception handling and integration testing.
+- Broader integration and production authentication.
+- External certification/order adapters and automatic scheduling.
+- Robust failure recovery and wider integration testing.
+- Food-category rules and unit policies agreed by the group.
 
 ## Working Practices
 

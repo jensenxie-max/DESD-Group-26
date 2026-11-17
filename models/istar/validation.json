@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "scope": "Static semantic/reference checks, not tutor review or Camunda runtime validation",
+  "actors": 5,
+  "intentional_elements": 67,
+  "dependencies": 19,
+  "intentional_links": 64,
+  "checks": [
+    "Unique IDs",
+    "Same-actor intentional links",
+    "Link endpoint types",
+    "AND/OR arity and exclusivity",
+    "No refinement cycles",
+    "Distinct dependency actors",
+    "Optional dependency endpoints valid",
+    "Concern/order conditions separated; certification has explicit no-claim/verification alternatives",
+    "Both SVG views contain the same actors/dependencies; SR includes every intentional element",
+    "Editable drawio pages have unique native cells and resolvable edge endpoints",
+    "All strategic activity references resolve",
+    "Traceability references resolve across iStar, strategic and F1/F2 models"
+  ]
+}

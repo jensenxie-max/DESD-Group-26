@@ -47,9 +47,22 @@
     "createdAndLinked": true,
     "deployed": false,
     "processExecutable": false,
-    "previewChecked": ["Required fields block empty submission", "Organic claim exposes required certification reference", "Dynamic allergen entry can be added", "Date output is YYYY-MM-DD", "Correction shows original input and validationErrors", "Corrected certificate reference appears in preview output"],
-    "formFiles": ["review-evidence/forms-2026-11-11/proposed/F1-Product-Details.form", "review-evidence/forms-2026-11-11/proposed/F1-Correct-Product-Details.form"],
-    "previewOutputs": ["review-evidence/forms-2026-11-11/F1-submit-preview-output.json", "review-evidence/forms-2026-11-11/F1-correct-preview-output.json"],
+    "previewChecked": [
+      "Required fields block empty submission",
+      "Organic claim exposes required certification reference",
+      "Dynamic allergen entry can be added",
+      "Date output is YYYY-MM-DD",
+      "Correction shows original input and validationErrors",
+      "Corrected certificate reference appears in preview output"
+    ],
+    "formFiles": [
+      "review-evidence/forms-2026-11-11/proposed/F1-Product-Details.form",
+      "review-evidence/forms-2026-11-11/proposed/F1-Correct-Product-Details.form"
+    ],
+    "previewOutputs": [
+      "review-evidence/forms-2026-11-11/F1-submit-preview-output.json",
+      "review-evidence/forms-2026-11-11/F1-correct-preview-output.json"
+    ],
     "actualFormDataShape": "Form field keys use details.<field>; allergenEntries is a list of {name}. Task output mapping normalizes that list to details.allergens and omits empty optional fields. Engine execution of mappings remains unverified.",
     "ids": [
       "f1-submit-product-proposed",
@@ -249,5 +262,12 @@
     "testModule": "tests/test_f1.py",
     "testMethodCount": 18,
     "scope": "Local standard-library business-path checks, not deployed-engine or real-provider tests"
+  },
+  "currentRuntimeAsOf": "2026-11-18",
+  "currentRuntime": {
+    "description": "This document specifies pure business rules. The separate runtime now implements engine jobs and persistent storage.",
+    "model": "models/operational/F1-Operational.bpmn",
+    "manifest": "models/operational/execution-manifest.json",
+    "evidence": "docs/sprint-2/runtime-validation-2026-11-18.md"
   }
 }
