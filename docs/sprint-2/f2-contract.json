@@ -7,7 +7,8 @@
     {
       "path": "review-evidence/forms-2026-11-11/F2-saved.bpmn",
       "processId": "F2_Process",
-      "isExecutable": false
+      "isExecutable": false,
+      "qualification": "Historical Form Preview baseline; current executable model and runtime evidence are identified by currentRuntime."
     },
     {
       "path": "docs/sprint-1/README.md",
@@ -21,11 +22,11 @@
     "formId": "f2-stock-dates-proposed",
     "userTask": "F2_EnterStockChange",
     "position": "Producer process F2_ProducerStart -> request/receive stock context -> F2_EnterStockChange -> F2_SubmitStockChange; Marketplace processes stock, order or season messages separately. Order/season messages bypass the form.",
-    "currentNodeCount": 28,
-    "currentSequenceFlowCount": 30,
-    "processExecutable": false,
-    "deployed": false,
-    "formFile": "review-evidence/forms-2026-11-11/proposed/F2-Stock-and-Sale-Dates.form",
+    "currentNodeCount": 42,
+    "currentSequenceFlowCount": 45,
+    "processExecutable": true,
+    "deployed": true,
+    "formFile": "models/operational/forms/F2-Stock-and-Sale-Dates.form",
     "previewOutput": "review-evidence/forms-2026-11-11/F2-preview-output.json",
     "previewChecked": [
       "Current quantity 0 and version 7 are read-only",
@@ -34,7 +35,17 @@
       "Sale dates use YYYY-MM-DD"
     ],
     "dataBoundary": "productId and update.source exist before load/source routing. On task activation, product.version is copied to local loadedVersion. Read-only display is separate from producerQuantity/producerStartDate/producerEndDate. Whitelisted outputs target update fields and expectedVersion=loadedVersion, never stored product.",
-    "runtimeLimit": "Form Preview does not execute task mappings, gateway conditions, service workers or database writes. Process-instance execution and trusted identity integration remain pending."
+    "runtimeLimit": "Form Preview alone does not execute mappings, gateways, workers or database writes. Actual F1/F2 engine execution and manual Tasklist interaction are recorded in the separate 18 November runtime evidence. Producer identity and order confirmation remain supplied demo inputs.",
+    "previewAsOf": "2026-11-11",
+    "historicalFormPreviewBaseline": {
+      "date": "2026-11-11",
+      "model": "review-evidence/forms-2026-11-11/F2-saved.bpmn",
+      "nodeCount": 28,
+      "sequenceFlowCount": 30,
+      "processExecutable": false,
+      "deployed": false,
+      "scope": "Historical saved design and Form Preview only; not the current executable deployment."
+    }
   },
   "product": {
     "additionalProperties": "Preserved by deep copy; no inventory update may change published or arbitrary metadata.",
@@ -338,6 +349,18 @@
     "description": "This document specifies pure business rules. The separate runtime now implements engine jobs and persistent storage.",
     "model": "models/operational/F2-Operational.bpmn",
     "manifest": "models/operational/execution-manifest.json",
-    "evidence": "docs/sprint-2/runtime-validation-2026-11-18.md"
-  }
+    "evidence": "docs/sprint-2/runtime-validation-2026-11-18.md",
+    "nodeCount": 42,
+    "sequenceFlowCount": 45,
+    "participantPools": 2,
+    "executableProcesses": [
+      "F2_Process",
+      "F2_ProducerProcess"
+    ],
+    "deployed": true,
+    "engineVersion": "8.10.9",
+    "manualTasklistEvidence": "review-evidence/runtime-2026-11-18/tasklist-user-run.json",
+    "boundaryEvidence": "review-evidence/runtime-2026-11-18/boundaries-engine.json"
+  },
+  "notImplementedOrTestedScope": "The following exclusions describe only the pure sprint2_demo.f2 function. They do not describe the separate deployed sprint2_runtime implementation."
 }
