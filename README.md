@@ -57,6 +57,8 @@ The [tutor-confirmation task #4](https://github.com/jensenxie-max/DESD-Group-26/
 | [`docs/Use-Case-1-Requirements.xlsm`](docs/Use-Case-1-Requirements.xlsm) | Existing requirements workbook |
 | [`docs/sprint-1/README.md`](docs/sprint-1/README.md) | Strategic scope, traceability, backlog and sprint plan |
 | [`docs/sprint-1/Group-26-Sprint-1-Contribution-Matrix.docx`](docs/sprint-1/Group-26-Sprint-1-Contribution-Matrix.docx) | Group-provided Sprint 1 contribution matrix |
+| [`docs/sprint-2/README.md`](docs/sprint-2/README.md) | Sprint 2 models, execution, evidence and delivery index |
+| [`docs/sprint-2/Contribution-Matrix.docx`](docs/sprint-2/Contribution-Matrix.docx) | Group-provided Sprint 2 contribution matrix |
 | [`models/strategic/`](models/strategic/) | Current strategic BPMN source, readable PNG and opening instructions |
 | [`docs/sprint-1/submission-checklist.md`](docs/sprint-1/submission-checklist.md) | Video ZIP contents, access checks and contribution matrix completion |
 
@@ -84,7 +86,7 @@ Double-click [Run-Sprint2.cmd](Run-Sprint2.cmd) for a manual Tasklist walkthroug
 
 The [SD/SR models](models/istar/README.md), [technical model review](docs/sprint-2/model-review-2026-11-18.md) and [traceability register](docs/sprint-2/traceability.md) cover the enterprise context and selected functionality. [Current verification](docs/sprint-2/evidence/implementation-check-2026-11-18.json) records 58 Python tests and 45 passing engine assertions across seven scenarios.
 
-Four individual GitHub upload packages are available under `outputs/sprint2-github-2026-11-18/`; see [who uploads what](docs/sprint-2/individual-files-2026-11-18.txt). These files have been prepared locally. Remote upload, each member's own review/contribution, final video and Blackboard submission remain group actions.
+The four individual upload packages were checked against the repository on 19 November: all 103 expected paths are present. See [who uploads what](docs/sprint-2/individual-files-2026-11-18.txt). The [Sprint 2 contribution matrix](docs/sprint-2/Contribution-Matrix.docx) is the original group-provided file; [contribution notes](docs/sprint-2/contribution-record.md) link its allocations to the deliverables. The group confirmed that video recording is complete on 19 November. Personal review findings and Blackboard upload/receipt still require the group's actual records.
 
 ### Earlier preparation on 11 November 2026
 
