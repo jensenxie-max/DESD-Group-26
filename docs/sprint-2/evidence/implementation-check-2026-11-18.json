@@ -160,13 +160,12 @@
     "tests/test_f1.py": "6fd879f0130a9b599f06bf756202aea128e2c375741e81f5d6d92f5f6bb3737f",
     "tests/test_f2.py": "7581008a6c6b8e3d25714f77f6dbfe53c780192e8005e75cee5760ddf873f250",
     "tests/test_sprint2_runtime.py": "bfb10c2ae57e60c06ee23c5acd9644a7a7537e63528ecf30487785b7a566f35e",
-    "tools/audit_sprint2_models.py": "85aada1038c115ae1a4e730dcde4810c898b6792a97f1571f504ffb64bb4deef",
     "tools/build_sprint2_executable.py": "a213ca4b9e881f9954360c4554fb69605d7d05a3aed4b1c07f99ffbf7034b182",
-    "tools/package_individual_github_uploads.py": "d3d1c5044fc9a045c98855067e918873f47e3db9910c9154b031e1af7b80e80c",
     "tools/package_sprint2_review.py": "4ce4c4115bf90e5830b3f7a28a586247b1aa0fdc19fea6f1779c106bb2893a01",
-    "tools/package_thursday_handoff.py": "81095ed3448fb9de12011f6c03a526b1e6591165b49296d7fd739db5a26cc0ac",
     "tools/review_sprint2_models.py": "eb8ca147913e425c3db861341ceee9d2c10c3965b7b8409a0d3a839e2734eac5",
     "tools/run_sprint2_manual.py": "f6499d3fa56588dd987b86c4db3fb36037a38065c6f85a50966eb916eca2dbe7",
     "tools/verify_sprint2_delivery.py": "4c0bc7c7af39ed6835177d0cb46cc2e767366a3111cd62063b2cbd85de060281"
-  }
+  },
+  "sourceHashScope": "Delivered source files only. Packaging helper files outside this repository delivery are excluded. The original check timestamp, test counts and engine-run results above are preserved; this packaging review does not rerun engine scenarios.",
+  "packagingReviewedAt": "2026-11-19T00:44:59.263918+00:00"
 }
