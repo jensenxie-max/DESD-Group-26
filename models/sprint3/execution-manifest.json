@@ -1,0 +1,487 @@
+{
+  "schemaVersion": 1,
+  "targetCamundaVersion": "8.10",
+  "correlationVariable": "requestId",
+  "messageTimeToLiveMs": 3600000,
+  "messageIdRule": "Use the activated send-task jobKey as messageId; retries of the same job reuse it.",
+  "jobTypes": [
+    "desd.s3.business",
+    "desd.s3.message"
+  ],
+  "messages": {
+    "F1_Message_ProductDetails": {
+      "name": "S3 Product details",
+      "senders": [
+        "F1_SendDetails"
+      ],
+      "receivers": [
+        "F1_ReceiveDetails"
+      ],
+      "payloadFields": [
+        "requestId",
+        "productId",
+        "producerId",
+        "businessDate",
+        "details",
+        "verificationOutcome"
+      ]
+    },
+    "F1_Message_CorrectedDetails": {
+      "name": "S3 Corrected product details",
+      "senders": [
+        "F1_ResendDetails"
+      ],
+      "receivers": [
+        "F1_ReceiveCorrected"
+      ],
+      "payloadFields": [
+        "requestId",
+        "productId",
+        "producerId",
+        "businessDate",
+        "details",
+        "verificationOutcome"
+      ]
+    },
+    "F1_Message_Correction": {
+      "name": "S3 Correction required",
+      "senders": [
+        "F1_Correction"
+      ],
+      "receivers": [
+        "F1_ProducerCorrection"
+      ],
+      "payloadFields": [
+        "requestId",
+        "validationErrors",
+        "verificationStatus",
+        "status"
+      ]
+    },
+    "F1_Message_Publication": {
+      "name": "S3 Listing published",
+      "senders": [
+        "F1_Notify"
+      ],
+      "receivers": [
+        "F1_ProducerPublished"
+      ],
+      "payloadFields": [
+        "requestId",
+        "productId",
+        "product",
+        "verificationStatus",
+        "status",
+        "verificationMode"
+      ]
+    },
+    "F1_Message_Pending": {
+      "name": "S3 Verification follow-up closed",
+      "senders": [
+        "F1_PendingNotify"
+      ],
+      "receivers": [
+        "F1_ProducerPending"
+      ],
+      "payloadFields": [
+        "requestId",
+        "productId",
+        "verificationStatus",
+        "status",
+        "pendingReason",
+        "followUpRequired",
+        "verificationMode",
+        "followUpStatus"
+      ]
+    },
+    "F2_Message_UpdateRequest": {
+      "name": "S3 F2 update request",
+      "senders": [
+        "F2_RequestContext"
+      ],
+      "receivers": [
+        "F2_Start"
+      ],
+      "payloadFields": [
+        "requestId",
+        "productId",
+        "producerId",
+        "businessDate",
+        "update"
+      ]
+    },
+    "F2_Message_StockContext": {
+      "name": "S3 F2 loaded product context",
+      "senders": [
+        "F2_SendContext",
+        "F2_RejectContext"
+      ],
+      "receivers": [
+        "F2_ReceiveContext"
+      ],
+      "payloadFields": [
+        "requestId",
+        "productId",
+        "product",
+        "update",
+        "loadedVersion",
+        "contextAvailable",
+        "contextError",
+        "status",
+        "errors"
+      ]
+    },
+    "F2_Message_StockSubmission": {
+      "name": "S3 F2 producer stock and sale dates",
+      "senders": [
+        "F2_SubmitStockChange"
+      ],
+      "receivers": [
+        "F2_ReceiveStockChange"
+      ],
+      "payloadFields": [
+        "requestId",
+        "productId",
+        "producerId",
+        "businessDate",
+        "update"
+      ]
+    },
+    "F2_Message_ProducerOutcome": {
+      "name": "S3 F2 producer update outcome",
+      "senders": [
+        "F2_Notify",
+        "F2_RejectInput",
+        "F2_SendFollowUp"
+      ],
+      "receivers": [
+        "F2_ReceiveOutcome"
+      ],
+      "payloadFields": [
+        "requestId",
+        "productId",
+        "product",
+        "status",
+        "validationErrors",
+        "errors",
+        "followUpRequired",
+        "commitConfirmed",
+        "customerAvailability"
+      ]
+    }
+  },
+  "models": {
+    "F1": {
+      "processIds": [
+        "F1_ProducerProcess_S3",
+        "F1_Process_S3"
+      ],
+      "pools": 3,
+      "lanes": 3,
+      "conditionExpressions": 9,
+      "tasks": [
+        {
+          "id": "F1_SendDetails",
+          "processId": "F1_ProducerProcess_S3",
+          "jobType": "desd.s3.message",
+          "headers": {
+            "action": "F1_SendDetails",
+            "messageName": "S3 Product details"
+          }
+        },
+        {
+          "id": "F1_ResendDetails",
+          "processId": "F1_ProducerProcess_S3",
+          "jobType": "desd.s3.message",
+          "headers": {
+            "action": "F1_ResendDetails",
+            "messageName": "S3 Corrected product details"
+          }
+        },
+        {
+          "id": "F1_PendingNotify",
+          "processId": "F1_Process_S3",
+          "jobType": "desd.s3.message",
+          "headers": {
+            "action": "F1_PendingNotify",
+            "messageName": "S3 Verification follow-up closed"
+          }
+        },
+        {
+          "id": "F1_Pending",
+          "processId": "F1_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F1_Pending"
+          }
+        },
+        {
+          "id": "F1_Correction",
+          "processId": "F1_Process_S3",
+          "jobType": "desd.s3.message",
+          "headers": {
+            "action": "F1_Correction",
+            "messageName": "S3 Correction required"
+          }
+        },
+        {
+          "id": "F1_Notify",
+          "processId": "F1_Process_S3",
+          "jobType": "desd.s3.message",
+          "headers": {
+            "action": "F1_Notify",
+            "messageName": "S3 Listing published"
+          }
+        },
+        {
+          "id": "F1_Availability",
+          "processId": "F1_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F1_Availability"
+          }
+        },
+        {
+          "id": "F1_Publish",
+          "processId": "F1_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F1_Publish"
+          }
+        },
+        {
+          "id": "F1_Verify",
+          "processId": "F1_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F1_Verify"
+          }
+        },
+        {
+          "id": "F1_Validate",
+          "processId": "F1_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F1_Validate"
+          }
+        },
+        {
+          "id": "F1_ClosePending",
+          "processId": "F1_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F1_ClosePending"
+          }
+        }
+      ],
+      "staticChecks": "passed",
+      "orthogonalEdges": true,
+      "edgeNodeIntersections": 0,
+      "resource": "F1-Sprint3.bpmn",
+      "sha256": "b6576a816913f5c1a5f777830684a4dfd623fa843bd72ca470181bbd8fe6def7",
+      "source": "models/operational/F1-Operational.bpmn",
+      "sourceSha256": "9cab6dea3ab48aeaa0c3d5058061b24cfb014814715b38b0801af07debe8067c"
+    },
+    "F2": {
+      "processIds": [
+        "F2_Process_S3",
+        "F2_ProducerProcess_S3"
+      ],
+      "pools": 2,
+      "lanes": 2,
+      "conditionExpressions": 19,
+      "tasks": [
+        {
+          "id": "F2_Failed",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F2_Failed"
+          }
+        },
+        {
+          "id": "F2_Notify",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.message",
+          "headers": {
+            "action": "F2_Notify",
+            "messageName": "S3 F2 producer update outcome"
+          }
+        },
+        {
+          "id": "F2_Sync",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F2_Sync"
+          }
+        },
+        {
+          "id": "F2_Save",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F2_Save"
+          }
+        },
+        {
+          "id": "F2_Unavailable",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F2_Unavailable"
+          }
+        },
+        {
+          "id": "F2_Available",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F2_Available"
+          }
+        },
+        {
+          "id": "F2_Assess",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F2_Assess"
+          }
+        },
+        {
+          "id": "F2_Season",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F2_Season"
+          }
+        },
+        {
+          "id": "F2_RejectOrder",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F2_RejectOrder"
+          }
+        },
+        {
+          "id": "F2_Deduct",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F2_Deduct"
+          }
+        },
+        {
+          "id": "F2_Order",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F2_Order"
+          }
+        },
+        {
+          "id": "F2_RejectInput",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.message",
+          "headers": {
+            "action": "F2_RejectInput",
+            "messageName": "S3 F2 producer update outcome"
+          }
+        },
+        {
+          "id": "F2_Prepare",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F2_Prepare"
+          }
+        },
+        {
+          "id": "F2_Producer",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F2_Producer"
+          }
+        },
+        {
+          "id": "F2_Load",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F2_Load"
+          }
+        },
+        {
+          "id": "F2_SendContext",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.message",
+          "headers": {
+            "action": "F2_SendContext",
+            "messageName": "S3 F2 loaded product context"
+          }
+        },
+        {
+          "id": "F2_IntegrationResult",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.business",
+          "headers": {
+            "action": "F2_IntegrationResult"
+          }
+        },
+        {
+          "id": "F2_SendFollowUp",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.message",
+          "headers": {
+            "action": "F2_SendFollowUp",
+            "messageName": "S3 F2 producer update outcome"
+          }
+        },
+        {
+          "id": "F2_RejectContext",
+          "processId": "F2_Process_S3",
+          "jobType": "desd.s3.message",
+          "headers": {
+            "action": "F2_RejectContext",
+            "messageName": "S3 F2 loaded product context"
+          }
+        },
+        {
+          "id": "F2_RequestContext",
+          "processId": "F2_ProducerProcess_S3",
+          "jobType": "desd.s3.message",
+          "headers": {
+            "action": "F2_RequestContext",
+            "messageName": "S3 F2 update request"
+          }
+        },
+        {
+          "id": "F2_SubmitStockChange",
+          "processId": "F2_ProducerProcess_S3",
+          "jobType": "desd.s3.message",
+          "headers": {
+            "action": "F2_SubmitStockChange",
+            "messageName": "S3 F2 producer stock and sale dates"
+          }
+        }
+      ],
+      "staticChecks": "passed",
+      "orthogonalEdges": true,
+      "edgeNodeIntersections": 0,
+      "resource": "F2-Sprint3.bpmn",
+      "sha256": "c744ff9a3c45197dbbbe27f2d49a900f4b6fa0e554bf0b7325965b367b93304a",
+      "source": "models/operational/F2-Operational.bpmn",
+      "sourceSha256": "9e59bc9cd363a9c6d8db5926f934e4faaa85663023fda32963caf81fe438dc3e"
+    }
+  },
+  "forms": [
+    "forms/F1-Correct-Product-Details.form",
+    "forms/F1-Product-Details.form",
+    "forms/F1-Verification-Follow-up.form",
+    "forms/F2-Stock-and-Sale-Dates.form"
+  ],
+  "validationScope": "Static model, contract, reference, reachability and layout checks. Runtime evidence is recorded separately.",
+  "baseline": "models/operational (retained Sprint 2 executable resources)"
+}

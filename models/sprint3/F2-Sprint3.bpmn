@@ -1,0 +1,1157 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" id="Definitions_F2_S3" targetNamespace="https://desd-group26.example/models" exporter="Group 26 model workspace" exporterVersion="3.1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.10.0">
+  <bpmn:collaboration id="F2_Collaboration">
+    <bpmn:participant id="F2_ProducerPool" name="PRODUCERS" processRef="F2_ProducerProcess_S3" />
+    <bpmn:participant id="F2_Pool" name="BRISTOL REGIONAL FOOD NETWORK / Marketplace" processRef="F2_Process_S3" />
+    <bpmn:messageFlow id="F2_Msg_Request" name="Stock / dates update request" sourceRef="F2_RequestContext" targetRef="F2_Start" messageRef="F2_Message_UpdateRequest" />
+    <bpmn:messageFlow id="F2_Msg_Context" name="Current stock, dates and version" sourceRef="F2_SendContext" targetRef="F2_ReceiveContext" messageRef="F2_Message_StockContext" />
+    <bpmn:messageFlow id="F2_Msg_Submit" name="Proposed values + expected version" sourceRef="F2_SubmitStockChange" targetRef="F2_ReceiveStockChange" messageRef="F2_Message_StockSubmission" />
+    <bpmn:messageFlow id="F2_Msg_Result" name="Committed producer result" sourceRef="F2_Notify" targetRef="F2_ReceiveOutcome" messageRef="F2_Message_ProducerOutcome" />
+    <bpmn:messageFlow id="F2_Msg_Correction" name="Correction required; new request to resubmit" sourceRef="F2_RejectInput" targetRef="F2_ReceiveOutcome" messageRef="F2_Message_ProducerOutcome" />
+    <bpmn:messageFlow id="F2_Msg_FollowUp" name="Follow-up required; update not confirmed" sourceRef="F2_SendFollowUp" targetRef="F2_ReceiveOutcome" messageRef="F2_Message_ProducerOutcome" />
+    <bpmn:messageFlow id="F2_Msg_ContextRejected" name="Rejected context; no product data" sourceRef="F2_RejectContext" targetRef="F2_ReceiveContext" messageRef="F2_Message_StockContext" />
+  </bpmn:collaboration>
+  <bpmn:process id="F2_Process_S3" name="F2 - Inventory and seasonal availability | Sprint 3" isExecutable="true">
+    <bpmn:documentation>Sprint 3 week-one executable revision. Producer and Marketplace remain separate participants. Deployment, Forms, worker and message contracts are included in models/sprint3. Runtime results must be checked separately from this structural model.</bpmn:documentation>
+    <bpmn:laneSet id="F2_Process_Lanes">
+      <bpmn:lane id="F2_Lane_Inventory" name="Inventory and availability">
+        <bpmn:flowNodeRef>F2_FailedEnd</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_Failed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_End</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_Notify</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_Sync</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_Saved</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_Save</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_StateMerge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_Unavailable</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_Available</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_CanSell</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_Assess</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_Merge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_Season</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_OrderEnd</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_RejectOrder</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_Deduct</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_OrderValid</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_Order</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_InputEnd</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_RejectInput</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_Prepare</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_InputValid</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_Producer</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_Source</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_Load</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_SendContext</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_ReceiveStockChange</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_ResultForProducer</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_IntegrationResult</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_ResultMerge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_FailureForProducer</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_SendFollowUp</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_FailureMerge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_ContextAvailable</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_RejectContext</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_ContextRejectedEnd</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:sequenceFlow id="F2_Flow_13" sourceRef="F2_Failed" targetRef="F2_FailureForProducer" />
+    <bpmn:sequenceFlow id="F2_Flow_12" sourceRef="F2_Notify" targetRef="F2_ResultMerge" />
+    <bpmn:sequenceFlow id="F2_Flow_11" sourceRef="F2_Sync" targetRef="F2_ResultForProducer" />
+    <bpmn:sequenceFlow id="F2_Flow_29" name="No / conflict" sourceRef="F2_Saved" targetRef="F2_Failed">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= commitConfirmed = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F2_Flow_28" name="Yes" sourceRef="F2_Saved" targetRef="F2_Sync">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= commitConfirmed = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F2_Flow_10" sourceRef="F2_Save" targetRef="F2_Saved" />
+    <bpmn:sequenceFlow id="F2_Flow_09" sourceRef="F2_StateMerge" targetRef="F2_Save" />
+    <bpmn:sequenceFlow id="F2_Flow_27" sourceRef="F2_Unavailable" targetRef="F2_StateMerge" />
+    <bpmn:sequenceFlow id="F2_Flow_26" sourceRef="F2_Available" targetRef="F2_StateMerge" />
+    <bpmn:sequenceFlow id="F2_Flow_25" name="No" sourceRef="F2_CanSell" targetRef="F2_Unavailable">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= saleEligible = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F2_Flow_24" name="Yes" sourceRef="F2_CanSell" targetRef="F2_Available">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= saleEligible = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F2_Flow_08" sourceRef="F2_Assess" targetRef="F2_CanSell" />
+    <bpmn:sequenceFlow id="F2_Flow_07" sourceRef="F2_Merge" targetRef="F2_Assess" />
+    <bpmn:sequenceFlow id="F2_Flow_23" sourceRef="F2_Season" targetRef="F2_Merge" />
+    <bpmn:sequenceFlow id="F2_Flow_06" sourceRef="F2_RejectOrder" targetRef="F2_OrderEnd" />
+    <bpmn:sequenceFlow id="F2_Flow_22" sourceRef="F2_Deduct" targetRef="F2_Merge" />
+    <bpmn:sequenceFlow id="F2_Flow_20" name="No / already applied" sourceRef="F2_OrderValid" targetRef="F2_RejectOrder">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= orderChangeApplicable = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F2_Flow_19" name="Yes" sourceRef="F2_OrderValid" targetRef="F2_Deduct">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= orderChangeApplicable = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F2_Flow_04" sourceRef="F2_Order" targetRef="F2_OrderValid" />
+    <bpmn:sequenceFlow id="F2_Flow_05" sourceRef="F2_RejectInput" targetRef="F2_InputEnd" />
+    <bpmn:sequenceFlow id="F2_Flow_21" sourceRef="F2_Prepare" targetRef="F2_Merge" />
+    <bpmn:sequenceFlow id="F2_Flow_18" name="No" sourceRef="F2_InputValid" targetRef="F2_RejectInput">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= producerInputValid = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F2_Flow_17" name="Yes" sourceRef="F2_InputValid" targetRef="F2_Prepare">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= producerInputValid = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F2_Flow_03" sourceRef="F2_Producer" targetRef="F2_InputValid" />
+    <bpmn:sequenceFlow id="F2_Flow_16" name="Seasonal recheck" sourceRef="F2_Source" targetRef="F2_Season">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= update.source = "season-check"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F2_Flow_15" name="Confirmed order" sourceRef="F2_Source" targetRef="F2_Order">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= update.source = "order"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F2_Flow_14" name="Producer update" sourceRef="F2_Source" targetRef="F2_SendContext">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= update.source = "producer"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F2_Flow_30" sourceRef="F2_ReceiveStockChange" targetRef="F2_Producer" />
+    <bpmn:sequenceFlow id="F2_Flow_02" sourceRef="F2_Load" targetRef="F2_ContextAvailable" />
+    <bpmn:sequenceFlow id="F2_Flow_01" sourceRef="F2_Start" targetRef="F2_Load" />
+    <bpmn:endEvent id="F2_FailedEnd" name="Update needs follow-up">
+      <bpmn:incoming>F2_Flow_FailureJoined</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="F2_Failed" name="Record failure; arrange follow-up">
+      <bpmn:documentation>On unconfirmed write, do not claim success or synchronise speculative values. Record retry/manual follow-up. Atomic failure leaves previous state unchanged; seasonal or stale-visibility risks require authoritative checkout checks and explicit handling in implementation.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.business" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_Failed" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_29</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_13</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="F2_End" name="Availability update handled">
+      <bpmn:incoming>F2_Flow_ResultJoined</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sendTask id="F2_Notify" name="Return update result" messageRef="F2_Message_ProducerOutcome">
+      <bpmn:documentation>Send the committed producer-update result to the correlated producer request. Order and seasonal results follow the separate integration branch.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.message" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_Notify" />
+          <zeebe:header key="messageName" value="S3 F2 producer update outcome" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_ProducerResult</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_12</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:serviceTask id="F2_Sync" name="Synchronise customer availability">
+      <bpmn:documentation>Update the local customer-availability projection from committed product state and version. This is a local read projection, not an external customer application. Ordering must still check the authoritative current product state.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.business" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_Sync" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_28</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_11</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="F2_Saved" name="Commit confirmed?">
+      <bpmn:incoming>F2_Flow_10</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_29</bpmn:outgoing>
+      <bpmn:outgoing>F2_Flow_28</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="F2_Save" name="Commit stock and status atomically">
+      <bpmn:documentation>Proposed transaction saves quantity, dates, availability, audit and order-change ID using expected version. Failure must not expose an uncommitted update. The database/worker implementation is next-week work.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.business" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_Save" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_09</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_10</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="F2_StateMerge" name="">
+      <bpmn:incoming>F2_Flow_27</bpmn:incoming>
+      <bpmn:incoming>F2_Flow_26</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_09</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="F2_Unavailable" name="Prepare UNAVAILABLE status">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.business" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_Unavailable" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_25</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_27</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="F2_Available" name="Prepare AVAILABLE status">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.business" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_Available" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_24</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_26</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="F2_CanSell" name="Eligible for sale?">
+      <bpmn:incoming>F2_Flow_08</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_25</bpmn:outgoing>
+      <bpmn:outgoing>F2_Flow_24</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="F2_Assess" name="Assess publication, stock and dates">
+      <bpmn:documentation>Available only if product is published, proposed quantity &gt; 0, and start &lt;= businessDate &lt;= end. Zero stock, future season, expired season or unpublished product all yield unavailable. Date boundary inclusivity is an explicit design assumption.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.business" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_Assess" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_07</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_08</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="F2_Merge" name="">
+      <bpmn:incoming>F2_Flow_23</bpmn:incoming>
+      <bpmn:incoming>F2_Flow_22</bpmn:incoming>
+      <bpmn:incoming>F2_Flow_21</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_07</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="F2_Season" name="Keep stock; recheck sale dates">
+      <bpmn:documentation>Proposed seasonal-boundary trigger. Keep stored stock and dates; recompute availability. Scheduling frequency, business timezone and inclusive date boundaries require group review. Not a running timer.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.business" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_Season" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_16</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_23</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="F2_OrderEnd" name="Order change not applied">
+      <bpmn:incoming>F2_Flow_06</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="F2_RejectOrder" name="Record rejected / duplicate change">
+      <bpmn:documentation>Do not change stock for an invalid, duplicate or insufficient-stock request. Return distinct duplicate-already-applied, rejected or retry-required outcomes to the order integration. Full order processing remains outside F2.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.business" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_RejectOrder" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_20</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_06</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="F2_Deduct" name="Calculate remaining stock">
+      <bpmn:documentation>Proposed new quantity = current quantity - confirmed-order deduction. This task calculates only; an atomic commit must recheck version and uniqueness to prevent double deduction.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.business" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_Deduct" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_19</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_22</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="F2_OrderValid" name="Order change applicable?">
+      <bpmn:incoming>F2_Flow_04</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_20</bpmn:outgoing>
+      <bpmn:outgoing>F2_Flow_19</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="F2_Order" name="Check confirmed order change">
+      <bpmn:documentation>Accept confirmed-order input only, require a positive deduction, a unique change ID, and enough current stock. Duplicate change IDs must not deduct again. An atomic commit/version check is proposed for concurrent updates.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.business" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_Order" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_15</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_04</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="F2_InputEnd" name="Correction requested">
+      <bpmn:incoming>F2_Flow_05</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sendTask id="F2_RejectInput" name="Request corrected stock / dates" messageRef="F2_Message_ProducerOutcome">
+      <bpmn:documentation>Reject invalid input without changing stored stock or availability; producer resubmission starts a new request.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.message" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_RejectInput" />
+          <zeebe:header key="messageName" value="S3 F2 producer update outcome" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_18</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_05</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:serviceTask id="F2_Prepare" name="Prepare producer stock / date change">
+      <bpmn:documentation>Prepare new quantity and/or date range without changing publication approval. Restocking is a producer quantity update. Do not subtract from an absolute producer stock value.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.business" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_Prepare" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_17</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_21</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="F2_InputValid" name="Producer input valid?">
+      <bpmn:incoming>F2_Flow_03</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_18</bpmn:outgoing>
+      <bpmn:outgoing>F2_Flow_17</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="F2_Producer" name="Validate producer quantity / dates">
+      <bpmn:documentation>Producer owns the product. Proposed quantity is an absolute value, non-negative, and conforms to the product unit. Start date cannot exceed end date. No database write yet.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.business" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_Producer" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_30</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_03</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="F2_Source" name="Update source?">
+      <bpmn:incoming>F2_S3_ContextAccepted</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_16</bpmn:outgoing>
+      <bpmn:outgoing>F2_Flow_15</bpmn:outgoing>
+      <bpmn:outgoing>F2_Flow_14</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="F2_Load" name="Read product and current stock">
+      <bpmn:documentation>Read product publication state, quantity, sale dates, version and already-processed order-change IDs. Product lookup failure requires follow-up before any mutation.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.business" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_Load" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_01</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_02</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:startEvent id="F2_Start" name="Update received">
+      <bpmn:documentation>Receives a source-tagged update request. A producer request supplies productId for the context exchange shown here. Confirmed-order and proposed seasonal-recheck inputs are delivered by integration/scheduler adapters outside this diagram; those branches do not wait for the producer form.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="= requestId" target="requestId" />
+          <zeebe:output source="= productId" target="productId" />
+          <zeebe:output source="= producerId" target="producerId" />
+          <zeebe:output source="= businessDate" target="businessDate" />
+          <zeebe:output source="= update" target="update" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>F2_Flow_01</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="F2_Start_MessageDef" messageRef="F2_Message_UpdateRequest" />
+    </bpmn:startEvent>
+    <bpmn:sendTask id="F2_SendContext" name="Send current stock and dates" messageRef="F2_Message_StockContext">
+      <bpmn:documentation>Send the productId and product object loaded by F2_Load, preserving publication state, quantity, sale dates and version for the producer form. The producer cannot replace the authoritative loaded record.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.message" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_SendContext" />
+          <zeebe:header key="messageName" value="S3 F2 loaded product context" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_14</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_Context</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:intermediateCatchEvent id="F2_ReceiveStockChange" name="Stock / date changes received">
+      <bpmn:documentation>Receive the update object and correlation identifier from this producer request. Keep candidate values separate from the loaded product until validation and atomic commit.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="= requestId" target="requestId" />
+          <zeebe:output source="= productId" target="productId" />
+          <zeebe:output source="= producerId" target="producerId" />
+          <zeebe:output source="= businessDate" target="businessDate" />
+          <zeebe:output source="= update" target="update" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_Context</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_30</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="F2_ReceiveStockChange_Def" messageRef="F2_Message_StockSubmission" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="F2_Flow_Context" sourceRef="F2_SendContext" targetRef="F2_ReceiveStockChange" />
+    <bpmn:exclusiveGateway id="F2_ResultForProducer" name="Producer request?">
+      <bpmn:documentation>Route the existing successful result by update.source. Producer requests receive a message; order and seasonal requests return or record their integration result.</bpmn:documentation>
+      <bpmn:incoming>F2_Flow_11</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_ProducerResult</bpmn:outgoing>
+      <bpmn:outgoing>F2_Flow_IntegrationResult</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="F2_IntegrationResult" name="Return / record integration result">
+      <bpmn:documentation>For order inputs return the committed result to the calling order integration; for seasonal rechecks record the completed outcome. This represents the non-producer part of the original Return update result responsibility. No customer order/checkout process is added.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.business" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_IntegrationResult" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_IntegrationResult</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_IntegrationEnd</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="F2_Flow_ProducerResult" name="Yes" sourceRef="F2_ResultForProducer" targetRef="F2_Notify">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= update.source = "producer"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F2_Flow_IntegrationResult" name="No: order / season" sourceRef="F2_ResultForProducer" targetRef="F2_IntegrationResult">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= update.source = "order" or update.source = "season-check"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="F2_ResultMerge" name="">
+      <bpmn:incoming>F2_Flow_12</bpmn:incoming>
+      <bpmn:incoming>F2_Flow_IntegrationEnd</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_ResultJoined</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="F2_Flow_IntegrationEnd" sourceRef="F2_IntegrationResult" targetRef="F2_ResultMerge" />
+    <bpmn:sequenceFlow id="F2_Flow_ResultJoined" sourceRef="F2_ResultMerge" targetRef="F2_End" />
+    <bpmn:exclusiveGateway id="F2_FailureForProducer" name="Producer request?">
+      <bpmn:documentation>Only a producer request has a waiting producer outcome interaction. All failures still retain the existing follow-up outcome.</bpmn:documentation>
+      <bpmn:incoming>F2_Flow_13</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_ProducerFailure</bpmn:outgoing>
+      <bpmn:outgoing>F2_Flow_IntegrationFailure</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="F2_SendFollowUp" name="Return follow-up required" messageRef="F2_Message_ProducerOutcome">
+      <bpmn:documentation>Report an unconfirmed commit or conflict to the correlated producer request without claiming a successful stock update. The original failure record and follow-up responsibility are preserved.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.message" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_SendFollowUp" />
+          <zeebe:header key="messageName" value="S3 F2 producer update outcome" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_Flow_ProducerFailure</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_ProducerFailureEnd</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="F2_Flow_ProducerFailure" name="Yes" sourceRef="F2_FailureForProducer" targetRef="F2_SendFollowUp">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= update.source = "producer"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="F2_FailureMerge" name="">
+      <bpmn:incoming>F2_Flow_IntegrationFailure</bpmn:incoming>
+      <bpmn:incoming>F2_Flow_ProducerFailureEnd</bpmn:incoming>
+      <bpmn:outgoing>F2_Flow_FailureJoined</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="F2_Flow_IntegrationFailure" name="No: order / season" sourceRef="F2_FailureForProducer" targetRef="F2_FailureMerge">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= update.source = "order" or update.source = "season-check"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F2_Flow_ProducerFailureEnd" sourceRef="F2_SendFollowUp" targetRef="F2_FailureMerge" />
+    <bpmn:sequenceFlow id="F2_Flow_FailureJoined" sourceRef="F2_FailureMerge" targetRef="F2_FailedEnd" />
+    <bpmn:exclusiveGateway id="F2_ContextAvailable" name="Product context available?">
+      <bpmn:incoming>F2_Flow_02</bpmn:incoming>
+      <bpmn:outgoing>F2_S3_ContextAccepted</bpmn:outgoing>
+      <bpmn:outgoing>F2_S3_ContextRejected</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="F2_RejectContext" name="Return rejected context request" messageRef="F2_Message_StockContext">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.message" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_RejectContext" />
+          <zeebe:header key="messageName" value="S3 F2 loaded product context" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_S3_ContextRejected</bpmn:incoming>
+      <bpmn:outgoing>F2_S3_ContextRejectedEnd</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="F2_ContextRejectedEnd" name="Context request rejected">
+      <bpmn:incoming>F2_S3_ContextRejectedEnd</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="F2_S3_ContextAccepted" sourceRef="F2_ContextAvailable" targetRef="F2_Source" name="Yes">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= contextAvailable = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F2_S3_ContextRejected" sourceRef="F2_ContextAvailable" targetRef="F2_RejectContext" name="No">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= contextAvailable = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F2_S3_ContextRejectedEnd" sourceRef="F2_RejectContext" targetRef="F2_ContextRejectedEnd" />
+  </bpmn:process>
+  <bpmn:process id="F2_ProducerProcess_S3" name="Producer stock and sale-date request | Sprint 3" isExecutable="true">
+    <bpmn:documentation>Sprint 3 week-one executable revision. Producer and Marketplace remain separate participants. Deployment, Forms, worker and message contracts are included in models/sprint3. Runtime results must be checked separately from this structural model.</bpmn:documentation>
+    <bpmn:laneSet id="F2_ProducerProcess_Lanes">
+      <bpmn:lane id="F2_Lane_Producer" name="Producer">
+        <bpmn:flowNodeRef>F2_EnterStockChange</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_ProducerStart</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_RequestContext</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_ReceiveContext</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_SubmitStockChange</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_ReceiveOutcome</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_ProducerEnd</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_ProducerContextAvailable</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>F2_ProducerRejectedEnd</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:userTask id="F2_EnterStockChange" name="Enter stock and sale dates">
+      <bpmn:documentation>Collect an absolute stock quantity and sale dates on the producer branch. Pre-fill from the loaded product; keep edits separate from stored product until validation and commit. The expected version comes from the loaded product, not editable form data. Product lookup and the producer source must be supplied before this task. Ownership validation remains a service responsibility. Form binding and mappings require runtime verification.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+        <zeebe:formDefinition formId="f2-stock-dates-proposed" bindingType="deployment" />
+        <zeebe:ioMapping>
+          <zeebe:input source="= product.version" target="loadedVersion" />
+          <zeebe:input source="= {productId: productId, quantity: product.quantity, version: loadedVersion}" target="display" />
+          <zeebe:input source="= product.quantity" target="producerQuantity" />
+          <zeebe:input source="= product.startDate" target="producerStartDate" />
+          <zeebe:input source="= product.endDate" target="producerEndDate" />
+          <zeebe:output source="= &quot;producer&quot;" target="update.source" />
+          <zeebe:output source="= producerQuantity" target="update.quantity" />
+          <zeebe:output source="= producerStartDate" target="update.startDate" />
+          <zeebe:output source="= producerEndDate" target="update.endDate" />
+          <zeebe:output source="= loadedVersion" target="update.expectedVersion" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_ProducerFlow_03</bpmn:incoming>
+      <bpmn:outgoing>F2_ProducerFlow_04</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:startEvent id="F2_ProducerStart" name="Stock / dates need updating">
+      <bpmn:outgoing>F2_ProducerFlow_01</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sendTask id="F2_RequestContext" name="Request current stock and dates" messageRef="F2_Message_UpdateRequest">
+      <bpmn:documentation>Send productId, producer identity, source=producer and request correlation identifier. The marketplace loads authoritative stock and version before returning form context.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.message" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_RequestContext" />
+          <zeebe:header key="messageName" value="S3 F2 update request" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_ProducerFlow_01</bpmn:incoming>
+      <bpmn:outgoing>F2_ProducerFlow_02</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:intermediateCatchEvent id="F2_ReceiveContext" name="Current product context received">
+      <bpmn:documentation>Receive productId and the product object including quantity, startDate, endDate and version. Populate the variables consumed by the existing form input mappings. Server-side ownership and version validation remain marketplace responsibilities.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="= requestId" target="requestId" />
+          <zeebe:output source="= productId" target="productId" />
+          <zeebe:output source="= product" target="product" />
+          <zeebe:output source="= update" target="update" />
+          <zeebe:output source="= loadedVersion" target="loadedVersion" />
+          <zeebe:output source="= contextAvailable" target="contextAvailable" />
+          <zeebe:output source="= contextError" target="contextError" />
+          <zeebe:output source="= status" target="status" />
+          <zeebe:output source="= errors" target="errors" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_ProducerFlow_02</bpmn:incoming>
+      <bpmn:outgoing>F2_S3_ProducerContextDecision</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="F2_ReceiveContext_Def" messageRef="F2_Message_StockContext" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sendTask id="F2_SubmitStockChange" name="Submit stock and sale dates" messageRef="F2_Message_StockSubmission">
+      <bpmn:documentation>Send productId, producer identity, correlation identifier and the update object from the existing form output mappings, including expectedVersion.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="desd.s3.message" retries="3" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="action" value="F2_SubmitStockChange" />
+          <zeebe:header key="messageName" value="S3 F2 producer stock and sale dates" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_ProducerFlow_04</bpmn:incoming>
+      <bpmn:outgoing>F2_ProducerFlow_05</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:receiveTask id="F2_ReceiveOutcome" name="Receive update outcome" messageRef="F2_Message_ProducerOutcome">
+      <bpmn:documentation>Receive one outcome for this producer request: committed result, correction required, or follow-up required. A correction closes this request; no implicit correction loop is introduced.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="= requestId" target="requestId" />
+          <zeebe:output source="= productId" target="productId" />
+          <zeebe:output source="= product" target="product" />
+          <zeebe:output source="= status" target="status" />
+          <zeebe:output source="= validationErrors" target="validationErrors" />
+          <zeebe:output source="= errors" target="errors" />
+          <zeebe:output source="= followUpRequired" target="followUpRequired" />
+          <zeebe:output source="= commitConfirmed" target="commitConfirmed" />
+          <zeebe:output source="= customerAvailability" target="customerAvailability" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>F2_ProducerFlow_05</bpmn:incoming>
+      <bpmn:outgoing>F2_ProducerFlow_06</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:endEvent id="F2_ProducerEnd" name="Request outcome received">
+      <bpmn:incoming>F2_ProducerFlow_06</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="F2_ProducerFlow_01" sourceRef="F2_ProducerStart" targetRef="F2_RequestContext" />
+    <bpmn:sequenceFlow id="F2_ProducerFlow_02" sourceRef="F2_RequestContext" targetRef="F2_ReceiveContext" />
+    <bpmn:sequenceFlow id="F2_ProducerFlow_03" sourceRef="F2_ProducerContextAvailable" targetRef="F2_EnterStockChange" name="Yes">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= contextAvailable = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="F2_ProducerFlow_04" sourceRef="F2_EnterStockChange" targetRef="F2_SubmitStockChange" />
+    <bpmn:sequenceFlow id="F2_ProducerFlow_05" sourceRef="F2_SubmitStockChange" targetRef="F2_ReceiveOutcome" />
+    <bpmn:sequenceFlow id="F2_ProducerFlow_06" sourceRef="F2_ReceiveOutcome" targetRef="F2_ProducerEnd" />
+    <bpmn:exclusiveGateway id="F2_ProducerContextAvailable" name="Context accepted?">
+      <bpmn:incoming>F2_S3_ProducerContextDecision</bpmn:incoming>
+      <bpmn:outgoing>F2_ProducerFlow_03</bpmn:outgoing>
+      <bpmn:outgoing>F2_S3_ProducerContextRejected</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="F2_ProducerRejectedEnd" name="Request rejected; no stock change">
+      <bpmn:incoming>F2_S3_ProducerContextRejected</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="F2_S3_ProducerContextDecision" sourceRef="F2_ReceiveContext" targetRef="F2_ProducerContextAvailable" />
+    <bpmn:sequenceFlow id="F2_S3_ProducerContextRejected" sourceRef="F2_ProducerContextAvailable" targetRef="F2_ProducerRejectedEnd" name="No">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= contextAvailable = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+  </bpmn:process>
+  <bpmn:message id="F2_Message_UpdateRequest" name="S3 F2 update request" />
+  <bpmn:message id="F2_Message_StockContext" name="S3 F2 loaded product context">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="= requestId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="F2_Message_StockSubmission" name="S3 F2 producer stock and sale dates">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="= requestId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="F2_Message_ProducerOutcome" name="S3 F2 producer update outcome">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="= requestId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmndi:BPMNDiagram id="F2_Diagram_S3">
+    <bpmndi:BPMNPlane id="F2_Plane_S3" bpmnElement="F2_Collaboration">
+      <bpmndi:BPMNShape id="F2_FailedEnd_di" bpmnElement="F2_FailedEnd">
+        <dc:Bounds x="4632.0" y="1412.0" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4555.0" y="1456.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Failed_di" bpmnElement="F2_Failed">
+        <dc:Bounds x="3425.0" y="1385.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_End_di" bpmnElement="F2_End">
+        <dc:Bounds x="4632.0" y="982.0" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4555.0" y="1026.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Notify_di" bpmnElement="F2_Notify">
+        <dc:Bounds x="4095.0" y="755.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Sync_di" bpmnElement="F2_Sync">
+        <dc:Bounds x="3645.0" y="955.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Saved_di" bpmnElement="F2_Saved">
+        <dc:Bounds x="3485.0" y="975.0" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3415.0" y="1033.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Save_di" bpmnElement="F2_Save">
+        <dc:Bounds x="3215.0" y="955.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_StateMerge_di" bpmnElement="F2_StateMerge">
+        <dc:Bounds x="3075.0" y="975.0" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Unavailable_di" bpmnElement="F2_Unavailable">
+        <dc:Bounds x="2805.0" y="1055.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Available_di" bpmnElement="F2_Available">
+        <dc:Bounds x="2805.0" y="855.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_CanSell_di" bpmnElement="F2_CanSell">
+        <dc:Bounds x="2665.0" y="975.0" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2595.0" y="1033.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Assess_di" bpmnElement="F2_Assess">
+        <dc:Bounds x="2385.0" y="955.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Merge_di" bpmnElement="F2_Merge">
+        <dc:Bounds x="2225.0" y="975.0" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Season_di" bpmnElement="F2_Season">
+        <dc:Bounds x="1035.0" y="1245.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_OrderEnd_di" bpmnElement="F2_OrderEnd">
+        <dc:Bounds x="1792.0" y="1142.0" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1715.0" y="1186.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_RejectOrder_di" bpmnElement="F2_RejectOrder">
+        <dc:Bounds x="1485.0" y="1115.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Deduct_di" bpmnElement="F2_Deduct">
+        <dc:Bounds x="1485.0" y="955.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_OrderValid_di" bpmnElement="F2_OrderValid">
+        <dc:Bounds x="1325.0" y="975.0" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1255.0" y="1033.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Order_di" bpmnElement="F2_Order">
+        <dc:Bounds x="1035.0" y="955.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_InputEnd_di" bpmnElement="F2_InputEnd">
+        <dc:Bounds x="2232.0" y="602.0" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2155.0" y="646.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_RejectInput_di" bpmnElement="F2_RejectInput">
+        <dc:Bounds x="1925.0" y="575.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Prepare_di" bpmnElement="F2_Prepare">
+        <dc:Bounds x="1925.0" y="755.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_InputValid_di" bpmnElement="F2_InputValid">
+        <dc:Bounds x="1765.0" y="775.0" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1695.0" y="833.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Producer_di" bpmnElement="F2_Producer">
+        <dc:Bounds x="1485.0" y="755.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Source_di" bpmnElement="F2_Source">
+        <dc:Bounds x="875.0" y="975.0" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="805.0" y="1033.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Load_di" bpmnElement="F2_Load">
+        <dc:Bounds x="335.0" y="955.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Start_di" bpmnElement="F2_Start">
+        <dc:Bounds x="162.0" y="982.0" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="85.0" y="1026.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_SendContext_di" bpmnElement="F2_SendContext">
+        <dc:Bounds x="1035.0" y="755.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_ReceiveStockChange_di" bpmnElement="F2_ReceiveStockChange">
+        <dc:Bounds x="1332.0" y="782.0" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1255.0" y="826.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_ResultForProducer_di" bpmnElement="F2_ResultForProducer">
+        <dc:Bounds x="3935.0" y="975.0" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3865.0" y="1033.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_IntegrationResult_di" bpmnElement="F2_IntegrationResult">
+        <dc:Bounds x="4095.0" y="955.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_ResultMerge_di" bpmnElement="F2_ResultMerge">
+        <dc:Bounds x="4405.0" y="975.0" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_FailureForProducer_di" bpmnElement="F2_FailureForProducer">
+        <dc:Bounds x="3935.0" y="1405.0" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3865.0" y="1463.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_SendFollowUp_di" bpmnElement="F2_SendFollowUp">
+        <dc:Bounds x="4095.0" y="1255.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_FailureMerge_di" bpmnElement="F2_FailureMerge">
+        <dc:Bounds x="4405.0" y="1405.0" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_ContextAvailable_di" bpmnElement="F2_ContextAvailable">
+        <dc:Bounds x="635.0" y="975.0" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="565.0" y="1033.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_RejectContext_di" bpmnElement="F2_RejectContext">
+        <dc:Bounds x="575.0" y="575.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_ContextRejectedEnd_di" bpmnElement="F2_ContextRejectedEnd">
+        <dc:Bounds x="882.0" y="602.0" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="805.0" y="646.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_EnterStockChange_di" bpmnElement="F2_EnterStockChange">
+        <dc:Bounds x="1025.0" y="125.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_ProducerStart_di" bpmnElement="F2_ProducerStart">
+        <dc:Bounds x="162.0" y="152.0" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="85.0" y="196.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_RequestContext_di" bpmnElement="F2_RequestContext">
+        <dc:Bounds x="335.0" y="125.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_ReceiveContext_di" bpmnElement="F2_ReceiveContext">
+        <dc:Bounds x="642.0" y="152.0" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="565.0" y="196.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_SubmitStockChange_di" bpmnElement="F2_SubmitStockChange">
+        <dc:Bounds x="1265.0" y="125.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_ReceiveOutcome_di" bpmnElement="F2_ReceiveOutcome">
+        <dc:Bounds x="3735.0" y="125.0" width="170" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_ProducerEnd_di" bpmnElement="F2_ProducerEnd">
+        <dc:Bounds x="4082.0" y="152.0" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4005.0" y="196.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_ProducerContextAvailable_di" bpmnElement="F2_ProducerContextAvailable">
+        <dc:Bounds x="845.0" y="145.0" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="775.0" y="203.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_ProducerRejectedEnd_di" bpmnElement="F2_ProducerRejectedEnd">
+        <dc:Bounds x="1092.0" y="302.0" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1015.0" y="346.0" width="190" height="42" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_ProducerPool_di" bpmnElement="F2_ProducerPool" isHorizontal="true">
+        <dc:Bounds x="40" y="40" width="4820" height="380" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Pool_di" bpmnElement="F2_Pool" isHorizontal="true">
+        <dc:Bounds x="40" y="480" width="4820" height="1120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Lane_Producer_di" bpmnElement="F2_Lane_Producer" isHorizontal="true">
+        <dc:Bounds x="70" y="40" width="4790" height="380" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F2_Lane_Inventory_di" bpmnElement="F2_Lane_Inventory" isHorizontal="true">
+        <dc:Bounds x="70" y="480" width="4790" height="1120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="F2_Flow_13_di" bpmnElement="F2_Flow_13">
+        <di:waypoint x="3595.0" y="1430.0" />
+        <di:waypoint x="3935.0" y="1430.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_12_di" bpmnElement="F2_Flow_12">
+        <di:waypoint x="4265.0" y="800.0" />
+        <di:waypoint x="4430.0" y="800.0" />
+        <di:waypoint x="4430.0" y="975.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_11_di" bpmnElement="F2_Flow_11">
+        <di:waypoint x="3815.0" y="1000.0" />
+        <di:waypoint x="3935.0" y="1000.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_29_di" bpmnElement="F2_Flow_29">
+        <di:waypoint x="3510.0" y="1025.0" />
+        <di:waypoint x="3510.0" y="1385.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3425.0" y="1177.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_28_di" bpmnElement="F2_Flow_28">
+        <di:waypoint x="3535.0" y="1000.0" />
+        <di:waypoint x="3645.0" y="1000.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3505.0" y="972.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_10_di" bpmnElement="F2_Flow_10">
+        <di:waypoint x="3385.0" y="1000.0" />
+        <di:waypoint x="3485.0" y="1000.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_09_di" bpmnElement="F2_Flow_09">
+        <di:waypoint x="3125.0" y="1000.0" />
+        <di:waypoint x="3215.0" y="1000.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_27_di" bpmnElement="F2_Flow_27">
+        <di:waypoint x="2975.0" y="1100.0" />
+        <di:waypoint x="3025.0" y="1100.0" />
+        <di:waypoint x="3025.0" y="1000.0" />
+        <di:waypoint x="3075.0" y="1000.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_26_di" bpmnElement="F2_Flow_26">
+        <di:waypoint x="2975.0" y="900.0" />
+        <di:waypoint x="3025.0" y="900.0" />
+        <di:waypoint x="3025.0" y="1000.0" />
+        <di:waypoint x="3075.0" y="1000.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_25_di" bpmnElement="F2_Flow_25">
+        <di:waypoint x="2715.0" y="1000.0" />
+        <di:waypoint x="2760.0" y="1000.0" />
+        <di:waypoint x="2760.0" y="1100.0" />
+        <di:waypoint x="2805.0" y="1100.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2675.0" y="1022.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_24_di" bpmnElement="F2_Flow_24">
+        <di:waypoint x="2715.0" y="1000.0" />
+        <di:waypoint x="2760.0" y="1000.0" />
+        <di:waypoint x="2760.0" y="900.0" />
+        <di:waypoint x="2805.0" y="900.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2675.0" y="922.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_08_di" bpmnElement="F2_Flow_08">
+        <di:waypoint x="2555.0" y="1000.0" />
+        <di:waypoint x="2665.0" y="1000.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_07_di" bpmnElement="F2_Flow_07">
+        <di:waypoint x="2275.0" y="1000.0" />
+        <di:waypoint x="2385.0" y="1000.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_23_di" bpmnElement="F2_Flow_23">
+        <di:waypoint x="1205.0" y="1290.0" />
+        <di:waypoint x="2250.0" y="1290.0" />
+        <di:waypoint x="2250.0" y="1025.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_06_di" bpmnElement="F2_Flow_06">
+        <di:waypoint x="1655.0" y="1160.0" />
+        <di:waypoint x="1792.0" y="1160.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_22_di" bpmnElement="F2_Flow_22">
+        <di:waypoint x="1655.0" y="1000.0" />
+        <di:waypoint x="2225.0" y="1000.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_20_di" bpmnElement="F2_Flow_20">
+        <di:waypoint x="1375.0" y="1000.0" />
+        <di:waypoint x="1430.0" y="1000.0" />
+        <di:waypoint x="1430.0" y="1160.0" />
+        <di:waypoint x="1485.0" y="1160.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1345.0" y="1052.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_19_di" bpmnElement="F2_Flow_19">
+        <di:waypoint x="1375.0" y="1000.0" />
+        <di:waypoint x="1485.0" y="1000.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1345.0" y="972.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_04_di" bpmnElement="F2_Flow_04">
+        <di:waypoint x="1205.0" y="1000.0" />
+        <di:waypoint x="1325.0" y="1000.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_05_di" bpmnElement="F2_Flow_05">
+        <di:waypoint x="2095.0" y="620.0" />
+        <di:waypoint x="2232.0" y="620.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_21_di" bpmnElement="F2_Flow_21">
+        <di:waypoint x="2095.0" y="800.0" />
+        <di:waypoint x="2250.0" y="800.0" />
+        <di:waypoint x="2250.0" y="975.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_18_di" bpmnElement="F2_Flow_18">
+        <di:waypoint x="1815.0" y="800.0" />
+        <di:waypoint x="1870.0" y="800.0" />
+        <di:waypoint x="1870.0" y="620.0" />
+        <di:waypoint x="1925.0" y="620.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1785.0" y="682.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_17_di" bpmnElement="F2_Flow_17">
+        <di:waypoint x="1815.0" y="800.0" />
+        <di:waypoint x="1925.0" y="800.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1785.0" y="772.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_03_di" bpmnElement="F2_Flow_03">
+        <di:waypoint x="1655.0" y="800.0" />
+        <di:waypoint x="1765.0" y="800.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_16_di" bpmnElement="F2_Flow_16">
+        <di:waypoint x="900.0" y="1025.0" />
+        <di:waypoint x="900.0" y="1290.0" />
+        <di:waypoint x="1035.0" y="1290.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="815.0" y="1129.5" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_15_di" bpmnElement="F2_Flow_15">
+        <di:waypoint x="925.0" y="1000.0" />
+        <di:waypoint x="1035.0" y="1000.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="895.0" y="972.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_14_di" bpmnElement="F2_Flow_14">
+        <di:waypoint x="900.0" y="975.0" />
+        <di:waypoint x="900.0" y="800.0" />
+        <di:waypoint x="1035.0" y="800.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="815.0" y="859.5" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_30_di" bpmnElement="F2_Flow_30">
+        <di:waypoint x="1368.0" y="800.0" />
+        <di:waypoint x="1485.0" y="800.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_02_di" bpmnElement="F2_Flow_02">
+        <di:waypoint x="505.0" y="1000.0" />
+        <di:waypoint x="635.0" y="1000.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_01_di" bpmnElement="F2_Flow_01">
+        <di:waypoint x="198.0" y="1000.0" />
+        <di:waypoint x="335.0" y="1000.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_Context_di" bpmnElement="F2_Flow_Context">
+        <di:waypoint x="1205.0" y="800.0" />
+        <di:waypoint x="1332.0" y="800.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_ProducerResult_di" bpmnElement="F2_Flow_ProducerResult">
+        <di:waypoint x="3985.0" y="1000.0" />
+        <di:waypoint x="4040.0" y="1000.0" />
+        <di:waypoint x="4040.0" y="800.0" />
+        <di:waypoint x="4095.0" y="800.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3955.0" y="872.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_IntegrationResult_di" bpmnElement="F2_Flow_IntegrationResult">
+        <di:waypoint x="3985.0" y="1000.0" />
+        <di:waypoint x="4095.0" y="1000.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3955.0" y="972.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_IntegrationEnd_di" bpmnElement="F2_Flow_IntegrationEnd">
+        <di:waypoint x="4265.0" y="1000.0" />
+        <di:waypoint x="4405.0" y="1000.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_ResultJoined_di" bpmnElement="F2_Flow_ResultJoined">
+        <di:waypoint x="4455.0" y="1000.0" />
+        <di:waypoint x="4632.0" y="1000.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_ProducerFailure_di" bpmnElement="F2_Flow_ProducerFailure">
+        <di:waypoint x="3985.0" y="1430.0" />
+        <di:waypoint x="4040.0" y="1430.0" />
+        <di:waypoint x="4040.0" y="1300.0" />
+        <di:waypoint x="4095.0" y="1300.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3955.0" y="1337.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_IntegrationFailure_di" bpmnElement="F2_Flow_IntegrationFailure">
+        <di:waypoint x="3985.0" y="1430.0" />
+        <di:waypoint x="4405.0" y="1430.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4110.0" y="1402.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_ProducerFailureEnd_di" bpmnElement="F2_Flow_ProducerFailureEnd">
+        <di:waypoint x="4265.0" y="1300.0" />
+        <di:waypoint x="4430.0" y="1300.0" />
+        <di:waypoint x="4430.0" y="1405.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Flow_FailureJoined_di" bpmnElement="F2_Flow_FailureJoined">
+        <di:waypoint x="4455.0" y="1430.0" />
+        <di:waypoint x="4632.0" y="1430.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_S3_ContextAccepted_di" bpmnElement="F2_S3_ContextAccepted">
+        <di:waypoint x="685.0" y="1000.0" />
+        <di:waypoint x="875.0" y="1000.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="695.0" y="972.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_S3_ContextRejected_di" bpmnElement="F2_S3_ContextRejected">
+        <di:waypoint x="660.0" y="975.0" />
+        <di:waypoint x="660.0" y="665.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="575.0" y="792.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_S3_ContextRejectedEnd_di" bpmnElement="F2_S3_ContextRejectedEnd">
+        <di:waypoint x="745.0" y="620.0" />
+        <di:waypoint x="882.0" y="620.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_ProducerFlow_01_di" bpmnElement="F2_ProducerFlow_01">
+        <di:waypoint x="198.0" y="170.0" />
+        <di:waypoint x="335.0" y="170.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_ProducerFlow_02_di" bpmnElement="F2_ProducerFlow_02">
+        <di:waypoint x="505.0" y="170.0" />
+        <di:waypoint x="642.0" y="170.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_ProducerFlow_03_di" bpmnElement="F2_ProducerFlow_03">
+        <di:waypoint x="895.0" y="170.0" />
+        <di:waypoint x="1025.0" y="170.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="875.0" y="142.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_ProducerFlow_04_di" bpmnElement="F2_ProducerFlow_04">
+        <di:waypoint x="1195.0" y="170.0" />
+        <di:waypoint x="1265.0" y="170.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_ProducerFlow_05_di" bpmnElement="F2_ProducerFlow_05">
+        <di:waypoint x="1435.0" y="170.0" />
+        <di:waypoint x="3735.0" y="170.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_ProducerFlow_06_di" bpmnElement="F2_ProducerFlow_06">
+        <di:waypoint x="3905.0" y="170.0" />
+        <di:waypoint x="4082.0" y="170.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_S3_ProducerContextDecision_di" bpmnElement="F2_S3_ProducerContextDecision">
+        <di:waypoint x="678.0" y="170.0" />
+        <di:waypoint x="845.0" y="170.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_S3_ProducerContextRejected_di" bpmnElement="F2_S3_ProducerContextRejected">
+        <di:waypoint x="895.0" y="170.0" />
+        <di:waypoint x="993.5" y="170.0" />
+        <di:waypoint x="993.5" y="320.0" />
+        <di:waypoint x="1092.0" y="320.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="908.5" y="217.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Msg_Request_di" bpmnElement="F2_Msg_Request">
+        <di:waypoint x="420.0" y="215.0" />
+        <di:waypoint x="420.0" y="450.0" />
+        <di:waypoint x="120.0" y="450.0" />
+        <di:waypoint x="120.0" y="1000.0" />
+        <di:waypoint x="162.0" y="1000.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="35.0" y="697.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Msg_Context_di" bpmnElement="F2_Msg_Context">
+        <di:waypoint x="1120.0" y="755.0" />
+        <di:waypoint x="980.0" y="755.0" />
+        <di:waypoint x="980.0" y="450.0" />
+        <di:waypoint x="660.0" y="450.0" />
+        <di:waypoint x="660.0" y="188.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="735.0" y="422.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Msg_Submit_di" bpmnElement="F2_Msg_Submit">
+        <di:waypoint x="1350.0" y="215.0" />
+        <di:waypoint x="1350.0" y="782.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1265.0" y="470.5" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Msg_Result_di" bpmnElement="F2_Msg_Result">
+        <di:waypoint x="4180.0" y="755.0" />
+        <di:waypoint x="4180.0" y="460.0" />
+        <di:waypoint x="3820.0" y="460.0" />
+        <di:waypoint x="3820.0" y="215.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3915.0" y="432.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Msg_Correction_di" bpmnElement="F2_Msg_Correction">
+        <di:waypoint x="2010.0" y="575.0" />
+        <di:waypoint x="2010.0" y="440.0" />
+        <di:waypoint x="3820.0" y="440.0" />
+        <di:waypoint x="3820.0" y="215.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2830.0" y="412.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Msg_FollowUp_di" bpmnElement="F2_Msg_FollowUp">
+        <di:waypoint x="4265.0" y="1300.0" />
+        <di:waypoint x="4750.0" y="1300.0" />
+        <di:waypoint x="4750.0" y="430.0" />
+        <di:waypoint x="3820.0" y="430.0" />
+        <di:waypoint x="3820.0" y="215.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="4200.0" y="402.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F2_Msg_ContextRejected_di" bpmnElement="F2_Msg_ContextRejected">
+        <di:waypoint x="575.0" y="620.0" />
+        <di:waypoint x="530.0" y="620.0" />
+        <di:waypoint x="530.0" y="430.0" />
+        <di:waypoint x="660.0" y="430.0" />
+        <di:waypoint x="660.0" y="188.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="575.0" y="281.0" width="170" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
